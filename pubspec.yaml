@@ -51,6 +51,11 @@ flutter:
     - assets/images/
     - assets/lotties/
 
+  fonts:
+    - family: Kanda
+      fonts:
+        - asset: fonts/PSL Kanda.ttf
+
 flutter_native_splash:
   # Customize the parameters below, and run the following command in the terminal:
   # flutter pub run flutter_native_splash:create

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/create_account/staff_information.dart';
+import 'package:tms/pages/menu.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/text.dart';
 
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(25),
                     side: const BorderSide(color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () => Get.to(const Menu()),
                   child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 20),
                 ),
                 const SizedBox(height: 20),

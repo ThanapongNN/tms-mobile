@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Kanda',
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
           counterStyle: const TextStyle(fontSize: 0),
         ),
       ),
-      home: const Menu(),
+      home: const LoginPage(),
     );
   }
 }
