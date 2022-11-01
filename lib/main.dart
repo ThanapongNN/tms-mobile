@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/login.dart';
+import 'package:tms/pages/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           counterStyle: const TextStyle(fontSize: 0),
         ),
       ),
-      home: const LoginPage(),
+      home: const Menu(),
     );
   }
 }
