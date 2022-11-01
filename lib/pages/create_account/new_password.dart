@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/create_account/create_success.dart';
-import 'package:tms/widgets/tms_button.dart';
+import 'package:tms/widgets/button.dart';
 
 class NewPassword extends StatefulWidget {
   const NewPassword({super.key});
@@ -17,7 +15,7 @@ class _NewPasswordState extends State<NewPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('สร้างบัญชีใหม่')),
-      body: tmsButton(
+      body: button(
         text: 'ยืนยัน',
         onPressed: () => Get.to(const CreatePassword(), transition: Transition.rightToLeft),
       ),

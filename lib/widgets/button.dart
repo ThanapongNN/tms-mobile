@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget tmsButton({
+Widget button({
   required void Function()? onPressed,
   IconData? icon,
   required String text,
@@ -13,7 +13,7 @@ Widget tmsButton({
     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Icon(icon, color: Colors.white, size: 20),
       const SizedBox(width: 5),
-      Text(text, style: const TextStyle(color: Colors.white)),
+      Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
     ]),
   );
 }

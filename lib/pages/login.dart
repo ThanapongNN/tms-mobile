@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/create_account/staff_information.dart';
-import 'package:tms/widgets/tms_form_field.dart';
-import 'package:tms/widgets/tms_text.dart';
+import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/text.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,16 +32,17 @@ class _LoginPageState extends State<LoginPage> {
             child: Form(
               key: _formKey,
               child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                tmsFormField(
+                formField(
                   controller: _user,
                   hintText: 'รหัสพนักงานขาย',
+                  maxHeight: double.infinity,
                   validator: (user) {
                     if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงานขาย';
                     return null;
                   },
                 ),
                 const SizedBox(height: 20),
-                tmsFormField(
+                formField(
                   controller: _password,
                   hintText: 'รหัสผ่าน',
                   validator: (password) {
@@ -49,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                   obscureText: _hideText,
+                  maxHeight: double.infinity,
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideText = !_hideText),
                     icon: Icon(
@@ -68,12 +70,12 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Get.to(const StaffInformation());
                   },
-                  child: tmsText(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 20),
+                  child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 20),
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                  tmsText(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
-                  tmsText(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
+                  text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
+                  text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                 ])
               ]),
             ),
