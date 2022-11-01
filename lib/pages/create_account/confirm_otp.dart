@@ -5,6 +5,7 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tms/pages/create_account/new_password.dart';
+import 'package:tms/widgets/count_down.dart';
 import 'package:tms/widgets/pin_code_field.dart';
 import 'package:tms/widgets/text.dart';
 
@@ -42,16 +43,8 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               child: text(text: 'Ref: ABCDEFG', color: Colors.white, fontSize: 14),
             ),
             Row(children: [
-              Flexible(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: const TextSpan(text: 'รหัสยืนยันการใช้งาน จะหมดอายุใน ', style: TextStyle(fontSize: 16, color: Colors.black), children: [
-                    TextSpan(text: '259', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                    TextSpan(text: ' นาที หลังทำกกการขอรหัส หากไม่ได้รับรหัสผ่าน กรุณากดขอรหัสผ่านใหม่อีกครั้ง')
-                  ]),
-                ),
-              )
-            ]).paddingSymmetric(horizontal: 50, vertical: 20),
+              countdown(datetime: DateTime.now().add(const Duration(minutes: 3))),
+            ]).paddingSymmetric(horizontal: 40, vertical: 20),
             pinCodeField(
               appContext: context,
               controller: _otp,

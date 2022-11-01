@@ -67,15 +67,16 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(25),
                     side: const BorderSide(color: Colors.white),
                   ),
-                  onPressed: () {
-                    Get.to(const StaffInformation());
-                  },
+                  onPressed: () {},
                   child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 20),
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
-                  text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
+                  GestureDetector(
+                    onTap: () => Get.to(const StaffInformation()),
+                    child: text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
+                  ),
                 ])
               ]),
             ),
