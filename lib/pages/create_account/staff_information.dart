@@ -27,7 +27,7 @@ class _StaffInformationState extends State<StaffInformation> {
   final List<String> nameShop = ['7-11', 'Lotus HDE', 'Lotus Go Fresh', 'Lotus Talad', 'CP Frash Mart'];
   List<bool> selectShop = [false, false, false, false, false];
 
-  List<String> itemsDays = [];
+  List<String> itemsDays = [], itemsYears = [];
   final List<String> itemsMonths = [
     'มกราคม',
     'กุมภาพันธ์',
@@ -42,9 +42,15 @@ class _StaffInformationState extends State<StaffInformation> {
     'พฤศจิกายน',
     'ธันวาคม',
   ];
-  List<String> itemsYears = [];
+  final List<String> itemsJobs = [
+    'ผู้จัดการ',
+    'รองผู้จัดการ',
+    'หัวหน้า',
+    'รองหัวหน้า',
+    'เลขา',
+  ];
 
-  String? selectedDay, selectedMonth, selectedYear;
+  String? selectedDay, selectedMonth, selectedYear, selectedJob;
 
   @override
   void initState() {
@@ -55,7 +61,7 @@ class _StaffInformationState extends State<StaffInformation> {
 
   Widget checkBoxShop(int index) {
     return SizedBox(
-      width: index != 4 ? 180 : null,
+      width: index != 4 ? 160 : null,
       child: Row(children: [
         Checkbox(
           value: selectShop[index],
@@ -68,7 +74,6 @@ class _StaffInformationState extends State<StaffInformation> {
           },
         ),
         Text(nameShop[index]),
-        const SizedBox(width: 10),
       ]),
     );
   }
@@ -95,67 +100,92 @@ class _StaffInformationState extends State<StaffInformation> {
             key: _formKey,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: text(text: 'เลือกร้านค้าปฏิบัติงาน', fontSize: 20, fontBold: true).paddingAll(10)),
-              Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()),
+              Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
-              Center(child: text(text: 'ข้อมูลพนักงาน', fontSize: 20, fontBold: true).paddingAll(10)),
-              text(text: 'รหัสพนักงานขาย', fontBold: true),
-              formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
-              text(text: 'ชื่อ', fontBold: true),
-              formField(controller: _firstName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-              text(text: 'นามสกุล', fontBold: true),
-              formField(controller: _lastName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-              text(text: 'วันเดือนปีเกิด', fontBold: true),
-              Row(children: [
-                dropdown(
-                  flex: 2,
-                  hint: 'วัน',
-                  items: itemsDays,
-                  selectedValue: selectedDay,
-                  onChanged: (day) {
-                    setState(() {
-                      selectedDay = day as String;
-                    });
-                  },
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Center(child: text(text: 'ข้อมูลพนักงาน', fontSize: 20, fontBold: true).paddingAll(10)),
+                text(text: 'รหัสพนักงานขาย', fontBold: true),
+                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
+                text(text: 'ชื่อ', fontBold: true),
+                formField(controller: _firstName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                text(text: 'นามสกุล', fontBold: true),
+                formField(controller: _lastName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                text(text: 'วันเดือนปีเกิด', fontBold: true),
+                Row(children: [
+                  dropdown(
+                    flex: 2,
+                    hint: 'วัน',
+                    items: itemsDays,
+                    selectedValue: selectedDay,
+                    onChanged: (day) => setState(() => selectedDay = day as String),
+                  ),
+                  const SizedBox(width: 10),
+                  dropdown(
+                    flex: 3,
+                    hint: 'เดือน',
+                    items: itemsMonths,
+                    selectedValue: selectedMonth,
+                    onChanged: (month) => setState(() => selectedMonth = month as String),
+                  ),
+                  const SizedBox(width: 10),
+                  dropdown(
+                    flex: 3,
+                    hint: 'ปี',
+                    items: itemsYears,
+                    selectedValue: selectedYear,
+                    onChanged: (year) => setState(() => selectedYear = year as String),
+                  ),
+                ]).paddingSymmetric(vertical: 10),
+                text(text: 'เบอร์มือถือ', fontBold: true),
+                formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                text(text: 'อีเมล', fontBold: true),
+                formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                text(text: 'ตำแหน่งงาน', fontBold: true),
+                Row(children: [
+                  dropdown(
+                    hint: 'กรุณาเลือกตำแหน่งงาน',
+                    items: itemsJobs,
+                    selectedValue: selectedJob,
+                    onChanged: (job) => setState(() => selectedJob = job as String),
+                  ),
+                ]).paddingSymmetric(vertical: 10),
+                text(text: 'รหัสสาขา', fontBold: true),
+                formField(
+                  controller: _email,
+                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  suffixIcon: const Icon(Icons.search),
+                ).paddingSymmetric(vertical: 10),
+                text(text: 'สาขาปฏิบัติงาน', fontBold: true),
+                formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  Checkbox(
+                    checkColor: Colors.white,
+                    activeColor: Colors.red,
+                    side: const BorderSide(width: 2, color: Colors.grey),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    value: accept,
+                    onChanged: (bool? v) => setState(() => accept = v!),
+                    tristate: false,
+                  ),
+                  Flexible(
+                    child: RichText(
+                      text: const TextSpan(text: 'ยอมรับเงื่อนไข ', style: TextStyle(color: Colors.black), children: [
+                        TextSpan(
+                          text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการคครั้งนี้',
+                          style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                        )
+                      ]),
+                    ),
+                  )
+                ]),
+                const SizedBox(height: 20),
+                button(
+                  text: 'สร้างบัญชี',
+                  icon: Icons.add,
+                  onPressed: () => Get.to(const ConfirmOTP(), transition: Transition.rightToLeft),
                 ),
-                const SizedBox(width: 10),
-                dropdown(
-                  flex: 3,
-                  hint: 'เดือน',
-                  items: itemsMonths,
-                  selectedValue: selectedMonth,
-                  onChanged: (month) {
-                    setState(() {
-                      selectedMonth = month as String;
-                    });
-                  },
-                ),
-                const SizedBox(width: 10),
-                dropdown(
-                  flex: 3,
-                  hint: 'ปี',
-                  items: itemsYears,
-                  selectedValue: selectedYear,
-                  onChanged: (year) {
-                    setState(() {
-                      selectedYear = year as String;
-                    });
-                  },
-                ),
-              ]).paddingSymmetric(vertical: 10),
-              text(text: 'เบอร์มือถือ', fontBold: true),
-              formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-              text(text: 'อีเมล', fontBold: true),
-              formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-              text(text: 'ตำแหน่งงาน', fontBold: true),
-              // dropdown(items: items)
-              text(text: 'รหัสสาขา', fontBold: true),
-              text(text: 'รหัสพนักงานขาย', fontBold: true),
-              const SizedBox(height: 20),
-              button(
-                text: 'สร้างบัญชี',
-                icon: Icons.add,
-                onPressed: () => Get.to(const ConfirmOTP(), transition: Transition.rightToLeft),
-              ),
+                button(text: 'ยกเลิก', icon: Icons.close, outline: true),
+              ]).paddingSymmetric(horizontal: 40)
             ]),
           ),
         ),

@@ -19,6 +19,7 @@ Widget dropdown({required List<String> items, String? selectedValue, void Functi
             .toList(),
         value: selectedValue,
         onChanged: onChanged,
+        isExpanded: true,
         itemHeight: 25,
         itemPadding: const EdgeInsets.symmetric(horizontal: 14),
         dropdownMaxHeight: 200,
