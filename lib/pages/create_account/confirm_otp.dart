@@ -36,7 +36,10 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
         body: SizedBox(
           width: double.infinity,
           child: Column(children: [
-            text(text: 'ยืนยันการสร้างบัญชี', fontSize: 20, fontBold: true).paddingOnly(top: 40, bottom: 20),
+            text(
+              text: 'ยืนยันการสร้างบัญชี',
+              fontSize: 20,
+            ).paddingOnly(top: 40, bottom: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(30)),
@@ -56,7 +59,10 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 }
               },
             ),
-            text(text: 'ขอรหัสอีกครั้ง', color: Colors.red, fontBold: true).paddingAll(20),
+            text(
+              text: 'ขอรหัสอีกครั้ง',
+              color: Colors.red,
+            ).paddingAll(20),
           ]),
         ),
       ),

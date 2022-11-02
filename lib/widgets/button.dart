@@ -18,7 +18,7 @@ Widget button({
     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Icon(icon, color: outline ? Colors.black : Colors.white, size: 20),
       const SizedBox(width: 5),
-      Text(text, style: TextStyle(fontSize: 16, color: outline ? Colors.black : Colors.white, fontWeight: FontWeight.bold)),
+      Text(text, style: TextStyle(fontSize: 16, color: outline ? Colors.black : Colors.white)),
     ]),
   );
 }

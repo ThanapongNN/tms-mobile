@@ -17,7 +17,7 @@ Widget listSales({
             color: Colors.amber,
           ),
           Expanded(child: text(text: title)),
-          text(text: content, fontBold: true, fontSize: 18),
+          text(text: content, fontSize: 18),
           const Icon(Icons.expand_more)
         ]),
         const Divider(thickness: 2)

@@ -26,12 +26,22 @@ class _NewPasswordState extends State<NewPassword> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: text(text: 'กำหนดรหัสผ่าน', fontSize: 20, fontBold: true).paddingSymmetric(vertical: 20)),
-            text(text: 'รหัสพนักงานขาย', fontBold: true),
+            Center(
+                child: text(
+              text: 'กำหนดรหัสผ่าน',
+              fontSize: 20,
+            ).paddingSymmetric(vertical: 20)),
+            text(
+              text: 'รหัสพนักงานขาย',
+            ),
             formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
-            text(text: 'รหัสผ่าน', fontBold: true),
+            text(
+              text: 'รหัสผ่าน',
+            ),
             formField(controller: _password, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-            text(text: 'ยืนยันรหัสผ่าน', fontBold: true),
+            text(
+              text: 'ยืนยันรหัสผ่าน',
+            ),
             formField(controller: _confirmPassword, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
             text(text: 'กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วยตัวเลขและตัวอักษร', color: Colors.red, fontSize: 14).paddingSymmetric(vertical: 10),
             button(

@@ -99,18 +99,22 @@ class _StaffInformationState extends State<StaffInformation> {
           child: Form(
             key: _formKey,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: text(text: 'เลือกร้านค้าปฏิบัติงาน', fontSize: 20, fontBold: true).paddingAll(10)),
+              Center(
+                  child: text(
+                text: 'เลือกร้านค้าปฏิบัติงาน',
+                fontSize: 20,
+              ).paddingAll(10)),
               Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Center(child: text(text: 'ข้อมูลพนักงาน', fontSize: 20, fontBold: true).paddingAll(10)),
-                text(text: 'รหัสพนักงานขาย', fontBold: true),
+                Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 20).paddingAll(10)),
+                text(text: 'รหัสพนักงานขาย'),
                 formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
-                text(text: 'ชื่อ', fontBold: true),
+                text(text: 'ชื่อ'),
                 formField(controller: _firstName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-                text(text: 'นามสกุล', fontBold: true),
+                text(text: 'นามสกุล'),
                 formField(controller: _lastName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-                text(text: 'วันเดือนปีเกิด', fontBold: true),
+                text(text: 'วันเดือนปีเกิด'),
                 Row(children: [
                   dropdown(
                     flex: 2,
@@ -136,11 +140,11 @@ class _StaffInformationState extends State<StaffInformation> {
                     onChanged: (year) => setState(() => selectedYear = year as String),
                   ),
                 ]).paddingSymmetric(vertical: 10),
-                text(text: 'เบอร์มือถือ', fontBold: true),
+                text(text: 'เบอร์มือถือ'),
                 formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-                text(text: 'อีเมล', fontBold: true),
+                text(text: 'อีเมล'),
                 formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-                text(text: 'ตำแหน่งงาน', fontBold: true),
+                text(text: 'ตำแหน่งงาน'),
                 Row(children: [
                   dropdown(
                     hint: 'กรุณาเลือกตำแหน่งงาน',
@@ -149,13 +153,13 @@ class _StaffInformationState extends State<StaffInformation> {
                     onChanged: (job) => setState(() => selectedJob = job as String),
                   ),
                 ]).paddingSymmetric(vertical: 10),
-                text(text: 'รหัสสาขา', fontBold: true),
+                text(text: 'รหัสสาขา'),
                 formField(
                   controller: _email,
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
                   suffixIcon: const Icon(Icons.search),
                 ).paddingSymmetric(vertical: 10),
-                text(text: 'สาขาปฏิบัติงาน', fontBold: true),
+                text(text: 'สาขาปฏิบัติงาน'),
                 formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
@@ -169,9 +173,9 @@ class _StaffInformationState extends State<StaffInformation> {
                   ),
                   Flexible(
                     child: RichText(
-                      text: const TextSpan(text: 'ยอมรับเงื่อนไข ', style: TextStyle(color: Colors.black), children: [
+                      text: const TextSpan(text: 'ยอมรับเงื่อนไข ', style: TextStyle(color: Colors.black, fontFamily: 'Kanda'), children: [
                         TextSpan(
-                          text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการคครั้งนี้',
+                          text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการครั้งนี้',
                           style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
                         )
                       ]),

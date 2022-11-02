@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/login.dart';
-import 'package:tms/pages/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +14,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'TMS ช่วยขาย true',
       debugShowCheckedModeBanner: false,
+      home: const LoginPage(),
       theme: ThemeData(
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Kanda',
+        textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 16), button: TextStyle(fontSize: 20)),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
@@ -39,7 +40,6 @@ class MyApp extends StatelessWidget {
           counterStyle: const TextStyle(fontSize: 0),
         ),
       ),
-      home: const LoginPage(),
     );
   }
 }

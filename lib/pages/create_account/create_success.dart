@@ -14,7 +14,11 @@ class CreatePassword extends StatelessWidget {
       appBar: AppBar(title: const Text('สร้างบัญชีใหม่')),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Image.asset('assets/images/create_success.jpg', scale: 2),
-        FittedBox(child: text(text: 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว', fontSize: 24, fontBold: true).paddingSymmetric(vertical: 20)),
+        FittedBox(
+            child: text(
+          text: 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว',
+          fontSize: 24,
+        ).paddingSymmetric(vertical: 20)),
         button(
           text: 'เข้าสู่ระบบ',
           icon: Icons.turn_right,

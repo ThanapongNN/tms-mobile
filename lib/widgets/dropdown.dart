@@ -10,11 +10,7 @@ Widget dropdown({required List<String> items, String? selectedValue, void Functi
         items: items
             .map((item) => DropdownMenuItem<String>(
                   value: item,
-                  child: Text(
-                    item,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child: Text(item, style: const TextStyle(fontSize: 14), overflow: TextOverflow.ellipsis),
                 ))
             .toList(),
         value: selectedValue,
