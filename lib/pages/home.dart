@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/list_sales.dart';
+
 import 'package:tms/widgets/text.dart';
 
 class Home extends StatefulWidget {
@@ -29,14 +30,18 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             SizedBox(
-              height: 250,
+              height: 240,
               child: DrawerHeader(
                   decoration: const BoxDecoration(
                     color: Colors.red,
                   ),
                   child: Column(
                     children: [
-                      const CircleAvatar(backgroundImage: NetworkImage(''), maxRadius: 35),
+                      CircleAvatar(
+                        backgroundColor: Colors.brown.shade800,
+                        maxRadius: 35,
+                        child: text(text: 'AH'),
+                      ),
                       const SizedBox(height: 5),
                       GestureDetector(
                           onTap: () {}, child: text(text: 'แก้ไขรูป', color: Colors.white, fontSize: 14, decoration: TextDecoration.underline)),
@@ -75,7 +80,7 @@ class _HomeState extends State<Home> {
                 color: Colors.grey[200],
                 child: Row(
                   children: [
-                    const CircleAvatar(backgroundImage: NetworkImage('')),
+                    CircleAvatar(backgroundColor: Colors.brown.shade800, child: text(text: 'AH')),
                     const SizedBox(width: 5),
                     Expanded(child: text(text: 'คุณทดสอบ ชอบทดลอง')),
                     FittedBox(child: text(text: '7-11 สาขาเจริญนคร 27'))
