@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final _user = TextEditingController();
   final _password = TextEditingController();
 
-  bool _hideText = false;
+  bool _hideText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,22 +56,23 @@ class _LoginPageState extends State<LoginPage> {
                   maxHeight: double.infinity,
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideText = !_hideText),
-                    icon: Icon(
-                      _hideText ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+                    icon: FaIcon(
+                      _hideText ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.solidEye,
                       color: Colors.black,
+                      size: 20,
                     ),
                   ),
                 ),
                 const SizedBox(height: 40),
                 MaterialButton(
-                  height: 50,
+                  height: 70,
                   minWidth: double.infinity,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(35),
                     side: const BorderSide(color: Colors.white),
                   ),
                   onPressed: () => Get.to(const Menu()),
-                  child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 20),
+                  child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 28),
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [

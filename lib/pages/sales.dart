@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tms/widgets/text.dart';
 
-class Information extends StatefulWidget {
-  const Information({super.key});
+class SalesPage extends StatefulWidget {
+  const SalesPage({super.key});
 
   @override
-  State<Information> createState() => _InformationState();
+  State<SalesPage> createState() => _SalesPageState();
 }
 
-class _InformationState extends State<Information> {
+class _SalesPageState extends State<SalesPage> {
   @override
   Widget build(BuildContext context) {
     return Center(

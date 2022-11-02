@@ -33,7 +33,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           child: Form(
             key: _formKey,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: text(text: 'กรุณาระบุข้อมูล\nเพื่อกำหนดรหัสผ่านใหม่', fontSize: 20).paddingAll(10)),
+              Center(child: text(text: 'กรุณาระบุข้อมูล\nเพื่อกำหนดรหัสผ่านใหม่', fontSize: 24, textAlign: TextAlign.center).paddingAll(10)),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 text(text: 'รหัสพนักงานขาย'),
                 formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
@@ -54,7 +54,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       firstDate: DateTime(DateTime.now().year - 100),
                       lastDate: DateTime.now(),
                       locale: Get.locale,
-                    ).then((date) => _birthday.text = DateFormat('dd/MM/yyyy').format(date!));
+                    ).then((date) {
+                      if (date != null) _birthday.text = DateFormat('dd/MM/yyyy').format(date);
+                    });
                   },
                 ).paddingSymmetric(vertical: 10),
                 const SizedBox(height: 20),
@@ -66,6 +68,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     transition: Transition.rightToLeft,
                   ),
                 ),
+                const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: Icons.close, outline: true),
               ]).paddingSymmetric(horizontal: 40)
             ]),

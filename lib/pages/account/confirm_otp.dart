@@ -37,7 +37,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
         body: SizedBox(
           width: double.infinity,
           child: Column(children: [
-            text(text: widget.titleBody, fontSize: 20).paddingOnly(top: 40, bottom: 20),
+            text(text: widget.titleBody, fontSize: 24).paddingOnly(top: 40, bottom: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(30)),

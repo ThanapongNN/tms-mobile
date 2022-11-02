@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/pages/home.dart';
-import 'package:tms/pages/information.dart';
-import 'package:tms/pages/sale.dart';
+import 'package:tms/pages/sales.dart';
+import 'package:tms/pages/news.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -13,49 +13,30 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  int _currentIndex = 0;
-  List<Widget> taps = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    taps = [const Home(), const Sale(), const Information()];
-  }
+  List<Widget> taps = [const Home(), const SalesPage(), const NewsPage()];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Obx(() {
-      return SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            Padding(
-              padding: (!Store.drawer.value) ? const EdgeInsets.only(bottom: 70) : EdgeInsets.zero,
-              child: taps[_currentIndex],
-            ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: (!Store.drawer.value) ? 70 : 0,
-                  decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey))),
-                  child: BottomNavigationBar(
-                      currentIndex: _currentIndex,
-                      type: BottomNavigationBarType.fixed,
-                      onTap: (index) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      items: const [
-                        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'หน้าหลัก'),
-                        BottomNavigationBarItem(icon: Icon(Icons.signal_cellular_alt), label: 'ยอดขาย'),
-                        BottomNavigationBarItem(icon: Icon(Icons.campaign), label: 'ข่าวสาร'),
-                      ]),
-                ))
-          ],
-        ),
+    return Obx(() {
+      return Scaffold(
+        body: SafeArea(top: false, child: taps[Store.currentIndex.value]),
+        bottomNavigationBar: (!Store.drawer.value)
+            ? BottomNavigationBar(
+                currentIndex: Store.currentIndex.value,
+                type: BottomNavigationBarType.fixed,
+                iconSize: 32,
+                selectedFontSize: 16,
+                unselectedFontSize: 14,
+                backgroundColor: Colors.white,
+                items: const [
+                  BottomNavigationBarItem(icon: Icon(Icons.home), label: 'หน้าหลัก'),
+                  BottomNavigationBarItem(icon: Icon(Icons.signal_cellular_alt), label: 'ยอดขาย'),
+                  BottomNavigationBarItem(icon: Icon(Icons.campaign), label: 'ข่าวสาร'),
+                ],
+                onTap: (index) => Store.currentIndex.value = index,
+              )
+            : null,
       );
-    }));
+    });
   }
 }

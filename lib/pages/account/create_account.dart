@@ -99,11 +99,11 @@ class _CreateAccountState extends State<CreateAccount> {
           child: Form(
             key: _formKey,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: text(text: 'เลือกร้านค้าปฏิบัติงาน', fontSize: 20).paddingAll(10)),
+              Center(child: text(text: 'เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
               Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 20).paddingAll(10)),
+                Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
                 text(text: 'รหัสพนักงานขาย'),
                 formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
                 text(text: 'ชื่อ'),
@@ -169,12 +169,15 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                   Flexible(
                     child: RichText(
-                      text: const TextSpan(text: 'ยอมรับเงื่อนไข ', style: TextStyle(color: Colors.black, fontFamily: 'Kanda'), children: [
-                        TextSpan(
-                          text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการครั้งนี้',
-                          style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
-                        )
-                      ]),
+                      text: const TextSpan(
+                          text: 'ยอมรับเงื่อนไข ',
+                          style: TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Kanda'),
+                          children: [
+                            TextSpan(
+                              text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการครั้งนี้',
+                              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                            )
+                          ]),
                     ),
                   )
                 ]),
@@ -187,6 +190,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     transition: Transition.rightToLeft,
                   ),
                 ),
+                const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: Icons.close, outline: true),
               ]).paddingSymmetric(horizontal: 40)
             ]),
