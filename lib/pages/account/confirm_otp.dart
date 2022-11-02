@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:tms/pages/create_account/new_password.dart';
+import 'package:tms/pages/account/new_password.dart';
 import 'package:tms/widgets/count_down.dart';
 import 'package:tms/widgets/pin_code_field.dart';
 import 'package:tms/widgets/text.dart';
 
 class ConfirmOTP extends StatefulWidget {
-  const ConfirmOTP({super.key});
+  final String titleAppbar, titleBody;
+  const ConfirmOTP({super.key, required this.titleAppbar, required this.titleBody});
 
   @override
   State<ConfirmOTP> createState() => _ConfirmOTPState();
@@ -32,14 +33,11 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('สร้างบัญชีใหม่')),
+        appBar: AppBar(title: Text(widget.titleAppbar)),
         body: SizedBox(
           width: double.infinity,
           child: Column(children: [
-            text(
-              text: 'ยืนยันการสร้างบัญชี',
-              fontSize: 20,
-            ).paddingOnly(top: 40, bottom: 20),
+            text(text: widget.titleBody, fontSize: 20).paddingOnly(top: 40, bottom: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(30)),
@@ -55,14 +53,11 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               hasError: hasError,
               onCompleted: (value) {
                 if (value.length == 6) {
-                  Get.off(const NewPassword(), transition: Transition.rightToLeft);
+                  Get.off(NewPassword(titleAppbar: widget.titleAppbar), transition: Transition.rightToLeft);
                 }
               },
             ),
-            text(
-              text: 'ขอรหัสอีกครั้ง',
-              color: Colors.red,
-            ).paddingAll(20),
+            text(text: 'ขอรหัสอีกครั้ง', color: Colors.red).paddingAll(20),
           ]),
         ),
       ),

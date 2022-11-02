@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:tms/pages/create_account/create_success.dart';
+import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/text.dart';
 
 class NewPassword extends StatefulWidget {
-  const NewPassword({super.key});
+  final String titleAppbar;
+  const NewPassword({super.key, required this.titleAppbar});
 
   @override
   State<NewPassword> createState() => _NewPasswordState();
@@ -21,7 +22,7 @@ class _NewPasswordState extends State<NewPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('สร้างบัญชีใหม่')),
+      appBar: AppBar(title: Text(widget.titleAppbar)),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +48,14 @@ class _NewPasswordState extends State<NewPassword> {
             button(
               text: 'ยืนยัน',
               icon: Icons.check,
-              onPressed: () => Get.to(const CreatePassword(), transition: Transition.rightToLeft),
+              onPressed: () => Get.to(
+                AccountSuccess(
+                    titleAppbar: widget.titleAppbar,
+                    titleBody: (widget.titleAppbar.endsWith('ใหม่'))
+                        ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'
+                        : 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว'),
+                transition: Transition.rightToLeft,
+              ),
             ),
             button(text: 'ยกเลิก', icon: Icons.close, outline: true),
           ],

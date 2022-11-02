@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:tms/pages/create_account/staff_information.dart';
+import 'package:tms/pages/account/create_account.dart';
+import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/text.dart';
@@ -73,9 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                  text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   GestureDetector(
-                    onTap: () => Get.to(const StaffInformation()),
+                    onTap: () => Get.to(const ForgetPassword()),
+                    child: text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.to(const CreateAccount()),
                     child: text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                 ])

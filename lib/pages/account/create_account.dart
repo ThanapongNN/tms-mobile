@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:tms/pages/create_account/confirm_otp.dart';
+import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/text.dart';
 
-class StaffInformation extends StatefulWidget {
-  const StaffInformation({super.key});
+class CreateAccount extends StatefulWidget {
+  const CreateAccount({super.key});
 
   @override
-  State<StaffInformation> createState() => _StaffInformationState();
+  State<CreateAccount> createState() => _CreateAccountState();
 }
 
-class _StaffInformationState extends State<StaffInformation> {
+class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _saleID = TextEditingController();
@@ -99,11 +99,7 @@ class _StaffInformationState extends State<StaffInformation> {
           child: Form(
             key: _formKey,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(
-                  child: text(
-                text: 'เลือกร้านค้าปฏิบัติงาน',
-                fontSize: 20,
-              ).paddingAll(10)),
+              Center(child: text(text: 'เลือกร้านค้าปฏิบัติงาน', fontSize: 20).paddingAll(10)),
               Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -186,7 +182,10 @@ class _StaffInformationState extends State<StaffInformation> {
                 button(
                   text: 'สร้างบัญชี',
                   icon: Icons.add,
-                  onPressed: () => Get.to(const ConfirmOTP(), transition: Transition.rightToLeft),
+                  onPressed: () => Get.to(
+                    const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                    transition: Transition.rightToLeft,
+                  ),
                 ),
                 button(text: 'ยกเลิก', icon: Icons.close, outline: true),
               ]).paddingSymmetric(horizontal: 40)
