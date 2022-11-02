@@ -11,7 +11,7 @@ Widget boxNews() {
         Container(
           color: Colors.amber,
           height: 120,
-          child: Image.network('https://picsum.photos/250?image=9'),
+          child: Image.asset('assets/images/promotion.png'),
         ),
         const SizedBox(height: 5),
         text(text: "รับซิทรูเซว่นฟรี วันที่ 24 ก.พ 65 - 31 มี.ค. 65"),
