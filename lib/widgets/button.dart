@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:tms/theme/color.dart';
 
 Widget button({
   void Function()? onPressed,
@@ -10,7 +11,7 @@ Widget button({
 }) {
   return MaterialButton(
     height: 50,
-    color: outline ? Colors.white : Colors.red,
+    color: outline ? Colors.white : ThemeColor.primaryColor,
     minWidth: double.infinity,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(25),

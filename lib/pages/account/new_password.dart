@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/account_success.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/text.dart';
@@ -34,7 +35,8 @@ class _NewPasswordState extends State<NewPassword> {
             formField(controller: _password, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
             text(text: 'ยืนยันรหัสผ่าน'),
             formField(controller: _confirmPassword, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-            text(text: 'กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วยตัวเลขและตัวอักษร', color: Colors.red, fontSize: 18).paddingSymmetric(vertical: 10),
+            text(text: 'กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วยตัวเลขและตัวอักษร', color: ThemeColor.primaryColor, fontSize: 18)
+                .paddingSymmetric(vertical: 10),
             button(
               text: 'ยืนยัน',
               icon: Icons.check,

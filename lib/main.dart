@@ -7,6 +7,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:tms/pages/login.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/utils/package_version.dart';
 
 void main() {
@@ -25,7 +26,7 @@ void configLoading() {
       height: 60,
       width: 60,
       decoration: const BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
-      child: const LoadingIndicator(indicatorType: Indicator.ballPulse, colors: [Colors.red], strokeWidth: 4),
+      child: const LoadingIndicator(indicatorType: Indicator.ballPulse, colors: [ThemeColor.primaryColor], strokeWidth: 4),
     )
     ..userInteractions = false
     ..dismissOnTap = false;
@@ -59,20 +60,18 @@ class MyApp extends StatelessWidget {
         );
       }),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: const MaterialColor(0xFFD4364E, <int, Color>{
-            50: Color(0xFFD4364E),
-            100: Color(0xFFD4364E),
-            200: Color(0xFFD4364E),
-            300: Color(0xFFD4364E),
-            400: Color(0xFFD4364E),
-            500: Color(0xFFD4364E),
-            600: Color(0xFFD4364E),
-            700: Color(0xFFD4364E),
-            800: Color(0xFFD4364E),
-            900: Color(0xFFD4364E),
-          }),
-        ).copyWith(secondary: Colors.white),
+        primarySwatch: const MaterialColor(0xFFD4364E, <int, Color>{
+          50: Color(0xFFD4364E),
+          100: Color(0xFFD4364E),
+          200: Color(0xFFD4364E),
+          300: Color(0xFFD4364E),
+          400: Color(0xFFD4364E),
+          500: Color(0xFFD4364E),
+          600: Color(0xFFD4364E),
+          700: Color(0xFFD4364E),
+          800: Color(0xFFD4364E),
+          900: Color(0xFFD4364E),
+        }),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Kanit',
         appBarTheme: const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 24, fontFamily: 'Kanit')),

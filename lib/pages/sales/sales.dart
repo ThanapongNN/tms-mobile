@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:tms/pages/sales/sales_summary.dart';
 import 'package:tms/pages/sales/seller_rank.dart';
+import 'package:tms/theme/color.dart';
 
 class SalesPage extends StatefulWidget {
   const SalesPage({super.key});
@@ -36,7 +37,7 @@ class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
               child: TabBar(
                 controller: _tabBar,
-                indicator: const BoxDecoration(color: Colors.red),
+                indicator: const BoxDecoration(color: ThemeColor.primaryColor),
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black,
                 labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:tms/theme/color.dart';
 
 Widget pinCodeField({
   required BuildContext appContext,
@@ -24,8 +25,8 @@ Widget pinCodeField({
       borderRadius: BorderRadius.circular(5),
       fieldHeight: 50,
       fieldWidth: 43,
-      activeColor: hasError ? Colors.red : Colors.white,
-      selectedColor: Colors.red,
+      activeColor: hasError ? ThemeColor.primaryColor : Colors.white,
+      selectedColor: ThemeColor.primaryColor,
       inactiveColor: Colors.grey[300],
       disabledColor: Colors.grey[300],
       activeFillColor: Colors.white,

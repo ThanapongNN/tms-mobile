@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms/theme/color.dart';
 
 Widget countdown({void Function()? onEnd, required DateTime datetime}) {
   Duration expiration = datetime.difference(DateTime.now());
@@ -21,7 +22,7 @@ Widget countdown({void Function()? onEnd, required DateTime datetime}) {
             text: 'รหัสยืนยันการใช้งาน จะหมดอายุใน ',
             style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
             children: [
-              TextSpan(text: time, style: const TextStyle(color: Colors.red)),
+              TextSpan(text: time, style: const TextStyle(color: ThemeColor.primaryColor)),
               const TextSpan(text: ' นาที หลังทำการขอรหัส หากไม่ได้รับรหัสผ่าน กรุณากดขอรหัสผ่านใหม่อีกครั้ง')
             ],
           ),

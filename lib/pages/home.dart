@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/state_management.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/list_sales.dart';
@@ -33,7 +34,7 @@ class _HomeState extends State<Home> {
             height: 240,
             width: double.infinity,
             child: DrawerHeader(
-              decoration: const BoxDecoration(color: Colors.red),
+              decoration: const BoxDecoration(color: ThemeColor.primaryColor),
               child: Column(children: [
                 CircleAvatar(
                   backgroundColor: Colors.brown.shade800,
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> {
             icon: Icons.exit_to_app,
             text: 'ออกจากระบบ',
             outline: true,
-            colorOutline: Colors.red,
+            colorOutline: ThemeColor.primaryColor,
             onPressed: () => Get.offAll(const LoginPage()),
           ).paddingSymmetric(horizontal: 40),
           text(text: 'v ${Store.version.value}', color: Colors.grey).paddingSymmetric(vertical: 10)
@@ -99,9 +100,9 @@ class _HomeState extends State<Home> {
               Container(
                 margin: const EdgeInsets.all(30),
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.red)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: ThemeColor.primaryColor)),
                 child: Row(children: [
-                  FittedBox(child: Center(child: text(text: 'true', fontSize: 90, color: Colors.red))),
+                  FittedBox(child: Center(child: text(text: 'true', fontSize: 90, color: ThemeColor.primaryColor))),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -121,7 +122,7 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () => Store.currentIndex.value = 1,
-                child: text(text: 'ดูยอดขายทั้งหมด', color: Colors.red, decoration: TextDecoration.underline),
+                child: text(text: 'ดูยอดขายทั้งหมด', color: ThemeColor.primaryColor, decoration: TextDecoration.underline),
               ),
               const SizedBox(height: 15),
               Row(children: [const Icon(Icons.campaign, size: 30), text(text: 'ข่าวสารและแคมเปญเด่น')]),

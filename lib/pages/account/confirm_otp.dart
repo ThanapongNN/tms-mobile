@@ -5,6 +5,7 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tms/pages/account/new_password.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/count_down.dart';
 import 'package:tms/widgets/pin_code_field.dart';
 import 'package:tms/widgets/text.dart';
@@ -57,7 +58,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 }
               },
             ),
-            text(text: 'ขอรหัสอีกครั้ง', color: Colors.red).paddingAll(20),
+            text(text: 'ขอรหัสอีกครั้ง', color: ThemeColor.primaryColor).paddingAll(20),
           ]),
         ),
       ),

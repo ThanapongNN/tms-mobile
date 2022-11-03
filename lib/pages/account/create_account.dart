@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
@@ -150,7 +151,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
                     checkColor: Colors.white,
-                    activeColor: Colors.red,
+                    activeColor: ThemeColor.primaryColor,
                     side: const BorderSide(width: 2, color: Colors.grey),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     value: accept,

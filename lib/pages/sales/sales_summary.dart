@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:tms/theme/color.dart';
 
 class SalesSummary extends StatefulWidget {
   const SalesSummary({super.key});
@@ -29,7 +30,7 @@ class _SalesSummaryState extends State<SalesSummary> with TickerProviderStateMix
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
               child: TabBar(
                 controller: _tabBar,
-                indicator: const BoxDecoration(color: Colors.red),
+                indicator: const BoxDecoration(color: ThemeColor.primaryColor),
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.black,
                 labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
