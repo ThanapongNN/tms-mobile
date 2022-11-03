@@ -6,17 +6,17 @@ Widget dropdown({required List<String> items, String? selectedValue, void Functi
     flex: flex ?? 1,
     child: DropdownButtonHideUnderline(
       child: DropdownButton2(
-        hint: Text(hint ?? '', style: const TextStyle(fontSize: 14)),
+        hint: Text(hint ?? '', style: const TextStyle(fontSize: 18)),
         items: items
             .map((item) => DropdownMenuItem<String>(
                   value: item,
-                  child: Text(item, style: const TextStyle(fontSize: 14), overflow: TextOverflow.ellipsis),
+                  child: Text(item, style: const TextStyle(fontSize: 18), overflow: TextOverflow.ellipsis),
                 ))
             .toList(),
         value: selectedValue,
         onChanged: onChanged,
         isExpanded: true,
-        itemHeight: 25,
+        itemHeight: 45,
         itemPadding: const EdgeInsets.symmetric(horizontal: 14),
         dropdownMaxHeight: 200,
         buttonPadding: const EdgeInsets.only(left: 10),

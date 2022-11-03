@@ -39,8 +39,8 @@ class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
                 indicator: const BoxDecoration(color: Colors.red),
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black,
-                labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanda'),
-                unselectedLabelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanda'),
+                labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
+                unselectedLabelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
                 tabs: const <Tab>[
                   Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('สรุปยอดขาย'))),
                   Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('อันดับนักขาย'))),

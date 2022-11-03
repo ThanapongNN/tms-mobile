@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get_utils/get_utils.dart';
 
 class SalesSummary extends StatefulWidget {
@@ -23,11 +21,6 @@ class _SalesSummaryState extends State<SalesSummary> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const SizedBox(),
-        title: const Text('ยอดขาย'),
-        centerTitle: true,
-        elevation: 0,
-        actions: [IconButton(icon: const Icon(Icons.notifications), onPressed: () {})],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(kTextTabBarHeight + MediaQuery.of(context).padding.top),
           child: Container(
@@ -39,8 +32,8 @@ class _SalesSummaryState extends State<SalesSummary> with TickerProviderStateMix
                 indicator: const BoxDecoration(color: Colors.red),
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.black,
-                labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanda'),
-                unselectedLabelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanda'),
+                labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
+                unselectedLabelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
                 tabs: const <Tab>[
                   Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('เบอร์และมือถือ'))),
                   Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('เติมเงินเติมเน็ต'))),

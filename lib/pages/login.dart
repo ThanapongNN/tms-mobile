@@ -28,17 +28,21 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.bottomCenter,
-          color: Colors.red,
           height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
+          ),
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Form(
               key: _formKey,
-              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              child: Column(children: [
+                Image.asset('assets/images/logo.png', scale: 3),
+                SizedBox(height: Get.height / 4),
                 formField(
                   controller: _user,
                   hintText: 'รหัสพนักงานขาย',
-                  maxHeight: double.infinity,
+                  height: 15,
                   validator: (user) {
                     if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงานขาย';
                     return null;
@@ -53,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                   obscureText: _hideText,
-                  maxHeight: double.infinity,
+                  height: 15,
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideText = !_hideText),
                     icon: FaIcon(
@@ -65,14 +69,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 40),
                 MaterialButton(
-                  height: 70,
+                  height: 60,
                   minWidth: double.infinity,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35),
                     side: const BorderSide(color: Colors.white),
                   ),
                   onPressed: () => Get.to(const Menu()),
-                  child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 28),
+                  child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [

@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
       title: 'TMS ช่วยขาย true',
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),
-      builder: EasyLoading.init(
-        builder: (context, child) => ResponsiveWrapper.builder(
-          child,
+      builder: EasyLoading.init(builder: (context, widget) {
+        return ResponsiveWrapper.builder(
+          widget,
           maxWidth: 1200,
           minWidth: 480,
           defaultScale: true,
@@ -56,13 +56,13 @@ class MyApp extends StatelessWidget {
             const ResponsiveBreakpoint.autoScale(800, name: TABLET),
             const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
           ],
-        ),
-      ),
+        );
+      }),
       theme: ThemeData(
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Kanda',
-        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 28, fontFamily: 'Kanda')),
+        fontFamily: 'Kanit',
+        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 28, fontFamily: 'Kanit')),
         textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 20), button: TextStyle(fontSize: 24)),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
@@ -85,5 +85,23 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ScrollBehaviorModified extends ScrollBehavior {
+  const ScrollBehaviorModified();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    switch (getPlatform(context)) {
+      case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
+      case TargetPlatform.android:
+        return const BouncingScrollPhysics();
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        return const ClampingScrollPhysics();
+    }
   }
 }

@@ -6,7 +6,7 @@ Widget formField({
   Widget? suffixIcon,
   bool obscureText = false,
   String? Function(String?)? validator,
-  double maxHeight = 40,
+  double height = 10,
   void Function()? onTap,
   bool readOnly = false,
 }) {
@@ -21,8 +21,7 @@ Widget formField({
       hintText: hintText,
       hintStyle: const TextStyle(fontSize: 18),
       suffixIcon: suffixIcon,
-      constraints: BoxConstraints(maxHeight: maxHeight),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: height),
     ),
   );
 }

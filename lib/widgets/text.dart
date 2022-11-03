@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget text({
   required String text,
   Color? color,
-  double fontSize = 20,
+  double fontSize = 16,
   TextDecoration? decoration,
   bool fontBold = false,
   TextAlign? textAlign,

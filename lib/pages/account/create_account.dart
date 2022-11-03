@@ -61,7 +61,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget checkBoxShop(int index) {
     return SizedBox(
-      width: index != 4 ? 160 : null,
+      width: index != 4 ? (Get.width / 2) : null,
       child: Row(children: [
         Checkbox(
           value: selectShop[index],
@@ -73,7 +73,7 @@ class _CreateAccountState extends State<CreateAccount> {
             });
           },
         ),
-        Text(nameShop[index]),
+        text(text: nameShop[index]),
       ]),
     );
   }
@@ -82,7 +82,7 @@ class _CreateAccountState extends State<CreateAccount> {
     List<String> data = [];
 
     for (var i = start; i <= end; i++) {
-      data.add(i.toString());
+      data.insert(0, i.toString());
     }
 
     return data;
@@ -105,11 +105,11 @@ class _CreateAccountState extends State<CreateAccount> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
                 text(text: 'รหัสพนักงานขาย'),
-                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
+                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingOnly(bottom: 10),
                 text(text: 'ชื่อ'),
-                formField(controller: _firstName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                formField(controller: _firstName, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 text(text: 'นามสกุล'),
-                formField(controller: _lastName, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                formField(controller: _lastName, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 text(text: 'วันเดือนปีเกิด'),
                 Row(children: [
                   dropdown(
@@ -135,11 +135,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     selectedValue: selectedYear,
                     onChanged: (year) => setState(() => selectedYear = year as String),
                   ),
-                ]).paddingSymmetric(vertical: 10),
+                ]).paddingOnly(bottom: 10),
                 text(text: 'เบอร์มือถือ'),
-                formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 text(text: 'อีเมล'),
-                formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                formField(controller: _email, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 text(text: 'ตำแหน่งงาน'),
                 Row(children: [
                   dropdown(
@@ -148,15 +148,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     selectedValue: selectedJob,
                     onChanged: (job) => setState(() => selectedJob = job as String),
                   ),
-                ]).paddingSymmetric(vertical: 10),
+                ]).paddingOnly(bottom: 10),
                 text(text: 'รหัสสาขา'),
-                formField(
-                  controller: _email,
-                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
-                  suffixIcon: const Icon(Icons.search),
-                ).paddingSymmetric(vertical: 10),
+                formField(controller: _email, hintText: 'กรุณาค้นหาด้วยรหัสสาขา', suffixIcon: const Icon(Icons.search)).paddingOnly(bottom: 10),
                 text(text: 'สาขาปฏิบัติงาน'),
-                formField(controller: _email, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
+                formField(controller: _email, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
                     checkColor: Colors.white,
@@ -171,7 +167,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     child: RichText(
                       text: const TextSpan(
                           text: 'ยอมรับเงื่อนไข ',
-                          style: TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Kanda'),
+                          style: TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
                           children: [
                             TextSpan(
                               text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการครั้งนี้',
