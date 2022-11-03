@@ -21,7 +21,7 @@ Widget formField({
       hintText: hintText,
       hintStyle: const TextStyle(fontSize: 18),
       suffixIcon: suffixIcon,
-      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: height),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
     ),
   );
 }

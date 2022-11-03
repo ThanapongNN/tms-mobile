@@ -59,10 +59,23 @@ class MyApp extends StatelessWidget {
         );
       }),
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: const MaterialColor(0xFFD4364E, <int, Color>{
+            50: Color(0xFFD4364E),
+            100: Color(0xFFD4364E),
+            200: Color(0xFFD4364E),
+            300: Color(0xFFD4364E),
+            400: Color(0xFFD4364E),
+            500: Color(0xFFD4364E),
+            600: Color(0xFFD4364E),
+            700: Color(0xFFD4364E),
+            800: Color(0xFFD4364E),
+            900: Color(0xFFD4364E),
+          }),
+        ).copyWith(secondary: Colors.white),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Kanit',
-        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 28, fontFamily: 'Kanit')),
+        appBarTheme: const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 24, fontFamily: 'Kanit')),
         textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 20), button: TextStyle(fontSize: 24)),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(

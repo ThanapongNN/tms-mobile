@@ -24,8 +24,8 @@ class _CreateAccountState extends State<CreateAccount> {
   final _email = TextEditingController();
 
   bool accept = false;
-  final List<String> nameShop = ['7-11', 'Lotus HDE', 'Lotus Go Fresh', 'Lotus Talad', 'CP Frash Mart'];
-  List<bool> selectShop = [false, false, false, false, false];
+  final List<String> nameShop = ['7-11', 'Lotus HDE', 'Lotus Go Fresh', 'Lotus Talad'];
+  List<bool> selectShop = [false, false, false, false];
 
   List<String> itemsDays = [], itemsYears = [];
   final List<String> itemsMonths = [
@@ -42,13 +42,7 @@ class _CreateAccountState extends State<CreateAccount> {
     'พฤศจิกายน',
     'ธันวาคม',
   ];
-  final List<String> itemsJobs = [
-    'ผู้จัดการ',
-    'รองผู้จัดการ',
-    'หัวหน้า',
-    'รองหัวหน้า',
-    'เลขา',
-  ];
+  final List<String> itemsJobs = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
 
   String? selectedDay, selectedMonth, selectedYear, selectedJob;
 
@@ -61,7 +55,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget checkBoxShop(int index) {
     return SizedBox(
-      width: index != 4 ? (Get.width / 2) : null,
+      width: (Get.width / 2),
       child: Row(children: [
         Checkbox(
           value: selectShop[index],
