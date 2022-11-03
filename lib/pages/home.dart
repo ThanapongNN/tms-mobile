@@ -22,7 +22,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('ช่วยขาย true')),
+        title: const Text('ช่วยขาย true'),
+        centerTitle: true,
         actions: [IconButton(icon: const Icon(Icons.notifications), onPressed: () {})],
       ),
       onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,

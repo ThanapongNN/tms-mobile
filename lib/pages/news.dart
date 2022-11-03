@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tms/widgets/text.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -11,8 +10,14 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: text(text: 'ข่าวสาร'),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const SizedBox(),
+        title: const Text('ข่าวสารและแคมเปญ'),
+        centerTitle: true,
+        actions: [IconButton(icon: const Icon(Icons.notifications), onPressed: () {})],
+      ),
+      body: Column(children: const []),
     );
   }
 }

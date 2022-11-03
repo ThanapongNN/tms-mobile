@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Kanda',
-        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 24, fontFamily: 'Kanda')),
+        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 28, fontFamily: 'Kanda')),
         textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 20), button: TextStyle(fontSize: 24)),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
