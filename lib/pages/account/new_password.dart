@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
@@ -21,6 +23,12 @@ class _NewPasswordState extends State<NewPassword> {
   final _confirmPassword = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _saleID.text = '9989979708709989';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.titleAppbar)),
@@ -29,17 +37,19 @@ class _NewPasswordState extends State<NewPassword> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(child: text(text: 'กำหนดรหัสผ่าน', fontSize: 24).paddingSymmetric(vertical: 20)),
-            text(text: 'รหัสพนักงานขาย'),
-            formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingSymmetric(vertical: 10),
-            text(text: 'รหัสผ่าน'),
-            formField(controller: _password, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-            text(text: 'ยืนยันรหัสผ่าน'),
-            formField(controller: _confirmPassword, hintText: 'กรุณากรอก').paddingSymmetric(vertical: 10),
-            text(text: 'กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วยตัวเลขและตัวอักษร', color: ThemeColor.primaryColor, fontSize: 18)
-                .paddingSymmetric(vertical: 10),
+            text(text: 'รหัสพนักงานขาย', fontSize: 18),
+            formField(disable: true, controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingOnly(bottom: 10),
+            text(text: 'รหัสผ่าน', fontSize: 18),
+            formField(controller: _password, hintText: 'กรุณากรอกรหัสผ่าน').paddingOnly(bottom: 10),
+            text(text: 'ยืนยันรหัสผ่าน', fontSize: 18),
+            formField(controller: _confirmPassword, hintText: 'กรุณากรอกยืนยันรหัสผ่าน').paddingOnly(bottom: 10),
+            text(
+              text: 'กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วยตัวเลขและตัวอักษร',
+              color: ThemeColor.primaryColor,
+            ).paddingOnly(bottom: 10),
             button(
               text: 'ยืนยัน',
-              icon: Icons.check,
+              icon: FeatherIcons.checkCircle,
               onPressed: () => Get.to(
                 AccountSuccess(
                     titleAppbar: widget.titleAppbar,
@@ -50,7 +60,7 @@ class _NewPasswordState extends State<NewPassword> {
               ),
             ),
             const SizedBox(height: 10),
-            button(text: 'ยกเลิก', icon: Icons.close, outline: true),
+            button(text: 'ยกเลิก', icon: FeatherIcons.x, outline: true),
           ],
         ).paddingSymmetric(horizontal: 60),
       ),

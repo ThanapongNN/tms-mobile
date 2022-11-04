@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/route_manager.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
@@ -60,10 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                   height: 15,
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideText = !_hideText),
-                    icon: FaIcon(
-                      _hideText ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.solidEye,
+                    icon: Icon(
+                      _hideText ? Ionicons.eye_off_outline : Ionicons.eye,
                       color: Colors.black,
-                      size: 20,
                     ),
                   ),
                 ),
@@ -81,11 +82,19 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   GestureDetector(
-                    onTap: () => Get.to(const ForgetPassword()),
+                    onTap: () async {
+                      await EasyLoading.show();
+                      Get.to(const ForgetPassword());
+                      await EasyLoading.dismiss();
+                    },
                     child: text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(
-                    onTap: () => Get.to(const CreateAccount()),
+                    onTap: () async {
+                      await EasyLoading.show();
+                      Get.to(const CreateAccount());
+                      await EasyLoading.dismiss();
+                    },
                     child: text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                 ])

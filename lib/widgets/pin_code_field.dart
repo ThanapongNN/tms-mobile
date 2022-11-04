@@ -35,7 +35,7 @@ Widget pinCodeField({
     ),
     cursorColor: Colors.black,
     animationDuration: const Duration(milliseconds: 300),
-    textStyle: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
     backgroundColor: Colors.white,
     enableActiveFill: true,
     errorAnimationController: errorAnimationController,

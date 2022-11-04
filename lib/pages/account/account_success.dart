@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/login.dart';
@@ -14,13 +15,13 @@ class AccountSuccess extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(titleAppbar)),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Image.asset('assets/images/create_success.jpg', scale: 2),
-        FittedBox(child: text(text: titleBody, fontSize: 24).paddingSymmetric(vertical: 20)),
+        Image.asset('assets/images/check_circle.png', scale: 2),
+        text(text: titleBody, fontSize: 24, textAlign: TextAlign.center).paddingAll(40),
         button(
           text: 'เข้าสู่ระบบ',
-          icon: Icons.turn_right,
+          icon: FeatherIcons.cornerDownRight,
           onPressed: () => Get.offAll(const LoginPage()),
-        ).paddingSymmetric(horizontal: 20),
+        ).paddingSymmetric(horizontal: 40),
       ]).paddingSymmetric(horizontal: 20),
     );
   }

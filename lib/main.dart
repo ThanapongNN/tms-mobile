@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Kanit',
         appBarTheme: const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 24, fontFamily: 'Kanit')),
-        textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 20), button: TextStyle(fontSize: 24)),
+        textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 16), button: TextStyle(fontSize: 20)),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),

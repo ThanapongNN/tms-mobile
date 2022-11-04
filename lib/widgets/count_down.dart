@@ -22,8 +22,8 @@ Widget countdown({void Function()? onEnd, required DateTime datetime}) {
             text: 'รหัสยืนยันการใช้งาน จะหมดอายุใน ',
             style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
             children: [
-              TextSpan(text: time, style: const TextStyle(color: ThemeColor.primaryColor)),
-              const TextSpan(text: ' นาที หลังทำการขอรหัส หากไม่ได้รับรหัสผ่าน กรุณากดขอรหัสผ่านใหม่อีกครั้ง')
+              TextSpan(text: time, style: const TextStyle(color: ThemeColor.primaryColor, fontWeight: FontWeight.bold)),
+              const TextSpan(text: ' นาที\nหลังทำการขอรหัส หากไม่ได้รับรหัสผ่าน\nกรุณากดขอรหัสผ่านใหม่อีกครั้ง')
             ],
           ),
         ),

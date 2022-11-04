@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
@@ -90,6 +93,7 @@ class _CreateAccountState extends State<CreateAccount> {
       child: Scaffold(
         appBar: AppBar(title: const Text('สร้างบัญชีใหม่')),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,
@@ -99,13 +103,13 @@ class _CreateAccountState extends State<CreateAccount> {
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
-                text(text: 'รหัสพนักงานขาย'),
+                text(text: 'รหัสพนักงานขาย', fontSize: 18),
                 formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingOnly(bottom: 10),
-                text(text: 'ชื่อ'),
+                text(text: 'ชื่อ', fontSize: 18),
                 formField(controller: _firstName, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
-                text(text: 'นามสกุล'),
+                text(text: 'นามสกุล', fontSize: 18),
                 formField(controller: _lastName, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
-                text(text: 'วันเดือนปีเกิด'),
+                text(text: 'วันเดือนปีเกิด', fontSize: 18),
                 Row(children: [
                   dropdown(
                     flex: 2,
@@ -131,11 +135,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     onChanged: (year) => setState(() => selectedYear = year as String),
                   ),
                 ]).paddingOnly(bottom: 10),
-                text(text: 'เบอร์มือถือ'),
+                text(text: 'เบอร์มือถือ', fontSize: 18),
                 formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
-                text(text: 'อีเมล'),
+                text(text: 'อีเมล', fontSize: 18),
                 formField(controller: _email, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
-                text(text: 'ตำแหน่งงาน'),
+                text(text: 'ตำแหน่งงาน', fontSize: 18),
                 Row(children: [
                   dropdown(
                     hint: 'กรุณาเลือกตำแหน่งงาน',
@@ -144,9 +148,9 @@ class _CreateAccountState extends State<CreateAccount> {
                     onChanged: (job) => setState(() => selectedJob = job as String),
                   ),
                 ]).paddingOnly(bottom: 10),
-                text(text: 'รหัสสาขา'),
-                formField(controller: _email, hintText: 'กรุณาค้นหาด้วยรหัสสาขา', suffixIcon: const Icon(Icons.search)).paddingOnly(bottom: 10),
-                text(text: 'สาขาปฏิบัติงาน'),
+                text(text: 'รหัสสาขา', fontSize: 18),
+                formField(controller: _email, hintText: 'กรุณาค้นหาด้วยรหัสสาขา', suffixIcon: const Icon(Ionicons.search)).paddingOnly(bottom: 10),
+                text(text: 'สาขาปฏิบัติงาน', fontSize: 18),
                 formField(controller: _email, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
@@ -160,29 +164,31 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                   Flexible(
                     child: RichText(
-                      text: const TextSpan(
-                          text: 'ยอมรับเงื่อนไข ',
-                          style: TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
-                          children: [
-                            TextSpan(
-                              text: 'ผู้จัดการร้านร่วมของผู้ให้บริการผ่านการจัดการครั้งนี้',
-                              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
-                            )
-                          ]),
+                      text: TextSpan(
+                        text: 'ยอมรับเงื่อนไข ',
+                        style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
+                        children: [
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()..onTap = () => Get.to(const AcceptTerms()),
+                            text: 'ข้อตกลงร่วมใช้และเข้าถึงข้อมูลของผู้ใช้บริการผ่านแอฟพลิเคชั้นนี้',
+                            style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ]),
                 const SizedBox(height: 20),
                 button(
                   text: 'สร้างบัญชี',
-                  icon: Icons.add,
+                  icon: Ionicons.add,
                   onPressed: () => Get.to(
                     const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
                     transition: Transition.rightToLeft,
                   ),
                 ),
                 const SizedBox(height: 10),
-                button(text: 'ยกเลิก', icon: Icons.close, outline: true),
+                button(text: 'ยกเลิก', icon: Icons.close_outlined, outline: true),
               ]).paddingSymmetric(horizontal: 40)
             ]),
           ),

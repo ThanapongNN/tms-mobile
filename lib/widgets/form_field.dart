@@ -9,16 +9,18 @@ Widget formField({
   double height = 10,
   void Function()? onTap,
   bool readOnly = false,
+  bool disable = false,
 }) {
   return TextFormField(
     controller: controller,
     obscureText: obscureText,
     validator: validator,
-    readOnly: readOnly,
+    readOnly: disable ? disable : readOnly,
     onTap: onTap,
     style: const TextStyle(fontSize: 18),
     decoration: InputDecoration(
       hintText: hintText,
+      fillColor: disable ? Colors.grey[200] : Colors.white,
       hintStyle: const TextStyle(fontSize: 18),
       suffixIcon: suffixIcon,
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
