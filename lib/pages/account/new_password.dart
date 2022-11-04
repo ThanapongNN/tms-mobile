@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class NewPassword extends StatefulWidget {
@@ -50,8 +50,8 @@ class _NewPasswordState extends State<NewPassword> {
             button(
               text: 'ยืนยัน',
               icon: FeatherIcons.checkCircle,
-              onPressed: () => Get.to(
-                AccountSuccess(
+              onPressed: () => navigatorTo(
+                () => AccountSuccess(
                     titleAppbar: widget.titleAppbar,
                     titleBody: (widget.titleAppbar.endsWith('ใหม่'))
                         ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'

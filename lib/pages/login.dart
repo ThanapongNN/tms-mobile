@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/route_manager.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -76,25 +75,17 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(35),
                     side: const BorderSide(color: Colors.white),
                   ),
-                  onPressed: () => Get.to(const Menu()),
+                  onPressed: () => navigatorOffAll(() => const Menu()),
                   child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   GestureDetector(
-                    onTap: () async {
-                      await EasyLoading.show();
-                      Get.to(const ForgetPassword());
-                      await EasyLoading.dismiss();
-                    },
+                    onTap: () => navigatorTo(() => const ForgetPassword()),
                     child: text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      await EasyLoading.show();
-                      Get.to(const CreateAccount());
-                      await EasyLoading.dismiss();
-                    },
+                    onTap: () => navigatorTo(() => const CreateAccount()),
                     child: text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                 ])

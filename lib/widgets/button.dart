@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/widgets/navigator.dart';
 
 Widget button({
   void Function()? onPressed,
@@ -17,7 +18,7 @@ Widget button({
       borderRadius: BorderRadius.circular(25),
       side: BorderSide(color: outline ? colorOutline ?? Colors.grey : Colors.transparent),
     ),
-    onPressed: onPressed ?? () => Get.back(),
+    onPressed: onPressed ?? () => navigatorBack(),
     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Icon(icon, color: outline ? colorOutline ?? Colors.black : Colors.white, size: 32),
       const SizedBox(width: 5),

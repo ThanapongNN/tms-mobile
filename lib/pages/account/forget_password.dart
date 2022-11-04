@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -64,8 +65,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 button(
                   text: 'ถัดไป',
                   icon: Ionicons.arrow_forward_outline,
-                  onPressed: () => Get.to(
-                    const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
+                  onPressed: () => navigatorTo(
+                    () => const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
                     transition: Transition.rightToLeft,
                   ),
                 ),

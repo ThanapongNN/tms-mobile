@@ -4,6 +4,7 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/widgets/button.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class AccountSuccess extends StatelessWidget {
@@ -20,7 +21,7 @@ class AccountSuccess extends StatelessWidget {
         button(
           text: 'เข้าสู่ระบบ',
           icon: FeatherIcons.cornerDownRight,
-          onPressed: () => Get.offAll(const LoginPage()),
+          onPressed: () => navigatorOffAll(() => const LoginPage()),
         ).paddingSymmetric(horizontal: 40),
       ]).paddingSymmetric(horizontal: 20),
     );

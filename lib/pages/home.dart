@@ -8,6 +8,7 @@ import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/list_sales.dart';
+import 'package:tms/widgets/navigator.dart';
 
 import 'package:tms/widgets/text.dart';
 
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
             text: 'ออกจากระบบ',
             outline: true,
             colorOutline: ThemeColor.primaryColor,
-            onPressed: () => Get.offAll(const LoginPage()),
+            onPressed: () => navigatorOffAll(() => const LoginPage()),
           ).paddingSymmetric(horizontal: 40),
           text(text: 'v ${Store.version.value}', color: Colors.grey).paddingSymmetric(vertical: 10)
         ]),

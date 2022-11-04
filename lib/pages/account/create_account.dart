@@ -9,6 +9,7 @@ import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -169,7 +170,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
                         children: [
                           TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap = () => Get.to(const AcceptTerms()),
+                            recognizer: TapGestureRecognizer()..onTap = () => navigatorTo(() => const AcceptTerms()),
                             text: 'ข้อตกลงร่วมใช้และเข้าถึงข้อมูลของผู้ใช้บริการผ่านแอฟพลิเคชั้นนี้',
                             style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
                           )
@@ -182,8 +183,8 @@ class _CreateAccountState extends State<CreateAccount> {
                 button(
                   text: 'สร้างบัญชี',
                   icon: Ionicons.add,
-                  onPressed: () => Get.to(
-                    const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                  onPressed: () => navigatorTo(
+                    () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
                     transition: Transition.rightToLeft,
                   ),
                 ),
