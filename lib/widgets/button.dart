@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/navigator.dart';
 
