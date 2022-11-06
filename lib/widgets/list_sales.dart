@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:get/get.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/text.dart';
 import 'package:expandable/expandable.dart';
 
 Widget listSales({
-  required bool phone,
+  required String icon,
   required String title,
   required String content,
 }) {
@@ -18,7 +19,7 @@ Widget listSales({
         useInkWell: false,
       ),
       header: ListTile(
-        leading: SvgPicture.asset((phone) ? 'assets/images/phone with sim.svg' : 'assets/images/Sim.svg'),
+        leading: SvgPicture.asset(icon),
         title: text(text: title, fontSize: 24),
         trailing: text(text: content, fontSize: 24),
       ),
