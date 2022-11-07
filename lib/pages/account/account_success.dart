@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:get/route_manager.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/navigator.dart';

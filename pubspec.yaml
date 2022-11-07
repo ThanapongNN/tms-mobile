@@ -20,9 +20,9 @@ dependencies:
   firebase_messaging: ^14.0.3
   flutter_easyloading: ^3.0.5
   flutter_feather_icons: ^2.0.0+1
-  flutter_launcher_icons: ^0.10.0
+  # flutter_launcher_icons: ^0.10.0
   flutter_local_notifications: ^12.0.3
-  flutter_native_splash: ^2.2.3+1
+  # flutter_native_splash: ^2.2.5
   flutter_svg: ^1.0.3
   get: ^4.6.5
   http: ^0.13.5
@@ -62,33 +62,28 @@ flutter:
       fonts:
         - asset: fonts/Kanit-Regular.ttf
 
-flutter_icons:
-  # flutter pub run flutter_launcher_icons:main
+# flutter_icons:
+#   # flutter pub run flutter_launcher_icons:main
 
-  # android: "launcher_icon"
-  ios: true
-  image_path: "assets/images/icon.jpg"
+#   # android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/images/icon.jpg"
 
-flutter_native_splash:
-  # flutter pub run flutter_native_splash:create
-  # flutter pub run flutter_native_splash:remove
+# flutter_native_splash:
+#   # flutter pub run flutter_native_splash:create
+#   # flutter pub run flutter_native_splash:remove
 
-  color: "#ffffff"
-  image: assets/images/splash.png
+#   color: "#ffffff"
+#   image: assets/images/splash.png
 
-  android12: true
-  android_12:
-    color: "#ffffff"
-    image: assets/images/icon.png
-
-  # android_gravity can be one of the following Android Gravity (see
-  # https://developer.android.com/reference/android/view/Gravity): bottom, center,
-  # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
-  # fill_vertical, left, right, start, or top.
-  android_gravity: fill
-  #
-  # ios_content_mode can be one of the following iOS UIView.ContentMode (see
-  # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
-  # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
-  # bottomLeft, or bottomRight.
-  ios_content_mode: scaleAspectFit
+#   # android_gravity can be one of the following Android Gravity (see
+#   # https://developer.android.com/reference/android/view/Gravity): bottom, center,
+#   # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
+#   # fill_vertical, left, right, start, or top.
+#   android_gravity: fill|clip_horizontal|clip_vertical
+#   #
+#   # ios_content_mode can be one of the following iOS UIView.ContentMode (see
+#   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
+#   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
+#   # bottomLeft, or bottomRight.
+#   ios_content_mode: scaleAspectFit

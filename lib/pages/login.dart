@@ -44,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _user,
                   hintText: 'รหัสพนักงานขาย',
                   height: 15,
+                  textInputAction: TextInputAction.next,
                   validator: (user) {
                     if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงานขาย';
                     return null;

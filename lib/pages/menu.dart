@@ -26,20 +26,34 @@ class _MenuState extends State<Menu> {
             ? BottomNavigationBar(
                 currentIndex: Store.currentIndex.value,
                 type: BottomNavigationBarType.fixed,
-                iconSize: 32,
                 selectedFontSize: 16,
                 unselectedFontSize: 14,
                 backgroundColor: Colors.white,
                 items: [
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset('assets/icons/House.svg', color: (Store.currentIndex.value == 0) ? ThemeColor.primaryColor : null),
-                      label: 'หน้าหลัก'),
+                    icon: SvgPicture.asset(
+                      'assets/icons/House.svg',
+                      width: 24,
+                      color: (Store.currentIndex.value == 0) ? ThemeColor.primaryColor : null,
+                    ),
+                    label: 'หน้าหลัก',
+                  ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset('assets/icons/Graph up.svg', color: (Store.currentIndex.value == 1) ? ThemeColor.primaryColor : null),
-                      label: 'ยอดขาย'),
+                    icon: SvgPicture.asset(
+                      'assets/icons/Graph up.svg',
+                      width: 24,
+                      color: (Store.currentIndex.value == 1) ? ThemeColor.primaryColor : null,
+                    ),
+                    label: 'ยอดขาย',
+                  ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset('assets/icons/megaphone.svg', color: (Store.currentIndex.value == 2) ? ThemeColor.primaryColor : null),
-                      label: 'ข่าวสาร'),
+                    icon: SvgPicture.asset(
+                      'assets/icons/megaphone.svg',
+                      width: 24,
+                      color: (Store.currentIndex.value == 2) ? ThemeColor.primaryColor : null,
+                    ),
+                    label: 'ข่าวสาร',
+                  ),
                 ],
                 onTap: (index) => Store.currentIndex.value = index,
               )

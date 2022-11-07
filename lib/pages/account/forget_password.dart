@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
+import 'package:tms/utils/constructor.dart';
 import 'package:tms/widgets/button.dart';
+import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/list_string_number.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
@@ -22,7 +24,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   final _saleID = TextEditingController();
   final _job = TextEditingController();
   final _code = TextEditingController();
-  final _birthday = TextEditingController();
+
+  List<String> itemsDays = [], itemsYears = [];
+  String? selectedDay, selectedMonth, selectedYear;
+
+  @override
+  void initState() {
+    super.initState();
+    itemsDays = listStringNumber(start: 1, end: 31);
+    itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,23 +55,31 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 text(text: 'รหัสสาขา'),
                 formField(controller: _job, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
                 text(text: 'วันเดือนปีเกิด'),
-                formField(
-                  controller: _birthday,
-                  hintText: 'กรุณากรอก',
-                  readOnly: true,
-                  suffixIcon: const Icon(Ionicons.calendar_outline),
-                  onTap: () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(DateTime.now().year - 100),
-                      lastDate: DateTime.now(),
-                      locale: Get.locale,
-                    ).then((date) {
-                      if (date != null) _birthday.text = DateFormat('dd/MM/yyyy').format(date);
-                    });
-                  },
-                ).paddingOnly(bottom: 10),
+                Row(children: [
+                  dropdown(
+                    flex: 2,
+                    hint: 'วัน',
+                    items: itemsDays,
+                    selectedValue: selectedDay,
+                    onChanged: (day) => setState(() => selectedDay = day as String),
+                  ),
+                  const SizedBox(width: 10),
+                  dropdown(
+                    flex: 3,
+                    hint: 'เดือน',
+                    items: itemsMonths,
+                    selectedValue: selectedMonth,
+                    onChanged: (month) => setState(() => selectedMonth = month as String),
+                  ),
+                  const SizedBox(width: 10),
+                  dropdown(
+                    flex: 3,
+                    hint: 'ปี',
+                    items: itemsYears,
+                    selectedValue: selectedYear,
+                    onChanged: (year) => setState(() => selectedYear = year as String),
+                  ),
+                ]).paddingOnly(bottom: 10),
                 const SizedBox(height: 20),
                 button(
                   text: 'ถัดไป',

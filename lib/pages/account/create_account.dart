@@ -6,9 +6,11 @@ import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/constructor.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/list_string_number.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
@@ -29,24 +31,21 @@ class _CreateAccountState extends State<CreateAccount> {
   final _email = TextEditingController();
 
   bool accept = false;
-  final List<String> nameShop = ['7-11', 'Lotus HDE', 'Lotus Go Fresh', 'Lotus Talad'];
-  List<bool> selectShop = [false, false, false, false];
+  final List<String> nameShop = [
+    '7-11',
+    // 'Lotus HDE',
+    // 'Lotus Go Fresh',
+    // 'Lotus Talad',
+  ];
+  List<bool> selectShop = [
+    true,
+    // false,
+    // false,
+    // false,
+  ];
 
   List<String> itemsDays = [], itemsYears = [];
-  final List<String> itemsMonths = [
-    'มกราคม',
-    'กุมภาพันธ์',
-    'มีนาคม',
-    'เมษายน',
-    'พฤษภาคม',
-    'มิถุนายน',
-    'กรกฎาคม',
-    'สิงหาคม',
-    'กันยายน',
-    'ตุลาคม',
-    'พฤศจิกายน',
-    'ธันวาคม',
-  ];
+
   final List<String> itemsJobs = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
 
   String? selectedDay, selectedMonth, selectedYear, selectedJob;
@@ -55,7 +54,7 @@ class _CreateAccountState extends State<CreateAccount> {
   void initState() {
     super.initState();
     itemsDays = listStringNumber(start: 1, end: 31);
-    itemsYears = listStringNumber(start: (DateTime.now().year - 100), end: DateTime.now().year);
+    itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
   }
 
   Widget checkBoxShop(int index) {
@@ -75,16 +74,6 @@ class _CreateAccountState extends State<CreateAccount> {
         text(text: nameShop[index]),
       ]),
     );
-  }
-
-  List<String> listStringNumber({required int start, required int end}) {
-    List<String> data = [];
-
-    for (var i = start; i <= end; i++) {
-      data.insert(0, i.toString());
-    }
-
-    return data;
   }
 
   @override

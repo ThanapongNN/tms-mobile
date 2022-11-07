@@ -10,6 +10,7 @@ Widget formField({
   void Function()? onTap,
   bool readOnly = false,
   bool disable = false,
+  TextInputAction? textInputAction,
 }) {
   return TextFormField(
     controller: controller,
@@ -18,6 +19,7 @@ Widget formField({
     readOnly: disable ? disable : readOnly,
     onTap: onTap,
     style: const TextStyle(fontSize: 18),
+    textInputAction: textInputAction,
     decoration: InputDecoration(
       hintText: hintText,
       fillColor: disable ? Colors.grey[200] : Colors.white,
