@@ -12,7 +12,7 @@ class _NewDetailState extends State<NewDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: text(text: 'รายละเอียด')),
+      appBar: AppBar(title: text('รายละเอียด')),
     );
   }
 }

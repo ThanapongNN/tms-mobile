@@ -32,8 +32,8 @@ Widget boxHeadStatus({required String image, required String content, required S
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                text(text: content, fontSize: 20, color: Colors.red),
-                text(text: quantity, fontSize: 20, fontBold: true),
+                text(content, fontSize: 20, color: Colors.red),
+                text(quantity, fontSize: 20, fontBold: true),
               ],
             ),
           ),

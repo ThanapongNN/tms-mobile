@@ -16,7 +16,7 @@ class AccountSuccess extends StatelessWidget {
       appBar: AppBar(title: Text(titleAppbar)),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Image.asset('assets/images/check_circle.png', scale: 2),
-        text(text: titleBody, fontSize: 24, textAlign: TextAlign.center).paddingAll(40),
+        text(titleBody, fontSize: 24, textAlign: TextAlign.center).paddingAll(40),
         button(
           text: 'เข้าสู่ระบบ',
           icon: FeatherIcons.cornerDownRight,

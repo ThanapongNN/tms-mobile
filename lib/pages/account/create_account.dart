@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
@@ -7,6 +8,7 @@ import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
+import 'package:tms/utils/mask_text_formatter.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
@@ -29,9 +31,24 @@ class _CreateAccountState extends State<CreateAccount> {
   final _lastName = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _email = TextEditingController();
+  final _branch = TextEditingController();
+  final _jobBranch = TextEditingController();
+
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   bool accept = false;
+  bool errorAccept = false;
+  bool errorDay = false;
+  bool errorMonth = false;
+  bool errorYear = false;
+  bool errorJob = false;
+
   bool is711 = true;
+
+  Color borderDay = Colors.grey;
+  Color borderMonth = Colors.grey;
+  Color borderYear = Colors.grey;
+  Color borderJob = Colors.grey;
 
   final List<String> nameShop = [
     '7-11',
@@ -39,6 +56,7 @@ class _CreateAccountState extends State<CreateAccount> {
     'Lotus Go Fresh',
     'Lotus Talad',
   ];
+
   List<bool> selectShop = [
     true,
     false,
@@ -73,9 +91,54 @@ class _CreateAccountState extends State<CreateAccount> {
             // });
           },
         ),
-        text(text: nameShop[index]),
+        text(nameShop[index], color: index == 0 ? Colors.black : Colors.grey),
       ]),
     );
+  }
+
+  bool _validateForm() {
+    bool isValid = _formKey.currentState!.validate();
+
+    if (selectedDay == null) {
+      setState(() {
+        borderDay = Colors.red;
+        errorDay = true;
+        isValid = false;
+      });
+    }
+
+    if (selectedMonth == null) {
+      setState(() {
+        borderMonth = Colors.red;
+        errorMonth = true;
+        isValid = false;
+      });
+    }
+
+    if (selectedYear == null) {
+      setState(() {
+        borderYear = Colors.red;
+        errorYear = true;
+        isValid = false;
+      });
+    }
+
+    if (selectedJob == null) {
+      setState(() {
+        borderJob = Colors.red;
+        errorJob = true;
+        isValid = false;
+      });
+    }
+
+    if (!accept) {
+      setState(() {
+        errorAccept = true;
+        isValid = false;
+      });
+    }
+
+    return isValid;
   }
 
   @override
@@ -89,30 +152,67 @@ class _CreateAccountState extends State<CreateAccount> {
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,
+            autovalidateMode: autovalidateMode,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: text(text: 'เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
+              Center(child: text('เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
               Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
-                text(text: 'รหัสพนักงานขาย', fontSize: 18),
+                Center(child: text('ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
                 formField(
                   controller: _saleID,
+                  textLable: 'รหัสพนักงานขาย',
                   hintText: 'กรุณากรอกรหัสพนักงานขาย',
                   maxLength: is711 ? 7 : 8,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [TextInputFormatter.filterInputNumber],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                    }
+                    return null;
+                  },
                 ),
-                text(text: 'ชื่อ', fontSize: 18),
-                formField(controller: _firstName, hintText: 'กรุณากรอก'),
-                text(text: 'นามสกุล', fontSize: 18),
-                formField(controller: _lastName, hintText: 'กรุณากรอก'),
-                text(text: 'วันเดือนปีเกิด', fontSize: 18),
+                formField(
+                  controller: _firstName,
+                  textLable: 'ชื่อ',
+                  hintText: 'กรุณากรอก',
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุชื่อ\n';
+                    }
+                    return null;
+                  },
+                ),
+                formField(
+                  controller: _lastName,
+                  textLable: 'นามสกุล',
+                  hintText: 'กรุณากรอก',
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุนามสกุล\n';
+                    }
+                    return null;
+                  },
+                ),
+                Row(children: [
+                  text('วันเดือนปีเกิด', fontSize: 18),
+                  text('*', fontSize: 20, color: Colors.red),
+                ]),
                 Row(children: [
                   dropdown(
                     flex: 2,
                     hint: 'วัน',
                     items: itemsDays,
                     selectedValue: selectedDay,
-                    onChanged: (day) => setState(() => selectedDay = day as String),
+                    borderColor: borderDay,
+                    onChanged: (day) {
+                      setState(() {
+                        borderDay = Colors.grey;
+                        errorDay = false;
+                        selectedDay = day;
+                      });
+                    },
                   ),
                   const SizedBox(width: 10),
                   dropdown(
@@ -120,7 +220,23 @@ class _CreateAccountState extends State<CreateAccount> {
                     hint: 'เดือน',
                     items: itemsMonths,
                     selectedValue: selectedMonth,
-                    onChanged: (month) => setState(() => selectedMonth = month as String),
+                    borderColor: borderMonth,
+                    onChanged: (month) {
+                      int year = DateTime.now().year;
+                      if (selectedYear != null) year = (int.parse(selectedYear!) - 543);
+
+                      int endDay = DateTime(year, (itemsMonths.indexOf(month!) + 2), 0).day;
+                      if (selectedDay != null) {
+                        if (endDay < int.parse(selectedDay!)) selectedDay = endDay.toString();
+                      }
+                      itemsDays = listStringNumber(start: 1, end: endDay);
+
+                      setState(() {
+                        borderMonth = Colors.grey;
+                        errorMonth = false;
+                        selectedMonth = month;
+                      });
+                    },
                   ),
                   const SizedBox(width: 10),
                   dropdown(
@@ -128,26 +244,118 @@ class _CreateAccountState extends State<CreateAccount> {
                     hint: 'ปี',
                     items: itemsYears,
                     selectedValue: selectedYear,
-                    onChanged: (year) => setState(() => selectedYear = year as String),
+                    borderColor: borderYear,
+                    onChanged: (year) {
+                      if (selectedMonth != null) {
+                        int mouth = (itemsMonths.indexOf(selectedMonth!) + 2);
+                        int endDay = DateTime((int.parse(year!) - 543), mouth, 0).day;
+                        if (selectedDay != null) {
+                          if (endDay < int.parse(selectedDay!)) selectedDay = endDay.toString();
+                        }
+                        itemsDays = listStringNumber(start: 1, end: endDay);
+                      }
+
+                      setState(() {
+                        borderYear = Colors.grey;
+                        errorYear = false;
+                        selectedYear = year;
+                      });
+                    },
                   ),
-                ]).paddingOnly(bottom: 10),
-                text(text: 'เบอร์มือถือ', fontSize: 18),
-                formField(controller: _phoneNumber, hintText: 'กรุณากรอก'),
-                text(text: 'อีเมล', fontSize: 18),
-                formField(controller: _email, hintText: 'กรุณากรอก'),
-                text(text: 'ตำแหน่งงาน', fontSize: 18),
+                ]),
                 Row(children: [
-                  dropdown(
-                    hint: 'กรุณาเลือกตำแหน่งงาน',
-                    items: itemsJobs,
-                    selectedValue: selectedJob,
-                    onChanged: (job) => setState(() => selectedJob = job as String),
+                  Expanded(
+                    flex: 2,
+                    child: errorDay
+                        ? text('กรุณาเลือกวัน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10)
+                        : const SizedBox.shrink(),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 3,
+                    child: errorMonth
+                        ? text('กรุณาเลือกเดือน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10)
+                        : const SizedBox.shrink(),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 3,
+                    child: errorYear
+                        ? text('กรุณาเลือกปี', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10)
+                        : const SizedBox.shrink(),
                   ),
                 ]).paddingOnly(bottom: 10),
-                text(text: 'รหัสสาขา', fontSize: 18),
-                formField(controller: _email, hintText: 'กรุณาค้นหาด้วยรหัสสาขา', suffixIcon: const Icon(Ionicons.search)),
-                text(text: 'สาขาปฏิบัติงาน', fontSize: 18),
-                formField(controller: _email, hintText: 'กรุณากรอก'),
+                formField(
+                  controller: _phoneNumber,
+                  textLable: 'เบอร์มือถือ',
+                  hintText: 'กรุณากรอก',
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [TextInputFormatter.maskTextPhoneNumber],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือ\n';
+                    } else if (value.length != 12) {
+                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก\n';
+                    }
+
+                    return null;
+                  },
+                ),
+                formField(
+                  controller: _email,
+                  textLable: 'อีเมล',
+                  required: false,
+                  hintText: 'กรุณากรอก',
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isNotEmpty) {
+                      if (!EmailValidator.validate(value)) {
+                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
+                      }
+                    }
+                    return null;
+                  },
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(children: [
+                    text('ตำแหน่งงาน', fontSize: 18),
+                    text('*', fontSize: 20, color: Colors.red),
+                  ]),
+                  Row(children: [
+                    dropdown(
+                      hint: 'กรุณาเลือกตำแหน่งงาน',
+                      items: itemsJobs,
+                      selectedValue: selectedJob,
+                      borderColor: borderJob,
+                      onChanged: (job) {
+                        setState(() {
+                          borderJob = Colors.grey;
+                          errorJob = false;
+                          selectedJob = job;
+                        });
+                      },
+                    ),
+                  ]),
+                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
+                ]).paddingOnly(bottom: 10),
+                formField(
+                  controller: _branch,
+                  textLable: 'รหัสสาขา',
+                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  suffixIcon: const Icon(Ionicons.search),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
+                    }
+                    return null;
+                  },
+                ),
+                formField(
+                  controller: _jobBranch,
+                  textLable: 'สาขาปฏิบัติงาน',
+                  required: false,
+                  disable: true,
+                ),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
                     checkColor: Colors.white,
@@ -155,7 +363,10 @@ class _CreateAccountState extends State<CreateAccount> {
                     side: const BorderSide(width: 2, color: Colors.grey),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     value: accept,
-                    onChanged: (bool? v) => setState(() => accept = v!),
+                    onChanged: (bool? v) => setState(() {
+                      accept = v!;
+                      errorAccept = !v;
+                    }),
                     tristate: false,
                   ),
                   Flexible(
@@ -174,14 +385,26 @@ class _CreateAccountState extends State<CreateAccount> {
                     ),
                   )
                 ]),
+                if (errorAccept)
+                  text(
+                    'กรุณากดยอมรับเงื่อนไข ก่อนยืนยันสร้างบัญชี',
+                    color: ThemeColor.primaryColor,
+                    fontSize: 12,
+                  ).paddingOnly(left: 10),
                 const SizedBox(height: 20),
                 button(
                   text: 'สร้างบัญชี',
                   icon: Ionicons.add,
-                  onPressed: () => navigatorTo(
-                    () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
-                    transition: Transition.rightToLeft,
-                  ),
+                  onPressed: () {
+                    setState(() {
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
+                    });
+                    // print(_validateForm());
+                    navigatorTo(
+                      () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                      transition: Transition.rightToLeft,
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: Icons.close_outlined, outline: true),

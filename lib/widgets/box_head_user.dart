@@ -22,10 +22,10 @@ Widget boxHeadUser({
             CircleAvatar(
               backgroundColor: Colors.brown.shade800,
               maxRadius: 20,
-              child: text(text: 'AH'),
+              child: text('AH'),
             ),
             const SizedBox(width: 10),
-            text(text: name, fontSize: 20),
+            text(name, fontSize: 20),
           ],
         ).paddingSymmetric(vertical: 5),
         Container(
@@ -41,9 +41,9 @@ Widget boxHeadUser({
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              text(text: 'ยอดขายรวม', fontSize: 20),
-              text(text: ' $quantity ', fontSize: 22, fontBold: true, color: ThemeColor.primaryColor),
-              text(text: 'รายการ', fontSize: 20),
+              text('ยอดขายรวม', fontSize: 20),
+              text(' $quantity ', fontSize: 22, fontBold: true, color: ThemeColor.primaryColor),
+              text('รายการ', fontSize: 20),
             ],
           ),
         ).paddingSymmetric(vertical: 5),

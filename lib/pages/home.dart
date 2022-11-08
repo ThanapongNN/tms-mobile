@@ -1,18 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/pages/login.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_status.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/box_sales.dart';
-import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/drawer.dart';
-import 'package:tms/widgets/navigator.dart';
 
 import 'package:tms/widgets/text.dart';
 
@@ -37,10 +33,10 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             color: ThemeColor.primaryColor,
             child: Row(children: [
-              CircleAvatar(backgroundColor: Colors.brown.shade800, child: text(text: 'AH')),
+              CircleAvatar(backgroundColor: Colors.brown.shade800, child: text('AH')),
               const SizedBox(width: 5),
-              Expanded(child: text(text: 'คุณทดสอบ ชอบทดลอง', color: Colors.white)),
-              FittedBox(child: text(text: '7-11 สาขาเจริญนคร 27', color: Colors.white))
+              Expanded(child: text('คุณทดสอบ ชอบทดลอง', color: Colors.white)),
+              FittedBox(child: text('7-11 สาขาเจริญนคร 27', color: Colors.white))
             ]),
           ),
         ),
@@ -56,10 +52,10 @@ class _HomeState extends State<Home> {
               color: const Color(0xFF414F5C),
               child: Column(
                 children: [
-                  text(text: 'สรุปยอดขายของคุณ', color: Colors.white),
+                  text('สรุปยอดขายของคุณ', color: Colors.white),
                   const SizedBox(height: 5),
                   text(
-                    text: DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
+                    DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
                     color: Colors.white,
                   ),
                   const SizedBox(height: 15),
@@ -90,7 +86,7 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => Store.currentIndex.value = 1,
-                    child: text(text: 'ดูยอดขายทั้งหมด', color: ThemeColor.primaryColor, decoration: TextDecoration.underline),
+                    child: text('ดูยอดขายทั้งหมด', color: ThemeColor.primaryColor, decoration: TextDecoration.underline),
                   ),
                   const SizedBox(height: 15),
                 ],
@@ -102,7 +98,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text(text: 'ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24),
+                  text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24),
                   SizedBox(
                     height: 300,
                     child: ListView.builder(

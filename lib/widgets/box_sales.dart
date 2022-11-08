@@ -12,8 +12,8 @@ Widget boxSales({
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey)),
     child: ListTile(
       leading: SvgPicture.asset((phone) ? 'assets/images/phone with sim.svg' : 'assets/images/Sim.svg'),
-      title: text(text: title, fontSize: 24),
-      trailing: text(text: content, fontSize: 24),
+      title: text(title, fontSize: 24),
+      trailing: text(content, fontSize: 24),
     ).paddingSymmetric(horizontal: 10),
   ).paddingSymmetric(horizontal: 15, vertical: 10);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget text({
-  required String text,
+Widget text(
+  String text, {
   Color? color,
   double fontSize = 16,
   TextDecoration? decoration,

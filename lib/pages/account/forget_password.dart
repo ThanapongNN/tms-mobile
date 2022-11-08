@@ -46,22 +46,22 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           child: Form(
             key: _formKey,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: text(text: 'กรุณาระบุข้อมูล\nเพื่อกำหนดรหัสผ่านใหม่', fontSize: 24, textAlign: TextAlign.center).paddingAll(20)),
+              Center(child: text('กรุณาระบุข้อมูล\nเพื่อกำหนดรหัสผ่านใหม่', fontSize: 24, textAlign: TextAlign.center).paddingAll(20)),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                text(text: 'รหัสพนักงานขาย'),
-                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingOnly(bottom: 10),
-                text(text: 'ตำแหน่งงาน'),
-                formField(controller: _code, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
-                text(text: 'รหัสสาขา'),
-                formField(controller: _job, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
-                text(text: 'วันเดือนปีเกิด'),
+                text('รหัสพนักงานขาย'),
+                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย'),
+                text('ตำแหน่งงาน'),
+                formField(controller: _code, hintText: 'กรุณากรอก'),
+                text('รหัสสาขา'),
+                formField(controller: _job, hintText: 'กรุณากรอก'),
+                text('วันเดือนปีเกิด'),
                 Row(children: [
                   dropdown(
                     flex: 2,
                     hint: 'วัน',
                     items: itemsDays,
                     selectedValue: selectedDay,
-                    onChanged: (day) => setState(() => selectedDay = day as String),
+                    onChanged: (day) => setState(() => selectedDay = day),
                   ),
                   const SizedBox(width: 10),
                   dropdown(
@@ -69,7 +69,18 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     hint: 'เดือน',
                     items: itemsMonths,
                     selectedValue: selectedMonth,
-                    onChanged: (month) => setState(() => selectedMonth = month as String),
+                    onChanged: (month) {
+                      int year = DateTime.now().year;
+                      if (selectedYear != null) year = (int.parse(selectedYear!) - 543);
+
+                      int endDay = DateTime(year, (itemsMonths.indexOf(month!) + 2), 0).day;
+                      if (selectedDay != null) {
+                        if (endDay < int.parse(selectedDay!)) selectedDay = endDay.toString();
+                      }
+                      itemsDays = listStringNumber(start: 1, end: endDay);
+
+                      setState(() => selectedMonth = month);
+                    },
                   ),
                   const SizedBox(width: 10),
                   dropdown(
@@ -77,7 +88,18 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     hint: 'ปี',
                     items: itemsYears,
                     selectedValue: selectedYear,
-                    onChanged: (year) => setState(() => selectedYear = year as String),
+                    onChanged: (year) {
+                      if (selectedMonth != null) {
+                        int mouth = (itemsMonths.indexOf(selectedMonth!) + 2);
+                        int endDay = DateTime((int.parse(year!) - 543), mouth, 0).day;
+                        if (selectedDay != null) {
+                          if (endDay < int.parse(selectedDay!)) selectedDay = endDay.toString();
+                        }
+                        itemsDays = listStringNumber(start: 1, end: endDay);
+                      }
+
+                      setState(() => selectedYear = year);
+                    },
                   ),
                 ]).paddingOnly(bottom: 10),
                 const SizedBox(height: 20),

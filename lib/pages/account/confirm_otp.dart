@@ -39,14 +39,11 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
         body: SizedBox(
           width: double.infinity,
           child: Column(children: [
-            text(
-              text: widget.titleBody,
-              fontSize: 24,
-            ).paddingOnly(top: 40, bottom: 20),
+            text(widget.titleBody, fontSize: 24).paddingOnly(top: 40, bottom: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(30)),
-              child: text(text: 'Ref: ABCDEFG', color: Colors.white, fontSize: 14),
+              child: text('Ref: ABCDEFG', color: Colors.white, fontSize: 14),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               countdown(datetime: DateTime.now().add(const Duration(minutes: 3))),
@@ -63,7 +60,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               },
             ),
             text(
-              text: 'ขอรหัสอีกครั้ง',
+              'ขอรหัสอีกครั้ง',
               color: ThemeColor.primaryColor,
               decoration: TextDecoration.underline,
             ).paddingAll(20),

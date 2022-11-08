@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
+import 'package:tms/utils/mask_text_formatter.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final _user = TextEditingController();
   final _password = TextEditingController();
 
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   bool _hideText = true;
 
   @override
@@ -39,15 +40,18 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Form(
               key: _formKey,
+              autovalidateMode: autovalidateMode,
               child: Column(children: [
                 Image.asset('assets/images/logo.png', scale: 3),
                 SizedBox(height: Get.height / 4),
                 formField(
                   controller: _user,
                   hintText: 'รหัสพนักงานขาย',
+                  maxLength: 8,
                   height: 15,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                  inputFormatters: [TextInputFormatter.filterInputNumber],
+                  errorTextColor: Colors.white,
                   validator: (user) {
                     if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงานขาย';
                     return null;
@@ -57,8 +61,10 @@ class _LoginPageState extends State<LoginPage> {
                 formField(
                   controller: _password,
                   hintText: 'รหัสผ่าน',
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))],
+                  maxLength: 8,
+                  inputFormatters: [TextInputFormatter.filterInputENxNumber],
                   textInputAction: TextInputAction.done,
+                  errorTextColor: Colors.white,
                   validator: (password) {
                     if (password!.isEmpty) return 'กรุณาใส่รหัสผ่าน';
                     return null;
@@ -82,19 +88,23 @@ class _LoginPageState extends State<LoginPage> {
                     side: const BorderSide(color: Colors.white),
                   ),
                   onPressed: () {
+                    setState(() {
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
+                    });
+                    // print(_formKey.currentState!.validate());
                     navigatorOffAll(() => const Menu());
                   },
-                  child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
+                  child: text('เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
                 ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   GestureDetector(
                     onTap: () => navigatorTo(() => const ForgetPassword()),
-                    child: text(text: 'ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
+                    child: text('ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(
                     onTap: () => navigatorTo(() => const CreateAccount()),
-                    child: text(text: 'สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
+                    child: text('สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                 ])
               ]),

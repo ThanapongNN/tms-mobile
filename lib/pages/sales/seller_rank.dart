@@ -6,6 +6,6 @@ class SellerRank extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: text(text: 'อันดับนักขาย'));
+    return Center(child: text('อันดับนักขาย'));
   }
 }

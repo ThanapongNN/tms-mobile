@@ -20,7 +20,7 @@ Widget boxNews({
             height: 180,
             child: Image.asset(image),
           ),
-          Expanded(child: text(text: content).paddingAll(5))
+          Expanded(child: text(content).paddingAll(5))
         ],
       ),
     ).marginOnly(right: 10),

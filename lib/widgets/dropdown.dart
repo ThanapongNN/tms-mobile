@@ -1,7 +1,14 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-Widget dropdown({required List<String> items, String? selectedValue, void Function(String?)? onChanged, int? flex, String? hint}) {
+Widget dropdown({
+  required List<String> items,
+  void Function(String?)? onChanged,
+  Color borderColor = Colors.grey,
+  int? flex,
+  String? selectedValue,
+  String? hint,
+}) {
   return Expanded(
     flex: flex ?? 1,
     child: DropdownButtonHideUnderline(
@@ -22,7 +29,7 @@ Widget dropdown({required List<String> items, String? selectedValue, void Functi
         buttonPadding: const EdgeInsets.only(left: 10),
         buttonDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: borderColor),
         ),
       ),
     ),

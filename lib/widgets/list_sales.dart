@@ -20,8 +20,8 @@ Widget listSales({
       ),
       header: ListTile(
         leading: SvgPicture.asset(icon),
-        title: text(text: title, fontSize: 24),
-        trailing: text(text: content, fontSize: 24),
+        title: text(title, fontSize: 24),
+        trailing: text(content, fontSize: 24),
       ),
       expanded: Column(
         children: [
@@ -30,8 +30,8 @@ Widget listSales({
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 20),
               child: ListTile(
-                leading: text(text: 'เครื่องและรุ่น', color: Colors.white),
-                trailing: text(text: 'ยอดขาย', color: Colors.white),
+                leading: text('เครื่องและรุ่น', color: Colors.white),
+                trailing: text('ยอดขาย', color: Colors.white),
               ),
             ),
           ),
@@ -54,8 +54,8 @@ Widget listSalesDetail({required String title, required String quantity, require
   return Container(
     margin: const EdgeInsets.only(left: 10, right: 20),
     child: ListTile(
-      leading: text(text: title),
-      trailing: text(text: '$quantity $unit'),
+      leading: text(title),
+      trailing: text('$quantity $unit'),
     ),
   );
 }
