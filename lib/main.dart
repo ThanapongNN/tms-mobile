@@ -11,8 +11,12 @@ import 'package:tms/theme/color.dart';
 import 'package:tms/utils/package_version.dart';
 
 void main() {
-  configLoading();
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
+    configLoading();
+    runApp(const MyApp());
+  });
 }
 
 void configLoading() {
@@ -37,7 +41,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //ปรับให้แอปเป็นแนวตั้ง
     Intl.defaultLocale = 'th'; //ตั้งภาษาแรกตามพื้นที่
     initializeDateFormatting('th', null); //ตั้งปฏิทินแรกตามพื้นที่
     packageVersion(); //ดึงค่าเวอร์ชั่นแอป

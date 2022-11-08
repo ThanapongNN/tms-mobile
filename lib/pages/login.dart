@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final _user = TextEditingController();
   final _password = TextEditingController();
 
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   bool _hideText = true;
 
   @override
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Form(
               key: _formKey,
-              autovalidateMode: autovalidateMode,
+              autovalidateMode: _autovalidateMode,
               child: Column(children: [
                 Image.asset('assets/images/logo.png', scale: 3),
                 SizedBox(height: Get.height / 4),
@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'รหัสพนักงานขาย',
                   maxLength: 8,
                   height: 15,
+                  required: false,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   errorTextColor: Colors.white,
@@ -62,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _password,
                   hintText: 'รหัสผ่าน',
                   maxLength: 8,
+                  required: false,
                   inputFormatters: [TextInputFormatter.filterInputENxNumber],
                   textInputAction: TextInputAction.done,
                   errorTextColor: Colors.white,
@@ -89,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {
                     setState(() {
-                      autovalidateMode = AutovalidateMode.onUserInteraction;
+                      _autovalidateMode = AutovalidateMode.onUserInteraction;
                     });
                     // print(_formKey.currentState!.validate());
                     navigatorOffAll(() => const Menu());

@@ -34,7 +34,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final _branch = TextEditingController();
   final _jobBranch = TextEditingController();
 
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   bool accept = false;
   bool errorAccept = false;
@@ -99,44 +99,38 @@ class _CreateAccountState extends State<CreateAccount> {
   bool _validateForm() {
     bool isValid = _formKey.currentState!.validate();
 
-    if (selectedDay == null) {
-      setState(() {
+    setState(() {
+      _autovalidateMode = AutovalidateMode.onUserInteraction;
+
+      if (selectedDay == null) {
         borderDay = Colors.red;
         errorDay = true;
         isValid = false;
-      });
-    }
+      }
 
-    if (selectedMonth == null) {
-      setState(() {
+      if (selectedMonth == null) {
         borderMonth = Colors.red;
         errorMonth = true;
         isValid = false;
-      });
-    }
+      }
 
-    if (selectedYear == null) {
-      setState(() {
+      if (selectedYear == null) {
         borderYear = Colors.red;
         errorYear = true;
         isValid = false;
-      });
-    }
+      }
 
-    if (selectedJob == null) {
-      setState(() {
+      if (selectedJob == null) {
         borderJob = Colors.red;
         errorJob = true;
         isValid = false;
-      });
-    }
+      }
 
-    if (!accept) {
-      setState(() {
+      if (!accept) {
         errorAccept = true;
         isValid = false;
-      });
-    }
+      }
+    });
 
     return isValid;
   }
@@ -152,7 +146,7 @@ class _CreateAccountState extends State<CreateAccount> {
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,
-            autovalidateMode: autovalidateMode,
+            autovalidateMode: _autovalidateMode,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: text('เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
               Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
@@ -396,9 +390,6 @@ class _CreateAccountState extends State<CreateAccount> {
                   text: 'สร้างบัญชี',
                   icon: Ionicons.add,
                   onPressed: () {
-                    setState(() {
-                      autovalidateMode = AutovalidateMode.onUserInteraction;
-                    });
                     // print(_validateForm());
                     navigatorTo(
                       () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),

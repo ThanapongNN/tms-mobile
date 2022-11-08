@@ -55,6 +55,8 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               hasError: hasError,
               onCompleted: (value) {
                 if (value.length == 6) {
+                  // dialog(content: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่');
+                  // dialog(content: 'รหัส OTP หมดอายุ กรุณาขอรหัส OTP และทำรายการใหม่');
                   navigatorOff(() => NewPassword(titleAppbar: widget.titleAppbar), transition: Transition.rightToLeft);
                 }
               },

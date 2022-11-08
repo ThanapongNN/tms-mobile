@@ -88,3 +88,5 @@ flutter:
 #   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
 #   # bottomLeft, or bottomRight.
 #   ios_content_mode: scaleAspectFit
+
+#   android_screen_orientation: portrait
