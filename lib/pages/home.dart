@@ -98,11 +98,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-<<<<<<< HEAD
-                  text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24),
-=======
-                  text(text: 'ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10),
->>>>>>> 4756ccbf84cd129685a427997cee3cc00c4954bd
+                  text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10),
                   SizedBox(
                     height: 300,
                     child: ListView.builder(

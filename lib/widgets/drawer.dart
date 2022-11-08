@@ -36,35 +36,19 @@ Widget drawer() {
       ),
       ListTile(
         minLeadingWidth: 20,
-<<<<<<< HEAD
-        leading: const Icon(Icons.account_circle),
+        leading: SvgPicture.asset('assets/icons/profile.svg'),
         title: text('ข้อมูลของคุณ'),
       ),
       ListTile(
         minLeadingWidth: 20,
-        leading: const Icon(Icons.sync_lock),
-        title: text('เปลี่ยนรหัสผ่าน'),
-      ),
-      ListTile(
-        minLeadingWidth: 20,
-        leading: const Icon(Icons.settings),
-        title: text('ตั้งค่า'),
-      ),
-=======
-        leading: SvgPicture.asset('assets/icons/profile.svg'),
-        title: text(text: 'ข้อมูลของคุณ'),
-      ),
-      ListTile(
-        minLeadingWidth: 20,
         leading: SvgPicture.asset('assets/icons/ChangePass.svg'),
-        title: text(text: 'เปลี่ยนรหัสผ่าน'),
+        title: text('เปลี่ยนรหัสผ่าน'),
       ),
       // ListTile(
       //   minLeadingWidth: 20,
       //   leading: const Icon(Icons.settings),
-      //   title: text(text: 'ตั้งค่า'),
+      //   title: text('ตั้งค่า'),
       // ),
->>>>>>> 4756ccbf84cd129685a427997cee3cc00c4954bd
       const Spacer(),
       button(
         icon: Icons.exit_to_app,
