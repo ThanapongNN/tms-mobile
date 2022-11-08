@@ -1,18 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/pages/login.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_status.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/box_sales.dart';
-import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/drawer.dart';
-import 'package:tms/widgets/navigator.dart';
 
 import 'package:tms/widgets/text.dart';
 
@@ -102,7 +98,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text(text: 'ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24),
+                  text(text: 'ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10),
                   SizedBox(
                     height: 300,
                     child: ListView.builder(

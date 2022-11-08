@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/pages/login.dart';
 import 'package:tms/pages/sales/sales_summary.dart';
 import 'package:tms/state_management.dart';
-import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_user.dart';
-import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/drawer.dart';
-import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class SalesPage extends StatefulWidget {
