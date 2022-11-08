@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/create_account.dart';
@@ -34,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             image: DecorationImage(image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Form(
               key: _formKey,
@@ -44,7 +46,8 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _user,
                   hintText: 'รหัสพนักงานขาย',
                   height: 15,
-                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
                   validator: (user) {
                     if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงานขาย';
                     return null;
@@ -54,6 +57,8 @@ class _LoginPageState extends State<LoginPage> {
                 formField(
                   controller: _password,
                   hintText: 'รหัสผ่าน',
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))],
+                  textInputAction: TextInputAction.done,
                   validator: (password) {
                     if (password!.isEmpty) return 'กรุณาใส่รหัสผ่าน';
                     return null;
@@ -76,7 +81,9 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(35),
                     side: const BorderSide(color: Colors.white),
                   ),
-                  onPressed: () => navigatorOffAll(() => const Menu()),
+                  onPressed: () {
+                    navigatorOffAll(() => const Menu());
+                  },
                   child: text(text: 'เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
                 ),
                 const SizedBox(height: 20),

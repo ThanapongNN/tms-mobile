@@ -31,17 +31,19 @@ class _CreateAccountState extends State<CreateAccount> {
   final _email = TextEditingController();
 
   bool accept = false;
+  bool is711 = true;
+
   final List<String> nameShop = [
     '7-11',
-    // 'Lotus HDE',
-    // 'Lotus Go Fresh',
-    // 'Lotus Talad',
+    'Lotus HDE',
+    'Lotus Go Fresh',
+    'Lotus Talad',
   ];
   List<bool> selectShop = [
     true,
-    // false,
-    // false,
-    // false,
+    false,
+    false,
+    false,
   ];
 
   List<String> itemsDays = [], itemsYears = [];
@@ -65,10 +67,10 @@ class _CreateAccountState extends State<CreateAccount> {
           value: selectShop[index],
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           onChanged: (value) {
-            setState(() {
-              selectShop = [false, false, false, false, false];
-              selectShop[index] = value!;
-            });
+            // setState(() {
+            //   selectShop = [false, false, false, false, false];
+            //   selectShop[index] = value!;
+            // });
           },
         ),
         text(text: nameShop[index]),
@@ -94,11 +96,15 @@ class _CreateAccountState extends State<CreateAccount> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Center(child: text(text: 'ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
                 text(text: 'รหัสพนักงานขาย', fontSize: 18),
-                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย').paddingOnly(bottom: 10),
+                formField(
+                  controller: _saleID,
+                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  maxLength: is711 ? 7 : 8,
+                ),
                 text(text: 'ชื่อ', fontSize: 18),
-                formField(controller: _firstName, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
+                formField(controller: _firstName, hintText: 'กรุณากรอก'),
                 text(text: 'นามสกุล', fontSize: 18),
-                formField(controller: _lastName, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
+                formField(controller: _lastName, hintText: 'กรุณากรอก'),
                 text(text: 'วันเดือนปีเกิด', fontSize: 18),
                 Row(children: [
                   dropdown(
@@ -126,9 +132,9 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                 ]).paddingOnly(bottom: 10),
                 text(text: 'เบอร์มือถือ', fontSize: 18),
-                formField(controller: _phoneNumber, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
+                formField(controller: _phoneNumber, hintText: 'กรุณากรอก'),
                 text(text: 'อีเมล', fontSize: 18),
-                formField(controller: _email, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
+                formField(controller: _email, hintText: 'กรุณากรอก'),
                 text(text: 'ตำแหน่งงาน', fontSize: 18),
                 Row(children: [
                   dropdown(
@@ -139,9 +145,9 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                 ]).paddingOnly(bottom: 10),
                 text(text: 'รหัสสาขา', fontSize: 18),
-                formField(controller: _email, hintText: 'กรุณาค้นหาด้วยรหัสสาขา', suffixIcon: const Icon(Ionicons.search)).paddingOnly(bottom: 10),
+                formField(controller: _email, hintText: 'กรุณาค้นหาด้วยรหัสสาขา', suffixIcon: const Icon(Ionicons.search)),
                 text(text: 'สาขาปฏิบัติงาน', fontSize: 18),
-                formField(controller: _email, hintText: 'กรุณากรอก').paddingOnly(bottom: 10),
+                formField(controller: _email, hintText: 'กรุณากรอก'),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
                     checkColor: Colors.white,
