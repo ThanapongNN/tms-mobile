@@ -20,6 +20,7 @@ Widget formField({
   String? Function(String?)? validator,
   TextInputAction textInputAction = TextInputAction.next,
   TextInputType? keyboardType,
+<<<<<<< HEAD
   Widget? suffixIcon,
   void Function(String)? onChanged,
 }) {
@@ -52,5 +53,45 @@ Widget formField({
         validator: validator,
       ),
     ],
+=======
+  List<TextInputFormatter>? inputFormatters,
+  bool radius = false,
+  Widget? prefixIcon,
+}) {
+  return TextFormField(
+    controller: controller,
+    decoration: InputDecoration(
+      prefixIcon: prefixIcon,
+      hintText: hintText,
+      fillColor: disable ? Colors.grey[200] : Colors.white,
+      hintStyle: const TextStyle(fontSize: 18),
+      suffixIcon: suffixIcon,
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
+      border: radius
+          ? const OutlineInputBorder(
+              borderRadius: BorderRadius.all((Radius.circular(50))),
+            )
+          : null,
+      enabledBorder: radius
+          ? const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+            )
+          : null,
+      focusedBorder: radius
+          ? const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+            )
+          : null,
+    ),
+    keyboardType: keyboardType,
+    inputFormatters: inputFormatters,
+    maxLength: maxLength,
+    obscureText: obscureText,
+    onTap: onTap,
+    readOnly: disable ? disable : readOnly,
+    style: const TextStyle(fontSize: 18),
+    textInputAction: textInputAction,
+    validator: validator,
+>>>>>>> 4756ccbf84cd129685a427997cee3cc00c4954bd
   );
 }

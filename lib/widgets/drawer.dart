@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/state_management.dart';
@@ -35,6 +36,7 @@ Widget drawer() {
       ),
       ListTile(
         minLeadingWidth: 20,
+<<<<<<< HEAD
         leading: const Icon(Icons.account_circle),
         title: text('ข้อมูลของคุณ'),
       ),
@@ -48,6 +50,21 @@ Widget drawer() {
         leading: const Icon(Icons.settings),
         title: text('ตั้งค่า'),
       ),
+=======
+        leading: SvgPicture.asset('assets/icons/profile.svg'),
+        title: text(text: 'ข้อมูลของคุณ'),
+      ),
+      ListTile(
+        minLeadingWidth: 20,
+        leading: SvgPicture.asset('assets/icons/ChangePass.svg'),
+        title: text(text: 'เปลี่ยนรหัสผ่าน'),
+      ),
+      // ListTile(
+      //   minLeadingWidth: 20,
+      //   leading: const Icon(Icons.settings),
+      //   title: text(text: 'ตั้งค่า'),
+      // ),
+>>>>>>> 4756ccbf84cd129685a427997cee3cc00c4954bd
       const Spacer(),
       button(
         icon: Icons.exit_to_app,
