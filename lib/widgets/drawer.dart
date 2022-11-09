@@ -26,11 +26,11 @@ Widget drawer() {
               maxRadius: 35,
               child: text('AH'),
             ),
-            const SizedBox(height: 5),
-            GestureDetector(
-              onTap: () {},
-              child: text('แก้ไขรูป', color: Colors.white, fontSize: 16, decoration: TextDecoration.underline),
-            ),
+            // const SizedBox(height: 5),
+            // GestureDetector(
+            //   onTap: () {},
+            //   child: text('แก้ไขรูป', color: Colors.white, fontSize: 16, decoration: TextDecoration.underline),
+            // ),
             const SizedBox(height: 15),
             text('คุณศนันธฉัตร  ธนพัฒน์พิศาล', color: Colors.white),
             text('7-11 สาขาเจริญนคร 27', color: Colors.white, fontSize: 16),
