@@ -5,7 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/theme/color.dart';
-import 'package:tms/utils/mask_text_formatter.dart';
+import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/form_field.dart';
@@ -74,7 +74,7 @@ class _NewPasswordState extends State<NewPassword> {
                   ),
                   validator: (value) {
                     if (!validatePassword(value!)) {
-                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก เป็นตัวเลขและตัวอักษร\n';
+                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
                     }
                     return null;
                   },
@@ -95,9 +95,7 @@ class _NewPasswordState extends State<NewPassword> {
                   ),
                   validator: (value) {
                     if (value! != _password.text) {
-                      return 'ยืนยันรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ';
-                    } else if (!validatePassword(value)) {
-                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก เป็นตัวเลขและตัวอักษร\n';
+                      return 'รหัสผ่านไม่ตรงกัน';
                     }
                     return null;
                   },
@@ -111,7 +109,7 @@ class _NewPasswordState extends State<NewPassword> {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
                     });
                     // print(_formKey.currentState!.validate());
-                    navigatorTo(
+                    navigatorOffAll(
                       () => AccountSuccess(
                         titleAppbar: widget.titleAppbar,
                         titleBody: (widget.titleAppbar.endsWith('ใหม่'))

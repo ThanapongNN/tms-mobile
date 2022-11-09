@@ -3,7 +3,9 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
+import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
@@ -22,17 +24,64 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _saleID = TextEditingController();
-  final _job = TextEditingController();
-  final _code = TextEditingController();
+  final _branch = TextEditingController();
+
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
+  bool errorDay = false;
+  bool errorMonth = false;
+  bool errorYear = false;
+  bool errorJob = false;
+
+  Color borderDay = Colors.grey;
+  Color borderMonth = Colors.grey;
+  Color borderYear = Colors.grey;
+  Color borderJob = Colors.grey;
 
   List<String> itemsDays = [], itemsYears = [];
-  String? selectedDay, selectedMonth, selectedYear;
+  final List<String> itemsJobs = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
+
+  String? selectedDay, selectedMonth, selectedYear, selectedJob;
 
   @override
   void initState() {
     super.initState();
     itemsDays = listStringNumber(start: 1, end: 31);
     itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
+  }
+
+  bool _validateForm() {
+    bool isValid = _formKey.currentState!.validate();
+
+    setState(() {
+      _autovalidateMode = AutovalidateMode.onUserInteraction;
+
+      if (selectedDay == null) {
+        borderDay = Colors.red;
+        errorDay = true;
+        isValid = false;
+      }
+
+      if (selectedMonth == null) {
+        borderMonth = Colors.red;
+        errorMonth = true;
+        isValid = false;
+      }
+
+      if (selectedYear == null) {
+        borderYear = Colors.red;
+        errorYear = true;
+        isValid = false;
+      }
+
+      if (selectedJob == null) {
+        borderJob = Colors.red;
+        errorJob = true;
+        isValid = false;
+      }
+    });
+
+    return isValid;
   }
 
   @override
@@ -45,23 +94,76 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,
+            autovalidateMode: _autovalidateMode,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: text('กรุณาระบุข้อมูล\nเพื่อกำหนดรหัสผ่านใหม่', fontSize: 24, textAlign: TextAlign.center).paddingAll(20)),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                text('รหัสพนักงานขาย'),
-                formField(controller: _saleID, hintText: 'กรุณากรอกรหัสพนักงานขาย'),
-                text('ตำแหน่งงาน'),
-                formField(controller: _code, hintText: 'กรุณากรอก'),
-                text('รหัสสาขา'),
-                formField(controller: _job, hintText: 'กรุณากรอก'),
-                text('วันเดือนปีเกิด'),
+                formField(
+                  controller: _saleID,
+                  textLable: 'รหัสพนักงานขาย',
+                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  maxLength: 8,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [TextInputFormatter.filterInputNumber],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                    }
+                    return null;
+                  },
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(children: [
+                    text('ตำแหน่งงาน', fontSize: 18),
+                    text('*', fontSize: 20, color: Colors.red),
+                  ]),
+                  Row(children: [
+                    dropdown(
+                      hint: 'กรุณาเลือกตำแหน่งงาน',
+                      items: itemsJobs,
+                      selectedValue: selectedJob,
+                      borderColor: borderJob,
+                      onChanged: (job) {
+                        setState(() {
+                          borderJob = Colors.grey;
+                          errorJob = false;
+                          selectedJob = job;
+                        });
+                      },
+                    ),
+                  ]),
+                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
+                ]).paddingOnly(bottom: 10),
+                formField(
+                  controller: _branch,
+                  textLable: 'รหัสสาขา',
+                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  suffixIcon: const Icon(Ionicons.search),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
+                    }
+                    return null;
+                  },
+                ),
+                Row(children: [
+                  text('วันเดือนปีเกิด', fontSize: 18),
+                  text('*', fontSize: 20, color: Colors.red),
+                ]),
                 Row(children: [
                   dropdown(
                     flex: 2,
                     hint: 'วัน',
                     items: itemsDays,
                     selectedValue: selectedDay,
-                    onChanged: (day) => setState(() => selectedDay = day),
+                    borderColor: borderDay,
+                    onChanged: (day) {
+                      setState(() {
+                        borderDay = Colors.grey;
+                        errorDay = false;
+                        selectedDay = day;
+                      });
+                    },
                   ),
                   const SizedBox(width: 10),
                   dropdown(
@@ -69,6 +171,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     hint: 'เดือน',
                     items: itemsMonths,
                     selectedValue: selectedMonth,
+                    borderColor: borderMonth,
                     onChanged: (month) {
                       int year = DateTime.now().year;
                       if (selectedYear != null) year = (int.parse(selectedYear!) - 543);
@@ -79,7 +182,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       }
                       itemsDays = listStringNumber(start: 1, end: endDay);
 
-                      setState(() => selectedMonth = month);
+                      setState(() {
+                        borderMonth = Colors.grey;
+                        errorMonth = false;
+                        selectedMonth = month;
+                      });
                     },
                   ),
                   const SizedBox(width: 10),
@@ -88,6 +195,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     hint: 'ปี',
                     items: itemsYears,
                     selectedValue: selectedYear,
+                    borderColor: borderYear,
                     onChanged: (year) {
                       if (selectedMonth != null) {
                         int mouth = (itemsMonths.indexOf(selectedMonth!) + 2);
@@ -98,18 +206,47 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         itemsDays = listStringNumber(start: 1, end: endDay);
                       }
 
-                      setState(() => selectedYear = year);
+                      setState(() {
+                        borderYear = Colors.grey;
+                        errorYear = false;
+                        selectedYear = year;
+                      });
                     },
+                  ),
+                ]),
+                Row(children: [
+                  Expanded(
+                    flex: 2,
+                    child: errorDay
+                        ? text('กรุณาเลือกวัน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10)
+                        : const SizedBox.shrink(),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 3,
+                    child: errorMonth
+                        ? text('กรุณาเลือกเดือน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10)
+                        : const SizedBox.shrink(),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 3,
+                    child: errorYear
+                        ? text('กรุณาเลือกปี', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10)
+                        : const SizedBox.shrink(),
                   ),
                 ]).paddingOnly(bottom: 10),
                 const SizedBox(height: 20),
                 button(
                   text: 'ถัดไป',
                   icon: Ionicons.arrow_forward_outline,
-                  onPressed: () => navigatorTo(
-                    () => const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
-                    transition: Transition.rightToLeft,
-                  ),
+                  onPressed: () {
+                    // print(_validateForm());
+                    navigatorTo(
+                      () => const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
+                      transition: Transition.rightToLeft,
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: Ionicons.close_outline, outline: true),

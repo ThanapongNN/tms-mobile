@@ -4,7 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
-import 'package:tms/utils/mask_text_formatter.dart';
+import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';

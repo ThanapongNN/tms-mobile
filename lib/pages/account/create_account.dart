@@ -8,7 +8,7 @@ import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
-import 'package:tms/utils/mask_text_formatter.dart';
+import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
