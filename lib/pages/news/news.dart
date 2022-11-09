@@ -37,6 +37,7 @@ class _NewsPageState extends State<NewsPage> {
                 color: const Color(0xFF414F5C),
                 child: Form(
                     child: formField(
+                  showTextLable: false,
                   controller: search,
                   radius: true,
                   prefixIcon: const Icon(Icons.search),

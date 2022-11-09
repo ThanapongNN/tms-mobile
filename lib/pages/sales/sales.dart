@@ -19,7 +19,7 @@ class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ยอดขาย'),
+        title: text('ยอดขาย', fontSize: 20),
         centerTitle: true,
         elevation: 0,
       ),
