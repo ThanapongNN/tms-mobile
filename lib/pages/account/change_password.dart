@@ -12,30 +12,27 @@ import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
-class NewPassword extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   final String titleAppbar;
-  const NewPassword({super.key, required this.titleAppbar});
+  const ChangePassword({super.key, required this.titleAppbar});
 
   @override
-  State<NewPassword> createState() => _NewPasswordState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _NewPasswordState extends State<NewPassword> {
+class _ChangePasswordState extends State<ChangePassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _saleID = TextEditingController();
+  final _oldPassword = TextEditingController();
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
+  bool _hideOldPassword = true;
   bool _hidePassword = true;
   bool _hideConfirmPassword = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _saleID.text = '9989979708709989';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +47,46 @@ class _NewPasswordState extends State<NewPassword> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(child: text('กำหนดรหัสผ่าน', fontSize: 24).paddingSymmetric(vertical: 20)),
+                const SizedBox(height: 25),
                 formField(
-                  disable: true,
                   controller: _saleID,
-                  required: false,
                   textLable: 'รหัสพนักงานขาย',
                   hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  maxLength: 8,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [TextInputFormatter.filterInputNumber],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                    }
+                    return null;
+                  },
+                ),
+                formField(
+                  controller: _oldPassword,
+                  textLable: 'รหัสผ่านเดิม',
+                  hintText: 'กรุณากรอกรหัสผ่านเดิม',
+                  obscureText: _hideOldPassword,
+                  maxLength: 8,
+                  inputFormatters: [TextInputFormatter.filterInputENxNumber],
+                  suffixIcon: IconButton(
+                    onPressed: () => setState(() => _hideOldPassword = !_hideOldPassword),
+                    icon: Icon(
+                      _hideOldPassword ? Ionicons.eye_off_outline : Ionicons.eye,
+                      color: Colors.black,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (!validatePassword(value!)) {
+                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
+                    }
+                    return null;
+                  },
                 ),
                 formField(
                   controller: _password,
-                  textLable: 'รหัสผ่าน',
-                  hintText: 'กรุณากรอกรหัสผ่าน',
+                  textLable: 'รหัสผ่านใหม่',
+                  hintText: 'กรุณากรอกรหัสผ่านใหม่',
                   obscureText: _hidePassword,
                   maxLength: 8,
                   inputFormatters: [TextInputFormatter.filterInputENxNumber],
@@ -81,8 +106,8 @@ class _NewPasswordState extends State<NewPassword> {
                 ),
                 formField(
                   controller: _confirmPassword,
-                  textLable: 'ยืนยันรหัสผ่าน',
-                  hintText: 'กรุณากรอกยืนยันรหัสผ่าน',
+                  textLable: 'ยืนยันรหัสผ่านใหม่',
+                  hintText: 'กรุณากรอกยืนยันรหัสผ่านใหม่',
                   obscureText: _hideConfirmPassword,
                   maxLength: 8,
                   inputFormatters: [TextInputFormatter.filterInputENxNumber],
@@ -95,7 +120,7 @@ class _NewPasswordState extends State<NewPassword> {
                   ),
                   validator: (value) {
                     if (value! != _password.text) {
-                      return 'รหัสผ่านไม่ตรงกัน\n';
+                      return 'รหัสผ่านใหม่ของท่านไม่ตรงกัน\n';
                     }
                     return null;
                   },
@@ -112,7 +137,7 @@ class _NewPasswordState extends State<NewPassword> {
                     navigatorOffAll(
                       () => AccountSuccess(
                         titleAppbar: widget.titleAppbar,
-                        titleBody: (widget.titleAppbar.endsWith('ใหม่'))
+                        titleBody: (widget.titleAppbar.startsWith('สร้าง'))
                             ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'
                             : 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว',
                       ),

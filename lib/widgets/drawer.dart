@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:get/route_manager.dart';
+import 'package:tms/pages/account/change_password.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -29,7 +31,7 @@ Widget drawer() {
               child: text('แก้ไขรูป', color: Colors.white, fontSize: 16, decoration: TextDecoration.underline),
             ),
             const SizedBox(height: 15),
-            text('ศนันธฉัตร  ธนพัฒน์พิศาล', color: Colors.white),
+            text('คุณศนันธฉัตร  ธนพัฒน์พิศาล', color: Colors.white),
             text('7-11 สาขาเจริญนคร 27', color: Colors.white, fontSize: 16),
           ]),
         ),
@@ -43,6 +45,7 @@ Widget drawer() {
         minLeadingWidth: 20,
         leading: SvgPicture.asset('assets/icons/ChangePass.svg'),
         title: text('เปลี่ยนรหัสผ่าน'),
+        onTap: () => navigatorTo(() => const ChangePassword(titleAppbar: 'เปลี่ยนรหัสผ่าน'), transition: Transition.leftToRight),
       ),
       // ListTile(
       //   minLeadingWidth: 20,
