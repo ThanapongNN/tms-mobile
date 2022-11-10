@@ -15,14 +15,14 @@ Widget listTile({
     width: double.infinity,
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey.shade400)),
     child: ListTile(
-      leading: SvgPicture.asset(svgicon, height: 35),
-      title: text(title, color: (changeMark) ? Colors.black : Colors.grey[600]),
-      subtitle: (content != null)
-          ? (subtitle != null)
-              ? subtitle
-              : text(content, fontSize: 18, color: (changeMark) ? Colors.grey[600] : Colors.black)
-          : null,
+      leading: SvgPicture.asset(svgicon, height: 35).paddingOnly(top: (subtitle != null) ? 8 : 0),
+      title: text(title, color: (changeMark) ? Colors.black : Colors.grey[600]).paddingOnly(bottom: (subtitle != null) ? 5 : 0),
+      subtitle: (subtitle != null)
+          ? subtitle
+          : (content != null)
+              ? text(content, fontSize: 18, color: (changeMark) ? Colors.grey[600] : Colors.black)
+              : null,
       trailing: (trailing != null) ? trailing : null,
-    ).paddingSymmetric(vertical: (content != null) ? 0 : 10),
+    ).paddingSymmetric(vertical: (content == null && subtitle == null) ? 10 : 0),
   ).paddingSymmetric(vertical: 10);
 }

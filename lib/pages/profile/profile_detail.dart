@@ -2,6 +2,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tms/pages/account/deactivate_account.dart';
+import 'package:tms/pages/profile/profile_edit.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/listtile.dart';
 import 'package:tms/widgets/navigator.dart';
@@ -50,7 +51,12 @@ class _ProfileDetailState extends State<ProfileDetail> {
           listTile(svgicon: 'assets/icons/Phone.svg', title: 'เบอร์มือถือ', content: '089-980-0909'),
           listTile(svgicon: 'assets/icons/Envelope open.svg', title: 'อีเมล', content: 'Sananthachat@gmail.com'),
           const Spacer(),
-          button(text: 'แก้ไขข้อมูล', icon: BootstrapIcons.pencil, onPressed: () {}),
+          button(
+              text: 'แก้ไขข้อมูล',
+              icon: BootstrapIcons.pencil,
+              onPressed: () {
+                navigatorTo((() => const ProfileEdit()));
+              }),
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
