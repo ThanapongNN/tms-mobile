@@ -1,5 +1,6 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/state_management.dart';
@@ -26,7 +27,7 @@ class _NewsPageState extends State<NewsPage> {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Image.asset('assets/images/head_appbar.png', width: 100),
+          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
           centerTitle: true,
           elevation: 0,
         ),

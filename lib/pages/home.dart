@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tms/pages/news/new_detail.dart';
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Image.asset('assets/images/head_appbar.png', width: 100),
+        title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
                     items: [
                       boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '18'),
                       boxHeadStatus(image: 'assets/images/phone_sim.svg', content: 'ยอดขายเบอร์และมือถือ', quantity: '22'),
-                      boxHeadStatus(image: 'assets/images/TV.svg', content: 'ยอดสมัครเน็ตบ้านและทีวี', quantity: '10'),
+                      boxHeadStatus(image: 'assets/images/tv.svg', content: 'ยอดสมัครเน็ตบ้านและทีวี', quantity: '10'),
                       boxHeadStatus(image: 'assets/images/coin.svg', content: 'ยอดขายเติมเงินเติมเน็ต', quantity: '9'),
                     ],
                   ),

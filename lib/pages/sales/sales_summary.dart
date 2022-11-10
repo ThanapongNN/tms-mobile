@@ -51,10 +51,10 @@ class _SalesSummaryState extends State<SalesSummary> with TickerProviderStateMix
         SingleChildScrollView(
           child: SizedBox(
             child: Column(children: [
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิม  7-11', content: '0 ซิม'),
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิมเติมเงิน', content: '0 ซิม'),
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิมรายเดือน', content: '0 ซิม'),
-              listSales(icon: 'assets/images/phone with sim.svg', title: 'ยอดมือถือ', content: '6 เครื่อง'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิม  7-11', content: '0 ซิม'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิมเติมเงิน', content: '0 ซิม'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิมรายเดือน', content: '0 ซิม'),
+              listSales(icon: 'assets/images/phone_with_sim.svg', title: 'ยอดมือถือ', content: '6 เครื่อง'),
               listSales(icon: 'assets/images/mnp.svg', title: 'ย้ายค่ายเบอร์เดิม', content: '0 เบอร์'),
               listSales(icon: 'assets/images/pretopost.svg', title: 'เติมเงินเป็นรายเดือน', content: '0 เบอร์')
             ]),
@@ -63,10 +63,10 @@ class _SalesSummaryState extends State<SalesSummary> with TickerProviderStateMix
         SingleChildScrollView(
           child: SizedBox(
             child: Column(children: [
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิม  7-11', content: '0 ซิม'),
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิมเติมเงิน', content: '0 ซิม'),
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิมรายเดือน', content: '0 ซิม'),
-              listSales(icon: 'assets/images/phone with sim.svg', title: 'ยอดมือถือ', content: '6 เครื่อง'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิม  7-11', content: '0 ซิม'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิมเติมเงิน', content: '0 ซิม'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิมรายเดือน', content: '0 ซิม'),
+              listSales(icon: 'assets/images/phone_with_sim.svg', title: 'ยอดมือถือ', content: '6 เครื่อง'),
               listSales(icon: 'assets/images/mnp.svg', title: 'ย้ายค่ายเบอร์เดิม', content: '0 เบอร์'),
               listSales(icon: 'assets/images/pretopost.svg', title: 'เติมเงินเป็นรายเดือน', content: '0 เบอร์')
             ]),
@@ -75,10 +75,10 @@ class _SalesSummaryState extends State<SalesSummary> with TickerProviderStateMix
         SingleChildScrollView(
           child: SizedBox(
             child: Column(children: [
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิม  7-11', content: '0 ซิม'),
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิมเติมเงิน', content: '0 ซิม'),
-              listSales(icon: 'assets/images/Sim.svg', title: 'ซิมรายเดือน', content: '0 ซิม'),
-              listSales(icon: 'assets/images/phone with sim.svg', title: 'ยอดมือถือ', content: '6 เครื่อง'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิม  7-11', content: '0 ซิม'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิมเติมเงิน', content: '0 ซิม'),
+              listSales(icon: 'assets/images/sim.svg', title: 'ซิมรายเดือน', content: '0 ซิม'),
+              listSales(icon: 'assets/images/phone_with_sim.svg', title: 'ยอดมือถือ', content: '6 เครื่อง'),
               listSales(icon: 'assets/images/mnp.svg', title: 'ย้ายค่ายเบอร์เดิม', content: '0 เบอร์'),
               listSales(icon: 'assets/images/pretopost.svg', title: 'เติมเงินเป็นรายเดือน', content: '0 เบอร์')
             ]),

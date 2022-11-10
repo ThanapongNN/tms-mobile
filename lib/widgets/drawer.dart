@@ -1,4 +1,3 @@
-import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
@@ -6,9 +5,9 @@ import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/change_password.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/pages/profile/profile_detail.dart';
-import 'package:tms/pages/setting.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/custom_icons_icons.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dialog.dart';
 import 'package:tms/widgets/navigator.dart';
@@ -47,7 +46,7 @@ Widget drawer() {
       ),
       ListTile(
         minLeadingWidth: 20,
-        leading: SvgPicture.asset('assets/icons/ChangePass.svg'),
+        leading: SvgPicture.asset('assets/icons/change_pass.svg'),
         title: text('เปลี่ยนรหัสผ่าน'),
         onTap: () => navigatorTo(() => const ChangePassword(titleAppbar: 'เปลี่ยนรหัสผ่าน'), transition: Transition.leftToRight),
       ),
@@ -59,7 +58,7 @@ Widget drawer() {
       // ),
       const Spacer(),
       button(
-        icon: BootstrapIcons.box_arrow_right,
+        icon: CustomIcons.logout,
         text: 'ออกจากระบบ',
         outline: true,
         colorOutline: ThemeColor.primaryColor,
@@ -69,7 +68,7 @@ Widget drawer() {
             onPressedConfirm: () => navigatorOffAll(() => const LoginPage()),
           );
         },
-      ).paddingSymmetric(horizontal: 40),
+      ).paddingSymmetric(horizontal: 20),
       text('v ${Store.version.value}', color: Colors.grey).paddingSymmetric(vertical: 10)
     ]),
   );

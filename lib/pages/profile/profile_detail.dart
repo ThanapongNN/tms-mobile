@@ -37,7 +37,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
           text('7-11 สาขาเจริญนคร 27'),
           const SizedBox(height: 10),
           listTile(
-            svgicon: 'assets/icons/pinlocation.svg',
+            svgicon: 'assets/icons/pin_location.svg',
             title: 'สถานที่ทำงาน',
             content: '7-11 สาขาเจริญนคร 27',
             trailing: Column(
@@ -46,10 +46,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
               ],
             ),
           ),
-          listTile(svgicon: 'assets/icons/Person.svg', title: 'ตำแหน่งงาน', content: 'พนักงานขาย'),
+          listTile(svgicon: 'assets/icons/person.svg', title: 'ตำแหน่งงาน', content: 'พนักงานขาย'),
           listTile(svgicon: 'assets/icons/cake.svg', title: 'วันเดือนปีเกิด', content: '25 มกราคม 2540'),
-          listTile(svgicon: 'assets/icons/Phone.svg', title: 'เบอร์มือถือ', content: '089-980-0909'),
-          listTile(svgicon: 'assets/icons/Envelope open.svg', title: 'อีเมล', content: 'Sananthachat@gmail.com'),
+          listTile(svgicon: 'assets/icons/phone.svg', title: 'เบอร์มือถือ', content: '089-980-0909'),
+          listTile(svgicon: 'assets/icons/envelope_open.svg', title: 'อีเมล', content: 'Sananthachat@gmail.com'),
           const Spacer(),
           button(
               text: 'แก้ไขข้อมูล',
