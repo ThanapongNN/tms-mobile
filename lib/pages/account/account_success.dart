@@ -30,6 +30,7 @@ class AccountSuccess extends StatelessWidget {
         button(
           text: textButton,
           icon: icon,
+          space: 10,
           onPressed: () => navigatorOffAll(() => const LoginPage()),
         ).paddingSymmetric(horizontal: 40),
       ]).paddingSymmetric(horizontal: 20),

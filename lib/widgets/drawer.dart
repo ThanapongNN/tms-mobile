@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/change_password.dart';
@@ -39,17 +38,19 @@ Widget drawer() {
         ),
       ),
       ListTile(
-        minLeadingWidth: 20,
-        leading: SvgPicture.asset('assets/icons/profile.svg'),
+        horizontalTitleGap: 0,
+        leading: const Icon(CustomIcons.profile, color: Colors.black),
         title: text('ข้อมูลของคุณ'),
         onTap: () => navigatorTo(() => const ProfileDetail(), transition: Transition.leftToRight),
       ),
+      const Divider(),
       ListTile(
-        minLeadingWidth: 20,
-        leading: SvgPicture.asset('assets/icons/change_pass.svg'),
+        horizontalTitleGap: 0,
+        leading: const Icon(CustomIcons.change_pass, color: Colors.black, size: 28),
         title: text('เปลี่ยนรหัสผ่าน'),
         onTap: () => navigatorTo(() => const ChangePassword(titleAppbar: 'เปลี่ยนรหัสผ่าน'), transition: Transition.leftToRight),
       ),
+      const Divider(),
       // ListTile(
       //   minLeadingWidth: 20,
       //   leading: const Icon(Icons.settings),
@@ -61,6 +62,7 @@ Widget drawer() {
         icon: CustomIcons.logout,
         text: 'ออกจากระบบ',
         outline: true,
+        space: 15,
         colorOutline: ThemeColor.primaryColor,
         onPressed: () {
           dialog(

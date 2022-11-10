@@ -8,6 +8,7 @@ Widget button({
   IconData? icon,
   bool outline = false,
   Color? colorOutline,
+  double space = 5,
 }) {
   return MaterialButton(
     height: 50,
@@ -20,7 +21,7 @@ Widget button({
     onPressed: onPressed ?? () => navigatorBack(),
     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Icon(icon, color: outline ? colorOutline ?? Colors.black : Colors.white, size: 32),
-      const SizedBox(width: 10),
+      SizedBox(width: space),
       Text(text, style: TextStyle(fontSize: 24, color: outline ? colorOutline ?? Colors.black : Colors.white)),
     ]),
   );
