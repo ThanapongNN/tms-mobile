@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
@@ -56,7 +57,7 @@ Widget drawer() {
       // ),
       const Spacer(),
       button(
-        icon: Icons.exit_to_app,
+        icon: BootstrapIcons.box_arrow_right,
         text: 'ออกจากระบบ',
         outline: true,
         colorOutline: ThemeColor.primaryColor,

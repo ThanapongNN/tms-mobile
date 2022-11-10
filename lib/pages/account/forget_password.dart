@@ -1,7 +1,7 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
@@ -138,7 +138,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   controller: _branch,
                   textLable: 'รหัสสาขา',
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
-                  suffixIcon: const Icon(Ionicons.search),
+                  suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
@@ -239,7 +239,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 const SizedBox(height: 20),
                 button(
                   text: 'ถัดไป',
-                  icon: Ionicons.arrow_forward_outline,
+                  icon: BootstrapIcons.arrow_right,
                   onPressed: () {
                     // print(_validateForm());
                     navigatorTo(
@@ -249,7 +249,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   },
                 ),
                 const SizedBox(height: 10),
-                button(text: 'ยกเลิก', icon: Ionicons.close_outline, outline: true),
+                button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
               ]).paddingSymmetric(horizontal: 40)
             ]),
           ),

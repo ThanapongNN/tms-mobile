@@ -1,6 +1,6 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideText = !_hideText),
                     icon: Icon(
-                      _hideText ? Ionicons.eye_off_outline : Ionicons.eye,
+                      _hideText ? BootstrapIcons.eye_slash : BootstrapIcons.eye_fill,
                       color: Colors.black,
                     ),
                   ),

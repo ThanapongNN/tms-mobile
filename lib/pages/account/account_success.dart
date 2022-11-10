@@ -1,5 +1,5 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/widgets/button.dart';
@@ -15,7 +15,7 @@ class AccountSuccess extends StatelessWidget {
     required this.titleAppbar,
     required this.titleBody,
     this.textButton = 'เข้าสู่ระบบ',
-    this.icon = FeatherIcons.cornerDownRight,
+    this.icon = BootstrapIcons.arrow_return_right,
   });
 
   @override

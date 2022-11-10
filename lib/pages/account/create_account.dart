@@ -1,9 +1,9 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/theme/color.dart';
@@ -336,7 +336,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   controller: _branch,
                   textLable: 'รหัสสาขา',
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
-                  suffixIcon: const Icon(Ionicons.search),
+                  suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
@@ -388,7 +388,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 const SizedBox(height: 20),
                 button(
                   text: 'สร้างบัญชี',
-                  icon: Ionicons.add,
+                  icon: BootstrapIcons.plus,
                   onPressed: () {
                     // print(_validateForm());
                     navigatorTo(
@@ -398,7 +398,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   },
                 ),
                 const SizedBox(height: 10),
-                button(text: 'ยกเลิก', icon: Icons.close_outlined, outline: true),
+                button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
               ]).paddingSymmetric(horizontal: 40)
             ]),
           ),

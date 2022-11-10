@@ -1,8 +1,7 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/text_input_formatter.dart';
@@ -72,7 +71,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideOldPassword = !_hideOldPassword),
                     icon: Icon(
-                      _hideOldPassword ? Ionicons.eye_off_outline : Ionicons.eye,
+                      _hideOldPassword ? BootstrapIcons.eye_slash : BootstrapIcons.eye_fill,
                       color: Colors.black,
                     ),
                   ),
@@ -93,7 +92,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hidePassword = !_hidePassword),
                     icon: Icon(
-                      _hidePassword ? Ionicons.eye_off_outline : Ionicons.eye,
+                      _hidePassword ? BootstrapIcons.eye_slash : BootstrapIcons.eye_fill,
                       color: Colors.black,
                     ),
                   ),
@@ -114,7 +113,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hideConfirmPassword = !_hideConfirmPassword),
                     icon: Icon(
-                      _hideConfirmPassword ? Ionicons.eye_off_outline : Ionicons.eye,
+                      _hideConfirmPassword ? BootstrapIcons.eye_slash : BootstrapIcons.eye_fill,
                       color: Colors.black,
                     ),
                   ),
@@ -128,7 +127,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 text('กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วย ตัวเลขและตัวอักษร', color: ThemeColor.primaryColor).paddingOnly(bottom: 10),
                 button(
                   text: 'ยืนยัน',
-                  icon: FeatherIcons.checkCircle,
+                  icon: BootstrapIcons.check2_circle,
                   onPressed: () {
                     setState(() {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
@@ -146,7 +145,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                 ),
                 const SizedBox(height: 10),
-                button(text: 'ยกเลิก', icon: FeatherIcons.x, outline: true),
+                button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
               ],
             ).paddingSymmetric(horizontal: 60),
           ),

@@ -1,8 +1,7 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
@@ -67,7 +66,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hidePassword = !_hidePassword),
                     icon: Icon(
-                      _hidePassword ? Ionicons.eye_off_outline : Ionicons.eye,
+                      _hidePassword ? BootstrapIcons.eye_slash : BootstrapIcons.eye_fill,
                       color: Colors.black,
                     ),
                   ),
@@ -81,7 +80,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                 const SizedBox(height: 20),
                 button(
                   text: 'ยืนยัน',
-                  icon: FeatherIcons.checkCircle,
+                  icon: BootstrapIcons.check2_circle,
                   onPressed: () {
                     setState(() {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
@@ -94,7 +93,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                   },
                 ),
                 const SizedBox(height: 10),
-                button(text: 'ยกเลิก', icon: FeatherIcons.x, outline: true),
+                button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
               ],
             ).paddingSymmetric(horizontal: 60),
           ),

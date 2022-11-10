@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/pages/account/new_password.dart';
@@ -67,7 +67,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                         titleAppbar: widget.titleAppbar,
                         titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
                         textButton: 'กลับสู่หน้าแรก',
-                        icon: Ionicons.home_outline,
+                        icon: BootstrapIcons.house,
                       ),
                       transition: Transition.rightToLeft,
                     );

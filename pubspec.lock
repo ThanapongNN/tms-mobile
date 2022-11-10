@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  bootstrap_icons:
+    dependency: "direct main"
+    description:
+      name: bootstrap_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.1"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -202,13 +209,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.5"
-  flutter_feather_icons:
-    dependency: "direct main"
-    description:
-      name: flutter_feather_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0+1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -359,13 +359,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.0"
-  ionicons:
-    dependency: "direct main"
-    description:
-      name: ionicons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1"
   js:
     dependency: transitive
     description:
