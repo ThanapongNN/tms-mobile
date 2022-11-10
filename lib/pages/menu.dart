@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -30,29 +31,15 @@ class _MenuState extends State<Menu> {
                 unselectedFontSize: 14,
                 backgroundColor: Colors.white,
                 items: [
+                  const BottomNavigationBarItem(label: 'หน้าหลัก', icon: Icon(BootstrapIcons.house)),
+                  const BottomNavigationBarItem(label: 'ยอดขาย', icon: Icon(BootstrapIcons.graph_up_arrow)),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      'assets/icons/House.svg',
-                      width: 24,
-                      color: (Store.currentIndex.value == 0) ? ThemeColor.primaryColor : null,
-                    ),
-                    label: 'หน้าหลัก',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      'assets/icons/Graph up.svg',
-                      width: 24,
-                      color: (Store.currentIndex.value == 1) ? ThemeColor.primaryColor : null,
-                    ),
-                    label: 'ยอดขาย',
-                  ),
-                  BottomNavigationBarItem(
+                    label: 'ข่าวสาร',
                     icon: SvgPicture.asset(
                       'assets/icons/megaphone.svg',
                       width: 24,
                       color: (Store.currentIndex.value == 2) ? ThemeColor.primaryColor : null,
                     ),
-                    label: 'ข่าวสาร',
                   ),
                 ],
                 onTap: (index) => Store.currentIndex.value = index,

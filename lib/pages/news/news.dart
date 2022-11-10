@@ -1,3 +1,4 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tms/pages/news/new_detail.dart';
@@ -40,7 +41,7 @@ class _NewsPageState extends State<NewsPage> {
                   showTextLable: false,
                   controller: search,
                   radius: true,
-                  prefixIcon: const Icon(Icons.search),
+                  prefixIcon: const Icon(BootstrapIcons.search),
                   hintText: 'ค้นหาข่าวสารและแคมเปญ',
                 ).paddingSymmetric(horizontal: 20, vertical: 10))),
             SizedBox(
