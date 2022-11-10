@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/pages/sales/sales_summary.dart';
 import 'package:tms/state_management.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_user.dart';
 import 'package:tms/widgets/drawer.dart';
 import 'package:tms/widgets/text.dart';
@@ -15,37 +16,114 @@ class SalesPage extends StatefulWidget {
 }
 
 class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
+  TabController? _tabBar;
+
+  bool currentMonthFocus = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabBar = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: text('ยอดขาย', fontSize: 20),
-        centerTitle: true,
-        elevation: 0,
-      ),
       onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
       drawer: drawer(),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            color: const Color(0xFF414F5C),
-            child: Column(
-              children: [
+      body: CustomScrollView(slivers: [
+        SliverAppBar(
+          title: text('ยอดขาย', fontSize: 20),
+          centerTitle: true,
+          elevation: 0,
+          pinned: true,
+          expandedHeight: 360,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Container(
+              color: const Color(0xFF414F5C),
+              margin: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
+              child: Column(children: [
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  GestureDetector(
+                    onTap: () => setState(() => currentMonthFocus = !currentMonthFocus),
+                    child: text(
+                      DateFormat('MMMM ${DateTime.now().year + 543}', 'th').format(
+                        DateTime.parse('${DateTime.now().year}-${DateTime.now().month - 1}-01').toLocal(),
+                      ),
+                      color: !currentMonthFocus ? Colors.yellow : Colors.white,
+                      decoration: !currentMonthFocus ? null : TextDecoration.underline,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => setState(() => currentMonthFocus = !currentMonthFocus),
+                    child: text(
+                      DateFormat('MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
+                      color: currentMonthFocus ? Colors.yellow : Colors.white,
+                      decoration: currentMonthFocus ? null : TextDecoration.underline,
+                    ),
+                  ),
+                ]).paddingOnly(bottom: 10),
                 text('สรุปยอดขายของคุณ', color: Colors.white),
-                const SizedBox(height: 5),
                 text(
                   DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
                   color: Colors.white,
-                ),
-                const SizedBox(height: 15),
-                boxHeadUser(name: 'ศนันธฉัตร ธนพัฒน์พิศาล', quantity: '17')
-              ],
-            ).paddingSymmetric(vertical: 15),
+                ).paddingOnly(bottom: 5),
+                boxHeadUser(name: 'ศนันธฉัตร ธนพัฒน์พิศาล', quantity: '17').paddingOnly(bottom: 15)
+              ]).paddingSymmetric(vertical: 15),
+            ),
           ),
-          const Expanded(child: SalesSummary()),
-        ],
-      ),
+          bottom: AppBar(
+            leadingWidth: 0,
+            titleSpacing: 0,
+            elevation: 1,
+            backgroundColor: Colors.white,
+            toolbarHeight: kToolbarHeight + MediaQuery.of(context).padding.top,
+            title: Container(
+              width: double.infinity,
+              color: Colors.white,
+              child: Container(
+                decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(50)),
+                child: TabBar(
+                  controller: _tabBar,
+                  indicator: ShapeDecoration(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                    color: ThemeColor.primaryColor,
+                  ),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.black,
+                  labelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
+                  unselectedLabelStyle: const TextStyle(fontSize: 28, fontFamily: 'Kanit'),
+                  tabs: const <Tab>[
+                    Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('เบอร์และมือถือ'))),
+                    Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('เติมเงินเติมเน็ต'))),
+                    Tab(child: FittedBox(fit: BoxFit.scaleDown, child: Text('เน็ตบ้านและทีวี'))),
+                  ],
+                ),
+              ).paddingAll(20),
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Column(children: [
+                SizedBox(
+                  height: Get.height,
+                  child: TabBarView(
+                    controller: _tabBar,
+                    children: [
+                      Center(child: text('เบอร์และมือถือ')),
+                      Center(child: text('เติมเงินเติมเน็ต')),
+                      Center(child: text('เน็ตบ้านและทีวี')),
+                    ],
+                  ),
+                ),
+              ]);
+            },
+            childCount: 1,
+          ),
+        ),
+      ]),
     );
   }
 }
