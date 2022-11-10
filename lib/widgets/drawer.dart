@@ -6,6 +6,7 @@ import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/change_password.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/pages/profile/profile_detail.dart';
+import 'package:tms/pages/setting.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/button.dart';
@@ -42,7 +43,7 @@ Widget drawer() {
         minLeadingWidth: 20,
         leading: SvgPicture.asset('assets/icons/profile.svg'),
         title: text('ข้อมูลของคุณ'),
-        onTap: () => Get.to(() => const ProfileDetail()),
+        onTap: () => navigatorTo(() => const ProfileDetail(), transition: Transition.leftToRight),
       ),
       ListTile(
         minLeadingWidth: 20,
@@ -54,6 +55,7 @@ Widget drawer() {
       //   minLeadingWidth: 20,
       //   leading: const Icon(Icons.settings),
       //   title: text('ตั้งค่า'),
+      //   onTap: () => navigatorTo(() => const Setting(), transition: Transition.leftToRight),
       // ),
       const Spacer(),
       button(

@@ -1,6 +1,10 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tms/pages/account/deactivate_account.dart';
+import 'package:tms/widgets/button.dart';
+import 'package:tms/widgets/listtile.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class ProfileDetail extends StatefulWidget {
@@ -11,6 +15,7 @@ class ProfileDetail extends StatefulWidget {
 }
 
 class _ProfileDetailState extends State<ProfileDetail> {
+  bool switchValue = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,41 +35,32 @@ class _ProfileDetailState extends State<ProfileDetail> {
           text('ศนันธฉัตร  ธนพัฒน์พิศาล'),
           text('7-11 สาขาเจริญนคร 27'),
           const SizedBox(height: 10),
-          box(svgicon: 'assets/icons/pinlocation.svg', title: 'สถานที่ทำงาน', content: '7-11 สาขาเจริญนคร 27', tail: true, texttail: '1122334455'),
-          box(svgicon: 'assets/icons/Person.svg', title: 'สถานที่ทำงาน', content: '7-11 สาขาเจริญนคร 27'),
-          box(svgicon: 'assets/icons/cake.svg', title: 'สถานที่ทำงาน', content: '7-11 สาขาเจริญนคร 27'),
-          box(svgicon: 'assets/icons/Phone.svg', title: 'สถานที่ทำงาน', content: '7-11 สาขาเจริญนคร 27'),
-          box(svgicon: 'assets/icons/Envelope open.svg', title: 'สถานที่ทำงาน', content: '7-11 สาขาเจริญนคร 27')
-        ]),
+          listTile(
+            svgicon: 'assets/icons/pinlocation.svg',
+            title: 'สถานที่ทำงาน',
+            content: '7-11 สาขาเจริญนคร 27',
+            trailing: Column(
+              children: [
+                text('1122334455'),
+              ],
+            ),
+          ),
+          listTile(svgicon: 'assets/icons/Person.svg', title: 'ตำแหน่งงาน', content: 'พนักงานขาย'),
+          listTile(svgicon: 'assets/icons/cake.svg', title: 'วันเดือนปีเกิด', content: '25 มกราคม 2540'),
+          listTile(svgicon: 'assets/icons/Phone.svg', title: 'เบอร์มือถือ', content: '089-980-0909'),
+          listTile(svgicon: 'assets/icons/Envelope open.svg', title: 'อีเมล', content: 'Sananthachat@gmail.com'),
+          const Spacer(),
+          button(text: 'แก้ไขข้อมูล', icon: BootstrapIcons.pencil, onPressed: () {}),
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              navigatorTo((() => const DeactivateAccount()));
+            },
+            child: text('ปิดบัญชีใช้งาน', color: Colors.blue, decoration: TextDecoration.underline),
+          ),
+          const SizedBox(height: 20),
+        ]).paddingSymmetric(horizontal: 20),
       ),
     );
   }
-}
-
-Widget box({
-  required String svgicon,
-  required String title,
-  required String content,
-  bool tail = false,
-  String texttail = '',
-}) {
-  return Container(
-    width: double.infinity,
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey.shade400)),
-    child: ListTile(
-      leading: SvgPicture.asset(svgicon, height: 40),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(child: text(title)),
-              if (tail) FittedBox(child: text('1122334455')),
-            ],
-          ),
-          text(content),
-        ],
-      ),
-    ).paddingSymmetric(vertical: 10),
-  ).paddingSymmetric(horizontal: 20, vertical: 10);
 }
