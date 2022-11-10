@@ -1,6 +1,6 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/pages/home.dart';
@@ -24,25 +24,21 @@ class _MenuState extends State<Menu> {
       return Scaffold(
         body: SafeArea(top: false, child: taps[Store.currentIndex.value]),
         bottomNavigationBar: (!Store.drawer.value)
-            ? BottomNavigationBar(
+            ? CustomLineIndicatorBottomNavbar(
+                selectedColor: ThemeColor.primaryColor,
+                unSelectedColor: Colors.black54,
+                backgroundColor: Colors.white,
                 currentIndex: Store.currentIndex.value,
-                type: BottomNavigationBarType.fixed,
+                unselectedIconSize: 20,
+                selectedIconSize: 24,
                 selectedFontSize: 16,
                 unselectedFontSize: 14,
-                backgroundColor: Colors.white,
-                items: [
-                  const BottomNavigationBarItem(label: 'หน้าหลัก', icon: Icon(BootstrapIcons.house)),
-                  const BottomNavigationBarItem(label: 'ยอดขาย', icon: Icon(BootstrapIcons.graph_up_arrow)),
-                  BottomNavigationBarItem(
-                    label: 'ข่าวสาร',
-                    icon: SvgPicture.asset(
-                      'assets/icons/megaphone.svg',
-                      width: 24,
-                      color: (Store.currentIndex.value == 2) ? ThemeColor.primaryColor : null,
-                    ),
-                  ),
-                ],
                 onTap: (index) => Store.currentIndex.value = index,
+                customBottomBarItems: [
+                  CustomBottomBarItems(label: 'หน้าหลัก', icon: BootstrapIcons.house),
+                  CustomBottomBarItems(label: 'ยอดขาย', icon: BootstrapIcons.graph_up_arrow),
+                  CustomBottomBarItems(label: 'ข่าวสาร', icon: BootstrapIcons.megaphone),
+                ],
               )
             : null,
       );
