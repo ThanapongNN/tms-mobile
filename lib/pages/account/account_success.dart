@@ -24,7 +24,7 @@ class AccountSuccess extends StatelessWidget {
       appBar: AppBar(title: Text(titleAppbar)),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Image.asset('assets/images/check_circle.png', scale: 2),
-        text(titleBody, fontSize: 24, textAlign: TextAlign.center).paddingAll(40),
+        text(titleBody, fontSize: 28, textAlign: TextAlign.center).paddingSymmetric(vertical: 40, horizontal: 20),
         button(
           text: textButton,
           icon: icon,

@@ -11,8 +11,7 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class DeactivateAccount extends StatefulWidget {
-  final String titleAppbar;
-  const DeactivateAccount({super.key, required this.titleAppbar});
+  const DeactivateAccount({super.key});
 
   @override
   State<DeactivateAccount> createState() => _DeactivateAccountState();
@@ -33,7 +32,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.titleAppbar)),
+        appBar: AppBar(title: const Text('ปิดบัญชีใช้งาน')),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,

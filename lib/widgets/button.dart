@@ -20,8 +20,8 @@ Widget button({
     onPressed: onPressed ?? () => navigatorBack(),
     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Icon(icon, color: outline ? colorOutline ?? Colors.black : Colors.white, size: 32),
-      const SizedBox(width: 5),
-      Text(text, style: TextStyle(fontSize: 20, color: outline ? colorOutline ?? Colors.black : Colors.white)),
+      const SizedBox(width: 7),
+      Text(text, style: TextStyle(fontSize: 24, color: outline ? colorOutline ?? Colors.black : Colors.white)),
     ]),
   );
 }
