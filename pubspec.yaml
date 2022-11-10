@@ -62,6 +62,10 @@ flutter:
       fonts:
         - asset: fonts/Kanit-Regular.ttf
 
+    - family:  CustomIcons
+      fonts:
+       - asset: fonts/CustomIcons.ttf
+
 # flutter_icons:
 #   # flutter pub run flutter_launcher_icons:main
 

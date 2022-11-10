@@ -7,6 +7,7 @@ import 'package:tms/pages/home.dart';
 import 'package:tms/pages/sales/sales.dart';
 import 'package:tms/pages/news/news.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/custom_icons_icons.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -37,7 +38,7 @@ class _MenuState extends State<Menu> {
                 customBottomBarItems: [
                   CustomBottomBarItems(label: 'หน้าหลัก', icon: BootstrapIcons.house),
                   CustomBottomBarItems(label: 'ยอดขาย', icon: BootstrapIcons.graph_up_arrow),
-                  CustomBottomBarItems(label: 'ข่าวสาร', icon: BootstrapIcons.megaphone),
+                  CustomBottomBarItems(label: 'ข่าวสาร', icon: CustomIcons.megaphone),
                 ],
               )
             : null,

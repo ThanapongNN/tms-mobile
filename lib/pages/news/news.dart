@@ -18,6 +18,7 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   final search = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
