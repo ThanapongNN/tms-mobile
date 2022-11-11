@@ -142,7 +142,6 @@ class _CreateAccountState extends State<CreateAccount> {
       child: Scaffold(
         appBar: AppBar(title: const Text('สร้างบัญชีใหม่')),
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(20),
           child: Form(
             key: _formKey,

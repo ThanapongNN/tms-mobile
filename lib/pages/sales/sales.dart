@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:tms/pages/sales/internet.dart';
+import 'package:tms/pages/sales/sim.dart';
+import 'package:tms/pages/sales/topup.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_user.dart';
@@ -15,8 +17,8 @@ class SalesPage extends StatefulWidget {
   State<SalesPage> createState() => _SalesPageState();
 }
 
-class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
-  TabController? _tabBar;
+class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMixin {
+  late TabController _tabBar;
 
   bool currentMonthFocus = true;
 
@@ -24,7 +26,31 @@ class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabBar = TabController(length: 3, vsync: this);
+    _tabBar.addListener(() {
+      setState(() {});
+    });
   }
+
+  List mockData1 = [
+    {"icon": 'assets/images/sim.svg', "title": 'ซิม  7-11', "content": '0 ซิม'},
+    {"icon": 'assets/images/sim.svg', "title": 'ซิมเติมเงิน', "content": '0 ซิม'},
+    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "content": '0 ซิม'},
+    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "content": '6 เครื่อง'},
+    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "content": '0 เบอร์'},
+    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "content": '0 เบอร์'},
+  ];
+
+  List mockData2 = [
+    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "content": '0 ซิม'},
+    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "content": '6 เครื่อง'},
+    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "content": '0 เบอร์'},
+    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "content": '0 เบอร์'},
+  ];
+
+  List mockData3 = [
+    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "content": '0 เบอร์'},
+    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "content": '0 เบอร์'},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -103,26 +129,9 @@ class _SalesPageState extends State<SalesPage> with TickerProviderStateMixin {
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return Column(children: [
-                SizedBox(
-                  height: Get.height,
-                  child: TabBarView(
-                    controller: _tabBar,
-                    children: [
-                      Center(child: text('เบอร์และมือถือ')),
-                      Center(child: text('เติมเงินเติมเน็ต')),
-                      Center(child: text('เน็ตบ้านและทีวี')),
-                    ],
-                  ),
-                ),
-              ]);
-            },
-            childCount: 1,
-          ),
-        ),
+        if (_tabBar.index == 0) SalesSim(data: mockData1),
+        if (_tabBar.index == 1) SalesTopup(data: mockData2),
+        if (_tabBar.index == 2) SalesInternet(data: mockData3),
       ]),
     );
   }

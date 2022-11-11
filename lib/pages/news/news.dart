@@ -51,10 +51,11 @@ class _NewsPageState extends State<NewsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10),
+                  text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
                   SizedBox(
                     height: 300,
                     child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       scrollDirection: Axis.horizontal,
                       itemCount: 4,
                       itemBuilder: (BuildContext context, int index) {
@@ -73,7 +74,7 @@ class _NewsPageState extends State<NewsPage> {
                     )),
                   ).marginSymmetric(vertical: 10)
                 ],
-              ).paddingSymmetric(horizontal: 20),
+              ),
             ),
             Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
             SizedBox(

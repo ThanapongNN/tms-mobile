@@ -36,7 +36,6 @@ class _LoginPageState extends State<LoginPage> {
             image: DecorationImage(image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Form(
               key: _formKey,

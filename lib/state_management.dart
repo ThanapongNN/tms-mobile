@@ -6,5 +6,6 @@ class Store {
 
   static RxInt currentIndex = 0.obs;
 
+  static RxString token = ''.obs;
   static RxString version = ''.obs;
 }
