@@ -29,7 +29,7 @@ class API {
           await http.post(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
-      logger(response);
+      logger(response, body: body);
 
       if (response.statusCode == 200) {
         return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
@@ -149,7 +149,7 @@ class API {
           await http.put(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
-      logger(response);
+      logger(response, body: body);
 
       if (response.statusCode == 200) {
         return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
@@ -187,7 +187,7 @@ class API {
           await http.patch(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
-      logger(response);
+      logger(response, body: body);
 
       if (response.statusCode == 200) {
         return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
@@ -226,7 +226,7 @@ class API {
           .timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
-      logger(response);
+      logger(response, body: body);
 
       if (response.statusCode == 200) {
         return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
