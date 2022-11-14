@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,7 +5,6 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
-import 'package:tms/models/register.model.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -118,25 +115,25 @@ class _NewPasswordState extends State<NewPassword> {
                     });
 
                     if (_formKey.currentState!.validate()) {
-                      // Store.registerBody['employee']['password'] = _password.text;
+                      Store.registerBody['employee']['password'] = _password.text;
 
-                      // CallBack data = await API.post(
-                      //   url: '$hostDev/user/v1/accounts/register',
-                      //   headers: Authorization.none,
-                      //   body: Store.registerBody,
-                      // );
-
-                      // if (data.success) {
-                      navigatorOffAll(
-                        () => AccountSuccess(
-                          titleAppbar: widget.titleAppbar,
-                          titleBody: (widget.titleAppbar.endsWith('ใหม่'))
-                              ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'
-                              : 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว',
-                        ),
-                        transition: Transition.rightToLeft,
+                      CallBack data = await API.post(
+                        url: '$hostDev/user/v1/accounts/register',
+                        headers: Authorization.none,
+                        body: Store.registerBody,
                       );
-                      // }
+
+                      if (data.success) {
+                        navigatorOffAll(
+                          () => AccountSuccess(
+                            titleAppbar: widget.titleAppbar,
+                            titleBody: (widget.titleAppbar.endsWith('ใหม่'))
+                                ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'
+                                : 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว',
+                          ),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
                     }
                   },
                 ),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-logger(response, {Map? body}) {
+logger(response, {Object? body}) {
   if (kDebugMode) {
     try {
       Logger(printer: PrettyPrinter(methodCount: 0, printEmojis: false)).d(

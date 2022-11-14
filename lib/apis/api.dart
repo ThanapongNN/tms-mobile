@@ -16,25 +16,21 @@ class API {
   static Future<CallBack> post({
     required String url,
     required Authorization headers,
-    required Map<String, dynamic> body,
+    required Object? body,
     bool showDialog = true,
     bool showLoading = true,
-    bool encode = false,
-    bool decode = true,
-    dynamic Function()? onTapDialog,
   }) async {
     try {
       if (showLoading) EasyLoading.show();
-      final response =
-          await http.post(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body).timeout(const Duration(seconds: 30));
+      final response = await http.post(Uri.parse(url), headers: setHeaders(headers), body: jsonEncode(body)).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
       logger(response, body: body);
 
       if (response.statusCode == 200) {
-        return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
+        return CallBack(success: true, response: jsonDecode(response.body));
       } else {
-        final dataError = decode ? jsonDecode(response.body) : response.body;
+        Map dataError = jsonDecode(response.body);
         String errorMessage = dataError["description"] ?? errorNotFound;
         dialog(content: errorMessage, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
@@ -47,6 +43,10 @@ class API {
       dialog(content: messageOffline);
       if (showLoading) EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
+    } catch (error) {
+      dialog(content: error.toString());
+      if (showLoading) EasyLoading.dismiss();
+      return CallBack(success: false, response: error);
     }
   }
 
@@ -79,7 +79,7 @@ class API {
         Map dataError = jsonDecode(resStr)[0];
         String errorMessage = dataError["description"] ?? errorNotFound;
         dialog(content: errorMessage, showDialog: showDialog);
-        return CallBack(success: false, response: jsonDecode(resStr));
+        return CallBack(success: false, response: dataError);
       }
     } on TimeoutException catch (_) {
       dialog(content: errorTimeout);
@@ -92,6 +92,10 @@ class API {
     } on FormatException catch (_) {
       EasyLoading.dismiss();
       return CallBack(success: true, response: errorNotFound);
+    } catch (error) {
+      dialog(content: error.toString());
+      EasyLoading.dismiss();
+      return CallBack(success: false, response: error);
     }
   }
 
@@ -101,23 +105,19 @@ class API {
     required Authorization headers,
     bool showDialog = true,
     bool showLoading = true,
-    bool decode = true,
-    String errorMessage = '',
   }) async {
     try {
       if (showLoading) EasyLoading.show();
       final response = await http.get(Uri.parse(url), headers: setHeaders(headers)).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
+
       logger(response);
 
       if (response.statusCode == 200) {
-        return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
+        return CallBack(success: true, response: jsonDecode(response.body));
       } else {
-        final dataError = decode ? jsonDecode(response.body) : response.body;
-        if (dataError is Map) {
-          errorMessage = dataError["description"] ?? errorNotFound;
-        }
-
+        Map dataError = jsonDecode(response.body);
+        String errorMessage = dataError["description"] ?? errorNotFound;
         dialog(content: errorMessage, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
       }
@@ -129,6 +129,10 @@ class API {
       dialog(content: messageOffline);
       if (showLoading) EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
+    } catch (error) {
+      dialog(content: error.toString());
+      if (showLoading) EasyLoading.dismiss();
+      return CallBack(success: false, response: error);
     }
   }
 
@@ -136,25 +140,21 @@ class API {
   static Future<CallBack> put({
     required String url,
     required Authorization headers,
-    required Map<String, dynamic> body,
+    required Object? body,
     bool showDialog = true,
     bool showLoading = true,
-    bool encode = false,
-    bool decode = true,
-    dynamic Function()? onTapDialog,
   }) async {
     try {
       if (showLoading) EasyLoading.show();
-      final response =
-          await http.put(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body).timeout(const Duration(seconds: 30));
+      final response = await http.put(Uri.parse(url), headers: setHeaders(headers), body: body).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
       logger(response, body: body);
 
       if (response.statusCode == 200) {
-        return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
+        return CallBack(success: true, response: jsonDecode(response.body));
       } else {
-        final dataError = decode ? jsonDecode(response.body) : response.body;
+        Map dataError = jsonDecode(response.body);
         String errorMessage = dataError["description"] ?? errorNotFound;
         dialog(content: errorMessage, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
@@ -167,6 +167,10 @@ class API {
       dialog(content: messageOffline);
       if (showLoading) EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
+    } catch (error) {
+      dialog(content: error.toString());
+      if (showLoading) EasyLoading.dismiss();
+      return CallBack(success: false, response: error);
     }
   }
 
@@ -174,25 +178,21 @@ class API {
   static Future<CallBack> patch({
     required String url,
     required Authorization headers,
-    required Map<String, dynamic> body,
+    required Object? body,
     bool showDialog = true,
     bool showLoading = true,
-    bool encode = false,
-    bool decode = true,
-    dynamic Function()? onTapDialog,
   }) async {
     try {
       if (showLoading) EasyLoading.show();
-      final response =
-          await http.patch(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body).timeout(const Duration(seconds: 30));
+      final response = await http.patch(Uri.parse(url), headers: setHeaders(headers), body: body).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
       logger(response, body: body);
 
       if (response.statusCode == 200) {
-        return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
+        return CallBack(success: true, response: jsonDecode(response.body));
       } else {
-        final dataError = decode ? jsonDecode(response.body) : response.body;
+        Map dataError = jsonDecode(response.body);
         String errorMessage = dataError["description"] ?? errorNotFound;
         dialog(content: errorMessage, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
@@ -205,6 +205,10 @@ class API {
       dialog(content: messageOffline);
       if (showLoading) EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
+    } catch (error) {
+      dialog(content: error.toString());
+      if (showLoading) EasyLoading.dismiss();
+      return CallBack(success: false, response: error);
     }
   }
 
@@ -212,26 +216,21 @@ class API {
   static Future<CallBack> delete({
     required String url,
     required Authorization headers,
-    required Map<String, dynamic> body,
+    required Object? body,
     bool showDialog = true,
     bool showLoading = true,
-    bool encode = false,
-    bool decode = true,
-    dynamic Function()? onTapDialog,
   }) async {
     try {
       if (showLoading) EasyLoading.show();
-      final response = await http
-          .delete(Uri.parse(url), headers: setHeaders(headers), body: encode ? jsonEncode(body) : body)
-          .timeout(const Duration(seconds: 30));
+      final response = await http.delete(Uri.parse(url), headers: setHeaders(headers), body: body).timeout(const Duration(seconds: 30));
       if (showLoading) EasyLoading.dismiss();
 
       logger(response, body: body);
 
       if (response.statusCode == 200) {
-        return CallBack(success: true, response: decode ? jsonDecode(response.body) : response.body);
+        return CallBack(success: true, response: jsonDecode(response.body));
       } else {
-        final dataError = decode ? jsonDecode(response.body) : response.body;
+        Map dataError = jsonDecode(response.body);
         String errorMessage = dataError["description"] ?? errorNotFound;
         dialog(content: errorMessage, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
@@ -244,6 +243,9 @@ class API {
       dialog(content: messageOffline);
       if (showLoading) EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
+    } catch (error) {
+      dialog(content: error.toString());
+      return CallBack(success: false, response: error);
     }
   }
 }

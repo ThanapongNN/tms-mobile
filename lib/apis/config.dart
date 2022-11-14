@@ -11,9 +11,9 @@ enum Authorization { token, none }
 Map<String, String> setHeaders(Authorization headers) {
   switch (headers) {
     case Authorization.token:
-      return {"Authorization": "Bearer ${Store.token.value}"};
+      return {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ${Store.token.value}'};
     default:
-      return {};
+      return {'Content-Type': 'application/json; charset=UTF-8'};
   }
 }
 

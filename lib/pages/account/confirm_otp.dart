@@ -7,7 +7,6 @@ import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
-import 'package:tms/models/register.model.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/pages/account/new_password.dart';
 import 'package:tms/state_management.dart';
@@ -70,6 +69,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                     headers: Authorization.none,
                     body: {"msisdn": "string", "refId": "string", "otp": _otp.text},
                   );
+
                   if (data.success) {
                     Store.registerBody['otpRefId'] = data.response['refId'];
                     if (widget.fromDeactivateAccount) {

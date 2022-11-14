@@ -9,7 +9,6 @@ import 'package:get/route_manager.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/partner_types.model.dart';
-import 'package:tms/models/register.model.dart';
 import 'package:tms/models/shop_profile_list.model.dart';
 import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/accept_terms.dart';
@@ -418,23 +417,23 @@ class _CreateAccountState extends State<CreateAccount> {
                   icon: BootstrapIcons.plus,
                   onPressed: () {
                     if (_validateForm()) {
-                      Store.registerBody.value = RegisterModel(
-                        otpRefId: '',
-                        partnerTypeCode: partner.partnerTypes[selectShop.indexOf(true)].code,
-                        partnerCode: _branch.text,
-                        partnerName: _jobBranch.text,
-                        employee: Employee(
-                          id: _saleID.text,
-                          password: '',
-                          name: _firstName.text,
-                          surname: _lastName.text,
-                          birthdate: DateTime.parse(
-                              '${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}'),
-                          mobile: _phoneNumber.text.replaceAll('-', ''),
-                          email: _email.text,
-                          roleCode: user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
-                        ),
-                      ).toJson();
+                      Store.registerBody.value = {
+                        "otpRefId": '',
+                        "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
+                        "partnerCode": _branch.text,
+                        "partnerName": _jobBranch.text,
+                        "employee": {
+                          "id": _saleID.text,
+                          "password": '',
+                          "name": _firstName.text,
+                          "surname": _lastName.text,
+                          "birthdate":
+                              '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                          "mobile": _phoneNumber.text.replaceAll('-', ''),
+                          "email": _email.text,
+                          "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                        }
+                      };
 
                       navigatorTo(
                         () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
