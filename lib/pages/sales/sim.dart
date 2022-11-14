@@ -13,7 +13,8 @@ class SalesSim extends StatelessWidget {
           return listSales(
             icon: data[index]['icon'],
             title: data[index]['title'],
-            content: data[index]['content'],
+            quantity: data[index]['quantity'],
+            unit: data[index]['unit'],
           );
         },
         childCount: data.length,

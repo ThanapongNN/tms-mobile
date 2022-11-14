@@ -62,7 +62,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
             onTap: () {
               navigatorTo((() => const DeactivateAccount()));
             },
-            child: text('ปิดบัญชีใช้งาน', color: Colors.blue, decoration: TextDecoration.underline),
+            child: text('ปิดบัญชีใช้งาน', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
           ),
           const SizedBox(height: 20),
         ]).paddingSymmetric(horizontal: 20),

@@ -9,7 +9,8 @@ import 'package:expandable/expandable.dart';
 Widget listSales({
   required String icon,
   required String title,
-  required String content,
+  required String quantity,
+  required String unit,
 }) {
   return Container(
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey)),
@@ -21,7 +22,11 @@ Widget listSales({
       header: ListTile(
         leading: SvgPicture.asset(icon),
         title: text(title, fontSize: 24),
-        trailing: text(content, fontSize: 24),
+        trailing: Wrap(children: [
+          text(quantity, fontSize: 24, color: ThemeColor.primaryColor),
+          const SizedBox(width: 5),
+          text(unit, fontSize: 24),
+        ]),
       ),
       expanded: Column(
         children: [
@@ -55,7 +60,13 @@ Widget listSalesDetail({required String title, required String quantity, require
     margin: const EdgeInsets.only(left: 10, right: 20),
     child: ListTile(
       leading: text(title),
-      trailing: text('$quantity $unit'),
+      trailing: Wrap(
+        children: [
+          text(quantity, color: ThemeColor.primaryColor),
+          const SizedBox(width: 5),
+          text(unit),
+        ],
+      ),
     ),
   );
 }

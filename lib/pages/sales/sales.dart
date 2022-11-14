@@ -32,24 +32,24 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
   }
 
   List mockData1 = [
-    {"icon": 'assets/images/sim.svg', "title": 'ซิม  7-11', "content": '0 ซิม'},
-    {"icon": 'assets/images/sim.svg', "title": 'ซิมเติมเงิน', "content": '0 ซิม'},
-    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "content": '0 ซิม'},
-    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "content": '6 เครื่อง'},
-    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "content": '0 เบอร์'},
-    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "content": '0 เบอร์'},
+    {"icon": 'assets/images/sim.svg', "title": 'ซิม  7-11', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/sim.svg', "title": 'ซิมเติมเงิน', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "quantity": '0', "unit": 'ซิม'},
   ];
 
   List mockData2 = [
-    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "content": '0 ซิม'},
-    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "content": '6 เครื่อง'},
-    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "content": '0 เบอร์'},
-    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "content": '0 เบอร์'},
+    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "quantity": '0', "unit": 'ซิม'},
   ];
 
   List mockData3 = [
-    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "content": '0 เบอร์'},
-    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "content": '0 เบอร์'},
+    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "quantity": '0', "unit": 'ซิม'},
+    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "quantity": '0', "unit": 'ซิม'},
   ];
 
   @override

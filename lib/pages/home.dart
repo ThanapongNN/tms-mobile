@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => Store.currentIndex.value = 1,
-                    child: text('ดูยอดขายทั้งหมด', color: ThemeColor.primaryColor, decoration: TextDecoration.underline),
+                    child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
                   ),
                   const SizedBox(height: 15),
                 ],
