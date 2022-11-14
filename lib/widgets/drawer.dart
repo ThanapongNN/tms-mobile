@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/change_password.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/pages/profile/profile_detail.dart';
+import 'package:tms/pages/setting.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/custom_icons_icons.dart';

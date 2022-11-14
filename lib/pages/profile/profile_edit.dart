@@ -89,7 +89,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                   ),
                   listTile(
-                    svgicon: 'assets/icons/Person.svg',
+                    svgicon: 'assets/icons/person.svg',
                     title: 'ตำแหน่งงาน',
                     subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Row(children: [
@@ -179,7 +179,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ]),
                   ),
                   listTile(
-                    svgicon: 'assets/icons/Phone.svg',
+                    svgicon: 'assets/icons/phone.svg',
                     title: 'เบอร์มือถือ',
                     subtitle: formField(
                       controller: _phoneNumber,
@@ -199,7 +199,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                   ),
                   listTile(
-                    svgicon: 'assets/icons/Envelope open.svg',
+                    svgicon: 'assets/icons/envelope open.svg',
                     title: 'อีเมล',
                     subtitle: formField(
                       controller: _email,

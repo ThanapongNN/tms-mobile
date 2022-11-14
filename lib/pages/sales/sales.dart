@@ -63,7 +63,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
           centerTitle: true,
           elevation: 0,
           pinned: true,
-          expandedHeight: 360,
+          expandedHeight: 340,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
               color: const Color(0xFF414F5C),
@@ -89,7 +89,6 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                     ),
                   ),
                 ]).paddingOnly(bottom: 10),
-                text('สรุปยอดขายของคุณ', color: Colors.white),
                 text(
                   DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
                   color: Colors.white,
