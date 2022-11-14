@@ -6,6 +6,9 @@ class Store {
 
   static RxInt currentIndex = 0.obs;
 
+  static RxList partnerTypes = [].obs;
+  static RxList<String> userRoles = <String>[].obs;
+
   static RxString token = ''.obs;
   static RxString version = ''.obs;
 }

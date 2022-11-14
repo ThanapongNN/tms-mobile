@@ -1,11 +1,17 @@
+import 'dart:async';
+
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:tms/apis/api.dart';
+import 'package:tms/apis/config.dart';
+import 'package:tms/models/shop_profile_list.dart';
 import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
+import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
@@ -50,13 +56,6 @@ class _CreateAccountState extends State<CreateAccount> {
   Color borderYear = Colors.grey;
   Color borderJob = Colors.grey;
 
-  final List<String> nameShop = [
-    '7-11',
-    'Lotus HDE',
-    'Lotus Go Fresh',
-    'Lotus Talad',
-  ];
-
   List<bool> selectShop = [
     true,
     false,
@@ -66,9 +65,8 @@ class _CreateAccountState extends State<CreateAccount> {
 
   List<String> itemsDays = [], itemsYears = [];
 
-  final List<String> itemsJobs = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
-
   String? selectedDay, selectedMonth, selectedYear, selectedJob;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -91,7 +89,7 @@ class _CreateAccountState extends State<CreateAccount> {
             // });
           },
         ),
-        text(nameShop[index], color: index == 0 ? Colors.black : Colors.grey),
+        text(Store.partnerTypes[index], color: index == 0 ? Colors.black : Colors.grey),
       ]),
     );
   }
@@ -148,7 +146,8 @@ class _CreateAccountState extends State<CreateAccount> {
             autovalidateMode: _autovalidateMode,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: text('เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
-              Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
+              Wrap(children: Store.partnerTypes.map<Widget>((e) => checkBoxShop(Store.partnerTypes.indexOf(e))).toList())
+                  .paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Center(child: text('ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
@@ -317,7 +316,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   Row(children: [
                     dropdown(
                       hint: 'กรุณาเลือกตำแหน่งงาน',
-                      items: itemsJobs,
+                      items: Store.userRoles,
                       selectedValue: selectedJob,
                       borderColor: borderJob,
                       onChanged: (job) {
@@ -335,12 +334,32 @@ class _CreateAccountState extends State<CreateAccount> {
                   controller: _branch,
                   textLable: 'รหัสสาขา',
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  maxLength: 8,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.search,
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
                     }
                     return null;
+                  },
+                  onChanged: (value) {
+                    _timer?.cancel();
+                    _timer = Timer(
+                      const Duration(seconds: 1),
+                      () async {
+                        _timer?.cancel();
+
+                        CallBack data = await API.get(url: '$hostDev/content/v1/partners/${_branch.text}', headers: Authorization.none);
+                        if (data.success) {
+                          ShopProfileList shopProfileList = ShopProfileList.fromJson(data.response);
+                          for (var e in shopProfileList.shopProfileList) {
+                            _jobBranch.text = e.partnerNameTh;
+                          }
+                        }
+                      },
+                    );
                   },
                 ),
                 formField(
@@ -389,11 +408,12 @@ class _CreateAccountState extends State<CreateAccount> {
                   text: 'สร้างบัญชี',
                   icon: BootstrapIcons.plus,
                   onPressed: () {
-                    // print(_validateForm());
-                    navigatorTo(
-                      () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
-                      transition: Transition.rightToLeft,
-                    );
+                    if (_validateForm()) {
+                      navigatorTo(
+                        () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                        transition: Transition.rightToLeft,
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 10),

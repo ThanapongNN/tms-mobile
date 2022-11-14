@@ -1,6 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:tms/apis/controller/call_create_account.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
@@ -106,7 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: text('ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(
-                    onTap: () => navigatorTo(() => const CreateAccount()),
+                    onTap: () async {
+                      await callCreateAccount();
+                      navigatorTo(() => const CreateAccount());
+                    },
                     child: text('สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                 ])
