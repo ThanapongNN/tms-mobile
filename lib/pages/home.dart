@@ -80,10 +80,10 @@ class _HomeState extends State<Home> {
               color: Colors.white,
               child: Column(
                 children: [
-                  boxSales(phone: false, title: 'ซิมเติมเงิน', content: '5 ซิม'),
-                  boxSales(phone: false, title: 'ซิม 7-11', content: '5 ซิม'),
-                  boxSales(phone: false, title: 'ซิมรายเดือน', content: '5 ซิม'),
-                  boxSales(phone: true, title: 'ยอดมือถือ', content: '5 เครื่อง '),
+                  boxSales(phone: false, title: 'ซิมเติมเงิน', quantity: '5', unit: 'ซิม'),
+                  boxSales(phone: false, title: 'ซิม 7-11', quantity: '5', unit: 'ซิม'),
+                  boxSales(phone: false, title: 'ซิมรายเดือน', quantity: '5', unit: 'ซิม'),
+                  boxSales(phone: true, title: 'ยอดมือถือ', quantity: '5', unit: 'เครื่อง'),
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => Store.currentIndex.value = 1,
