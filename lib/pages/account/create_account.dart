@@ -8,7 +8,8 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
-import 'package:tms/models/shop_profile_list.dart';
+import 'package:tms/models/register.model.dart';
+import 'package:tms/models/shop_profile_list.model.dart';
 import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
@@ -353,7 +354,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                         CallBack data = await API.get(url: '$hostDev/content/v1/partners/${_branch.text}', headers: Authorization.none);
                         if (data.success) {
-                          ShopProfileList shopProfileList = ShopProfileList.fromJson(data.response);
+                          ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
                           for (var e in shopProfileList.shopProfileList) {
                             _jobBranch.text = e.partnerNameTh;
                           }
@@ -408,6 +409,27 @@ class _CreateAccountState extends State<CreateAccount> {
                   text: 'สร้างบัญชี',
                   icon: BootstrapIcons.plus,
                   onPressed: () {
+                    // API.post(
+                    //   url: '$hostDev/user/v1/accounts/register',
+                    //   headers: Authorization.none,
+                    //   body: RegisterModel(
+                    //     employee: Employee(
+                    //       id: 'id',
+                    //       password: 'password',
+                    //       name: 'name',
+                    //       surname: 'surname',
+                    //       birthdate: DateTime.now(),
+                    //       mobile: 'mobile',
+                    //       email: 'email',
+                    //       roleCode: 'roleCode',
+                    //     ),
+                    //     otpRefId: '',
+                    //     partnerCode: '',
+                    //     partnerName: '',
+                    //     partnerTypeCode: '',
+                    //   ).toJson(),
+                    // );
+
                     if (_validateForm()) {
                       navigatorTo(
                         () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),

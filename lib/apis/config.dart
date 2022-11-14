@@ -2,9 +2,9 @@ import 'package:tms/state_management.dart';
 
 String hostDev = "http://139.59.119.249:4500";
 
-String errorTimeout = 'หมดเวลาการเชื่อมต่อ';
-String messageOffline = 'ขาดการเชื่อมต่ออินเทอร์เน็ต';
-String errorNotFound = 'กรุณาลองใหม่อีกครั้ง';
+String errorTimeout = 'หมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
+String messageOffline = 'ขาดการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
+String errorNotFound = 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
 
 enum Authorization { token, none }
 

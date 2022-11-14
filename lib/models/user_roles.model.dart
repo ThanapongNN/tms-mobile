@@ -1,62 +1,58 @@
 // To parse this JSON data, do
 //
-//     final partnerTypes = partnerTypesFromJson(jsonString);
+//     final userRolesModel = userRolesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-class PartnerTypes {
-  PartnerTypes({
+class UserRolesModel {
+  UserRolesModel({
     required this.code,
     required this.description,
-    required this.partnerTypes,
+    required this.userRoles,
   });
 
   String code;
   String description;
-  List<PartnerType> partnerTypes;
+  List<UserRole> userRoles;
 
-  factory PartnerTypes.fromRawJson(String str) => PartnerTypes.fromJson(json.decode(str));
+  factory UserRolesModel.fromRawJson(String str) => UserRolesModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory PartnerTypes.fromJson(Map<String, dynamic> json) => PartnerTypes(
+  factory UserRolesModel.fromJson(Map<String, dynamic> json) => UserRolesModel(
         code: json["code"],
         description: json["description"],
-        partnerTypes: List<PartnerType>.from(json["partnerTypes"].map((x) => PartnerType.fromJson(x))),
+        userRoles: List<UserRole>.from(json["userRoles"].map((x) => UserRole.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "code": code,
         "description": description,
-        "partnerTypes": List<dynamic>.from(partnerTypes.map((x) => x.toJson())),
+        "userRoles": List<dynamic>.from(userRoles.map((x) => x.toJson())),
       };
 }
 
-class PartnerType {
-  PartnerType({
+class UserRole {
+  UserRole({
     required this.code,
     required this.name,
-    this.dmsAppChannel,
   });
 
   String code;
   Name name;
-  dynamic dmsAppChannel;
 
-  factory PartnerType.fromRawJson(String str) => PartnerType.fromJson(json.decode(str));
+  factory UserRole.fromRawJson(String str) => UserRole.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory PartnerType.fromJson(Map<String, dynamic> json) => PartnerType(
+  factory UserRole.fromJson(Map<String, dynamic> json) => UserRole(
         code: json["code"],
         name: Name.fromJson(json["name"]),
-        dmsAppChannel: json["dmsAppChannel"],
       );
 
   Map<String, dynamic> toJson() => {
         "code": code,
         "name": name.toJson(),
-        "dmsAppChannel": dmsAppChannel,
       };
 }
 

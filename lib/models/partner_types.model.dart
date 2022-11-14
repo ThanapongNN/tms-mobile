@@ -1,58 +1,62 @@
 // To parse this JSON data, do
 //
-//     final userRoles = userRolesFromJson(jsonString);
+//     final partnerTypesModel = partnerTypesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-class UserRoles {
-  UserRoles({
+class PartnerTypesModel {
+  PartnerTypesModel({
     required this.code,
     required this.description,
-    required this.userRoles,
+    required this.partnerTypes,
   });
 
   String code;
   String description;
-  List<UserRole> userRoles;
+  List<PartnerType> partnerTypes;
 
-  factory UserRoles.fromRawJson(String str) => UserRoles.fromJson(json.decode(str));
+  factory PartnerTypesModel.fromRawJson(String str) => PartnerTypesModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory UserRoles.fromJson(Map<String, dynamic> json) => UserRoles(
+  factory PartnerTypesModel.fromJson(Map<String, dynamic> json) => PartnerTypesModel(
         code: json["code"],
         description: json["description"],
-        userRoles: List<UserRole>.from(json["userRoles"].map((x) => UserRole.fromJson(x))),
+        partnerTypes: List<PartnerType>.from(json["partnerTypes"].map((x) => PartnerType.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "code": code,
         "description": description,
-        "userRoles": List<dynamic>.from(userRoles.map((x) => x.toJson())),
+        "partnerTypes": List<dynamic>.from(partnerTypes.map((x) => x.toJson())),
       };
 }
 
-class UserRole {
-  UserRole({
+class PartnerType {
+  PartnerType({
     required this.code,
     required this.name,
+    this.dmsAppChannel,
   });
 
   String code;
   Name name;
+  dynamic dmsAppChannel;
 
-  factory UserRole.fromRawJson(String str) => UserRole.fromJson(json.decode(str));
+  factory PartnerType.fromRawJson(String str) => PartnerType.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory UserRole.fromJson(Map<String, dynamic> json) => UserRole(
+  factory PartnerType.fromJson(Map<String, dynamic> json) => PartnerType(
         code: json["code"],
         name: Name.fromJson(json["name"]),
+        dmsAppChannel: json["dmsAppChannel"],
       );
 
   Map<String, dynamic> toJson() => {
         "code": code,
         "name": name.toJson(),
+        "dmsAppChannel": dmsAppChannel,
       };
 }
 

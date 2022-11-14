@@ -1,7 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:tms/apis/controller/call_create_account.dart';
+import 'package:tms/apis/call/create_account.call.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';

@@ -241,11 +241,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   text: 'ถัดไป',
                   icon: BootstrapIcons.arrow_right,
                   onPressed: () {
-                    // print(_validateForm());
-                    navigatorTo(
-                      () => const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
-                      transition: Transition.rightToLeft,
-                    );
+                    if (_validateForm()) {
+                      navigatorTo(
+                        () => const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
+                        transition: Transition.rightToLeft,
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 10),

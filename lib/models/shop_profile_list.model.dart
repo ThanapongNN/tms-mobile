@@ -1,11 +1,11 @@
 // To parse this JSON data, do
 //
-//     final shopProfileList = shopProfileListFromJson(jsonString);
+//     final shopProfileListModel = shopProfileListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-class ShopProfileList {
-  ShopProfileList({
+class ShopProfileListModel {
+  ShopProfileListModel({
     required this.statusCode,
     required this.statusDesc,
     required this.shopProfileList,
@@ -13,16 +13,16 @@ class ShopProfileList {
 
   String statusCode;
   String statusDesc;
-  List<ShopProfileListElement> shopProfileList;
+  List<ShopProfileList> shopProfileList;
 
-  factory ShopProfileList.fromRawJson(String str) => ShopProfileList.fromJson(json.decode(str));
+  factory ShopProfileListModel.fromRawJson(String str) => ShopProfileListModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ShopProfileList.fromJson(Map<String, dynamic> json) => ShopProfileList(
+  factory ShopProfileListModel.fromJson(Map<String, dynamic> json) => ShopProfileListModel(
         statusCode: json["statusCode"],
         statusDesc: json["statusDesc"],
-        shopProfileList: List<ShopProfileListElement>.from(json["shopProfileList"].map((x) => ShopProfileListElement.fromJson(x))),
+        shopProfileList: List<ShopProfileList>.from(json["shopProfileList"].map((x) => ShopProfileList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class ShopProfileList {
       };
 }
 
-class ShopProfileListElement {
-  ShopProfileListElement({
+class ShopProfileList {
+  ShopProfileList({
     required this.partnerCode,
     required this.partnerTypeId,
     required this.partnerTypeName,
@@ -59,11 +59,11 @@ class ShopProfileListElement {
   String latitude;
   String longitude;
 
-  factory ShopProfileListElement.fromRawJson(String str) => ShopProfileListElement.fromJson(json.decode(str));
+  factory ShopProfileList.fromRawJson(String str) => ShopProfileList.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ShopProfileListElement.fromJson(Map<String, dynamic> json) => ShopProfileListElement(
+  factory ShopProfileList.fromJson(Map<String, dynamic> json) => ShopProfileList(
         partnerCode: json["partnerCode"],
         partnerTypeId: json["partnerTypeId"],
         partnerTypeName: json["partnerTypeName"],
