@@ -8,8 +8,10 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
+import 'package:tms/models/partner_types.model.dart';
 import 'package:tms/models/register.model.dart';
 import 'package:tms/models/shop_profile_list.model.dart';
+import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
@@ -64,14 +66,20 @@ class _CreateAccountState extends State<CreateAccount> {
     false,
   ];
 
-  List<String> itemsDays = [], itemsYears = [];
+  List<String> nameShop = [], itemsJobs = [], itemsDays = [], itemsYears = [];
 
   String? selectedDay, selectedMonth, selectedYear, selectedJob;
   Timer? _timer;
 
+  PartnerTypesModel partner = PartnerTypesModel.fromJson(Store.partnerTypes);
+  UserRolesModel user = UserRolesModel.fromJson(Store.userRoles);
+
   @override
   void initState() {
     super.initState();
+
+    nameShop = partner.partnerTypes.map((e) => e.name.th).toList();
+    itemsJobs = user.userRoles.map((e) => e.name.th).toList();
     itemsDays = listStringNumber(start: 1, end: 31);
     itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
   }
@@ -90,7 +98,7 @@ class _CreateAccountState extends State<CreateAccount> {
             // });
           },
         ),
-        text(Store.partnerTypes[index], color: index == 0 ? Colors.black : Colors.grey),
+        text(nameShop[index], color: index == 0 ? Colors.black : Colors.grey),
       ]),
     );
   }
@@ -147,8 +155,7 @@ class _CreateAccountState extends State<CreateAccount> {
             autovalidateMode: _autovalidateMode,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: text('เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
-              Wrap(children: Store.partnerTypes.map<Widget>((e) => checkBoxShop(Store.partnerTypes.indexOf(e))).toList())
-                  .paddingSymmetric(horizontal: 20),
+              Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Center(child: text('ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
@@ -317,7 +324,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   Row(children: [
                     dropdown(
                       hint: 'กรุณาเลือกตำแหน่งงาน',
-                      items: Store.userRoles,
+                      items: itemsJobs,
                       selectedValue: selectedJob,
                       borderColor: borderJob,
                       onChanged: (job) {
@@ -337,7 +344,8 @@ class _CreateAccountState extends State<CreateAccount> {
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.search,
+                  inputFormatters: [TextInputFormatter.filterInputNumber],
+                  textInputAction: TextInputAction.done,
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -409,28 +417,25 @@ class _CreateAccountState extends State<CreateAccount> {
                   text: 'สร้างบัญชี',
                   icon: BootstrapIcons.plus,
                   onPressed: () {
-                    // API.post(
-                    //   url: '$hostDev/user/v1/accounts/register',
-                    //   headers: Authorization.none,
-                    //   body: RegisterModel(
-                    //     employee: Employee(
-                    //       id: 'id',
-                    //       password: 'password',
-                    //       name: 'name',
-                    //       surname: 'surname',
-                    //       birthdate: DateTime.now(),
-                    //       mobile: 'mobile',
-                    //       email: 'email',
-                    //       roleCode: 'roleCode',
-                    //     ),
-                    //     otpRefId: '',
-                    //     partnerCode: '',
-                    //     partnerName: '',
-                    //     partnerTypeCode: '',
-                    //   ).toJson(),
-                    // );
-
                     if (_validateForm()) {
+                      Store.registerBody.value = RegisterModel(
+                        otpRefId: '',
+                        partnerTypeCode: partner.partnerTypes[selectShop.indexOf(true)].code,
+                        partnerCode: _branch.text,
+                        partnerName: _jobBranch.text,
+                        employee: Employee(
+                          id: _saleID.text,
+                          password: '',
+                          name: _firstName.text,
+                          surname: _lastName.text,
+                          birthdate: DateTime.parse(
+                              '${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}'),
+                          mobile: _phoneNumber.text.replaceAll('-', ''),
+                          email: _email.text,
+                          roleCode: user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                        ),
+                      ).toJson();
+
                       navigatorTo(
                         () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
                         transition: Transition.rightToLeft,

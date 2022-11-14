@@ -84,11 +84,13 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     setState(() {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
                     });
-                    // print(_formKey.currentState!.validate());
-                    navigatorTo(
-                      () => const ConfirmOTP(titleAppbar: 'ปิดบัญชีใช้งาน', titleBody: 'ยืนยันการปิดบัญชี', fromDeactivateAccount: true),
-                      transition: Transition.rightToLeft,
-                    );
+
+                    if (_formKey.currentState!.validate()) {
+                      navigatorTo(
+                        () => const ConfirmOTP(titleAppbar: 'ปิดบัญชีใช้งาน', titleBody: 'ยืนยันการปิดบัญชี', fromDeactivateAccount: true),
+                        transition: Transition.rightToLeft,
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 10),

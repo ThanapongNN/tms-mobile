@@ -138,6 +138,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   controller: _branch,
                   textLable: 'รหัสสาขา',
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  maxLength: 8,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [TextInputFormatter.filterInputNumber],
+                  textInputAction: TextInputAction.done,
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {

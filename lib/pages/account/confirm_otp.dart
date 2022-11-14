@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:tms/apis/api.dart';
+import 'package:tms/apis/config.dart';
+import 'package:tms/models/register.model.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/pages/account/new_password.dart';
+import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/count_down.dart';
 import 'package:tms/widgets/navigator.dart';
@@ -57,25 +61,33 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               controller: _otp,
               errorAnimationController: errorController,
               hasError: hasError,
-              onCompleted: (value) {
+              onCompleted: (value) async {
                 if (value.length == 6) {
                   // dialog(content: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่');
                   // dialog(content: 'รหัส OTP หมดอายุ กรุณาขอรหัส OTP และทำรายการใหม่');
-                  if (widget.fromDeactivateAccount) {
-                    navigatorOffAll(
-                      () => AccountSuccess(
-                        titleAppbar: widget.titleAppbar,
-                        titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
-                        textButton: 'กลับสู่หน้าแรก',
-                        icon: BootstrapIcons.house,
-                      ),
-                      transition: Transition.rightToLeft,
-                    );
-                  } else {
-                    navigatorOff(
-                      () => NewPassword(titleAppbar: widget.titleAppbar),
-                      transition: Transition.rightToLeft,
-                    );
+                  CallBack data = await API.post(
+                    url: '$hostDev/support/v1/otp/request',
+                    headers: Authorization.none,
+                    body: {"msisdn": "string", "refId": "string", "otp": _otp.text},
+                  );
+                  if (data.success) {
+                    Store.registerBody['otpRefId'] = data.response['refId'];
+                    if (widget.fromDeactivateAccount) {
+                      navigatorOffAll(
+                        () => AccountSuccess(
+                          titleAppbar: widget.titleAppbar,
+                          titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
+                          textButton: 'กลับสู่หน้าแรก',
+                          icon: BootstrapIcons.house,
+                        ),
+                        transition: Transition.rightToLeft,
+                      );
+                    } else {
+                      navigatorOff(
+                        () => NewPassword(titleAppbar: widget.titleAppbar),
+                        transition: Transition.rightToLeft,
+                      );
+                    }
                   }
                 }
               },

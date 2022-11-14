@@ -95,8 +95,10 @@ class _LoginPageState extends State<LoginPage> {
                     setState(() {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
                     });
-                    // print(_formKey.currentState!.validate());
-                    navigatorOffAll(() => const Menu());
+
+                    if (_formKey.currentState!.validate()) {
+                      navigatorOffAll(() => const Menu());
+                    }
                   },
                   child: text('เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
                 ),
