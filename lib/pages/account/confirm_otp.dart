@@ -64,31 +64,32 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 if (value.length == 6) {
                   // dialog(content: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่');
                   // dialog(content: 'รหัส OTP หมดอายุ กรุณาขอรหัส OTP และทำรายการใหม่');
-                  CallBack data = await API.post(
-                    url: '$hostDev/support/v1/otp/request',
-                    headers: Authorization.none,
-                    body: {"msisdn": "string", "refId": "string", "otp": _otp.text},
-                  );
 
-                  if (data.success) {
-                    Store.registerBody['otpRefId'] = data.response['refId'];
-                    if (widget.fromDeactivateAccount) {
-                      navigatorOffAll(
-                        () => AccountSuccess(
-                          titleAppbar: widget.titleAppbar,
-                          titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
-                          textButton: 'กลับสู่หน้าแรก',
-                          icon: BootstrapIcons.house,
-                        ),
-                        transition: Transition.rightToLeft,
-                      );
-                    } else {
-                      navigatorOff(
-                        () => NewPassword(titleAppbar: widget.titleAppbar),
-                        transition: Transition.rightToLeft,
-                      );
-                    }
+                  // CallBack data = await API.call(
+                  //   method: Method.post,
+                  //   url: '$hostDev/support/v1/otp/validation',
+                  //   headers: Authorization.none,
+                  //   body: {"msisdn": "string", "refId": "string", "otp": "string"},
+                  // );
+
+                  // if (data.success) {
+                  if (widget.fromDeactivateAccount) {
+                    navigatorOffAll(
+                      () => AccountSuccess(
+                        titleAppbar: widget.titleAppbar,
+                        titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
+                        textButton: 'กลับสู่หน้าแรก',
+                        icon: BootstrapIcons.house,
+                      ),
+                      transition: Transition.rightToLeft,
+                    );
+                  } else {
+                    navigatorOff(
+                      () => NewPassword(titleAppbar: widget.titleAppbar),
+                      transition: Transition.rightToLeft,
+                    );
                   }
+                  // }
                 }
               },
             ),

@@ -359,7 +359,12 @@ class _CreateAccountState extends State<CreateAccount> {
                       () async {
                         _timer?.cancel();
 
-                        CallBack data = await API.get(url: '$hostDev/content/v1/partners/${_branch.text}', headers: Authorization.none);
+                        CallBack data = await API.call(
+                          method: Method.get,
+                          url: '$hostDev/content/v1/partners/${_branch.text}',
+                          headers: Authorization.none,
+                        );
+
                         if (data.success) {
                           ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
                           for (var e in shopProfileList.shopProfileList) {
@@ -415,30 +420,39 @@ class _CreateAccountState extends State<CreateAccount> {
                 button(
                   text: 'สร้างบัญชี',
                   icon: BootstrapIcons.plus,
-                  onPressed: () {
+                  onPressed: () async {
                     if (_validateForm()) {
-                      Store.registerBody.value = {
-                        "otpRefId": '',
-                        "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                        "partnerCode": _branch.text,
-                        "partnerName": _jobBranch.text,
-                        "employee": {
-                          "id": _saleID.text,
-                          "password": '',
-                          "name": _firstName.text,
-                          "surname": _lastName.text,
-                          "birthdate":
-                              '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
-                          "mobile": _phoneNumber.text.replaceAll('-', ''),
-                          "email": _email.text,
-                          "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
-                        }
-                      };
-
-                      navigatorTo(
-                        () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
-                        transition: Transition.rightToLeft,
+                      CallBack data = await API.call(
+                        method: Method.post,
+                        url: '$hostDev/support/v1/otp/request',
+                        headers: Authorization.none,
+                        body: {"msisdn": "string"},
                       );
+
+                      if (data.success) {
+                        Store.registerBody.value = {
+                          "otpRefId": data.response['refId'],
+                          "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
+                          "partnerCode": _branch.text,
+                          "partnerName": _jobBranch.text,
+                          "employee": {
+                            "id": _saleID.text,
+                            "password": '',
+                            "name": _firstName.text,
+                            "surname": _lastName.text,
+                            "birthdate":
+                                '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                            "mobile": _phoneNumber.text.replaceAll('-', ''),
+                            "email": _email.text,
+                            "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                          }
+                        };
+
+                        navigatorTo(
+                          () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
                     }
                   },
                 ),

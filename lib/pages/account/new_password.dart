@@ -117,7 +117,8 @@ class _NewPasswordState extends State<NewPassword> {
                     if (_formKey.currentState!.validate()) {
                       Store.registerBody['employee']['password'] = _password.text;
 
-                      CallBack data = await API.post(
+                      CallBack data = await API.call(
+                        method: Method.post,
                         url: '$hostDev/user/v1/accounts/register',
                         headers: Authorization.none,
                         body: Store.registerBody,
