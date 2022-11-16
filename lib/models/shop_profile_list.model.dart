@@ -6,88 +6,76 @@ import 'dart:convert';
 
 class ShopProfileListModel {
   ShopProfileListModel({
-    required this.statusCode,
-    required this.statusDesc,
-    required this.shopProfileList,
+    required this.code,
+    required this.description,
+    required this.partner,
   });
 
-  String statusCode;
-  String statusDesc;
-  List<ShopProfileList> shopProfileList;
+  String code;
+  String description;
+  Partner partner;
 
   factory ShopProfileListModel.fromRawJson(String str) => ShopProfileListModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory ShopProfileListModel.fromJson(Map<String, dynamic> json) => ShopProfileListModel(
-        statusCode: json["statusCode"],
-        statusDesc: json["statusDesc"],
-        shopProfileList: List<ShopProfileList>.from(json["shopProfileList"].map((x) => ShopProfileList.fromJson(x))),
+        code: json["code"],
+        description: json["description"],
+        partner: Partner.fromJson(json["partner"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "statusCode": statusCode,
-        "statusDesc": statusDesc,
-        "shopProfileList": List<dynamic>.from(shopProfileList.map((x) => x.toJson())),
+        "code": code,
+        "description": description,
+        "partner": partner.toJson(),
       };
 }
 
-class ShopProfileList {
-  ShopProfileList({
-    required this.partnerCode,
-    required this.partnerTypeId,
-    required this.partnerTypeName,
-    required this.partnerNameEn,
-    required this.partnerNameTh,
-    required this.shopNameEn,
-    required this.shopNameTh,
-    required this.channelAlias,
-    required this.channelName,
-    required this.latitude,
-    required this.longitude,
+class Partner {
+  Partner({
+    required this.code,
+    required this.name,
   });
 
-  String partnerCode;
-  String partnerTypeId;
-  String partnerTypeName;
-  String partnerNameEn;
-  String partnerNameTh;
-  String shopNameEn;
-  String shopNameTh;
-  String channelAlias;
-  String channelName;
-  String latitude;
-  String longitude;
+  String code;
+  Name name;
 
-  factory ShopProfileList.fromRawJson(String str) => ShopProfileList.fromJson(json.decode(str));
+  factory Partner.fromRawJson(String str) => Partner.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ShopProfileList.fromJson(Map<String, dynamic> json) => ShopProfileList(
-        partnerCode: json["partnerCode"],
-        partnerTypeId: json["partnerTypeId"],
-        partnerTypeName: json["partnerTypeName"],
-        partnerNameEn: json["partnerNameEn"],
-        partnerNameTh: json["partnerNameTh"],
-        shopNameEn: json["shopNameEn"],
-        shopNameTh: json["shopNameTh"],
-        channelAlias: json["channelAlias"],
-        channelName: json["channelName"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
+  factory Partner.fromJson(Map<String, dynamic> json) => Partner(
+        code: json["code"],
+        name: Name.fromJson(json["name"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "partnerCode": partnerCode,
-        "partnerTypeId": partnerTypeId,
-        "partnerTypeName": partnerTypeName,
-        "partnerNameEn": partnerNameEn,
-        "partnerNameTh": partnerNameTh,
-        "shopNameEn": shopNameEn,
-        "shopNameTh": shopNameTh,
-        "channelAlias": channelAlias,
-        "channelName": channelName,
-        "latitude": latitude,
-        "longitude": longitude,
+        "code": code,
+        "name": name.toJson(),
+      };
+}
+
+class Name {
+  Name({
+    required this.th,
+    required this.en,
+  });
+
+  String th;
+  String en;
+
+  factory Name.fromRawJson(String str) => Name.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Name.fromJson(Map<String, dynamic> json) => Name(
+        th: json["th"],
+        en: json["en"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "th": th,
+        "en": en,
       };
 }

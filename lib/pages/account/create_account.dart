@@ -293,6 +293,8 @@ class _CreateAccountState extends State<CreateAccount> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุเบอร์โทรศัพท์มือถือ\n';
+                    } else if (!value.startsWith(RegExp(r'06|08|09'))) {
+                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือ เพื่อใช้รับรหัสยืนยันการสร้างบัญชี\n';
                     } else if (value.length != 12) {
                       return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก\n';
                     }
@@ -303,14 +305,13 @@ class _CreateAccountState extends State<CreateAccount> {
                 formField(
                   controller: _email,
                   textLable: 'อีเมล',
-                  required: false,
                   hintText: 'กรุณากรอก',
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value!.isNotEmpty) {
-                      if (!EmailValidator.validate(value)) {
-                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
-                      }
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุอีเมล\n';
+                    } else if (!EmailValidator.validate(value)) {
+                      return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
                     }
                     return null;
                   },
@@ -367,9 +368,8 @@ class _CreateAccountState extends State<CreateAccount> {
 
                         if (data.success) {
                           ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                          for (var e in shopProfileList.shopProfileList) {
-                            _jobBranch.text = e.partnerNameTh;
-                          }
+                          _branch.text = shopProfileList.partner.code;
+                          _jobBranch.text = shopProfileList.partner.name.th;
                         }
                       },
                     );
@@ -426,7 +426,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         method: Method.post,
                         url: '$hostDev/support/v1/otp/request',
                         headers: Authorization.none,
-                        body: {"msisdn": "string"},
+                        body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
                       );
 
                       if (data.success) {
@@ -449,7 +449,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         };
 
                         navigatorTo(
-                          () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                          () => ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี', otpRefId: data.response['refId']),
                           transition: Transition.rightToLeft,
                         );
                       }
