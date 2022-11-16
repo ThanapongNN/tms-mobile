@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
@@ -68,7 +66,6 @@ class _CreateAccountState extends State<CreateAccount> {
   List<String> nameShop = [], itemsJobs = [], itemsDays = [], itemsYears = [];
 
   String? selectedDay, selectedMonth, selectedYear, selectedJob;
-  Timer? _timer;
 
   PartnerTypesModel partner = PartnerTypesModel.fromJson(Store.partnerTypes);
   UserRolesModel user = UserRolesModel.fromJson(Store.userRoles);
@@ -354,25 +351,15 @@ class _CreateAccountState extends State<CreateAccount> {
                     return null;
                   },
                   onChanged: (value) {
-                    _timer?.cancel();
-                    _timer = Timer(
-                      const Duration(seconds: 1),
-                      () async {
-                        _timer?.cancel();
-
-                        CallBack data = await API.call(
-                          method: Method.get,
-                          url: '$hostDev/content/v1/partners/${_branch.text}',
-                          headers: Authorization.none,
-                        );
-
+                    if (value.length == 8) {
+                      API.call(method: Method.get, url: '$hostDev/content/v1/partners/${_branch.text}', headers: Authorization.none).then((data) {
                         if (data.success) {
                           ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
                           _branch.text = shopProfileList.partner.code;
                           _jobBranch.text = shopProfileList.partner.name.th;
                         }
-                      },
-                    );
+                      });
+                    }
                   },
                 ),
                 formField(

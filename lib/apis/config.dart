@@ -1,6 +1,7 @@
 import 'package:tms/state_management.dart';
 
-String hostDev = "http://139.59.119.249:4500";
+// String hostDev = "http://139.59.119.249:4500";
+String hostDev = "https://tms-api-test-192-168-68-105.loca.lt";
 
 String errorTimeout = 'หมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
 String messageOffline = 'ขาดการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
