@@ -355,8 +355,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       API.call(method: Method.get, url: '$hostDev/content/v1/partners/${_branch.text}', headers: Authorization.none).then((data) {
                         if (data.success) {
                           ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                          _branch.text = shopProfileList.partner.code;
-                          _jobBranch.text = shopProfileList.partner.name.th;
+                          _branch.text = shopProfileList.partner[0].code;
+                          _jobBranch.text = shopProfileList.partner[0].name.th;
                         }
                       });
                     }
