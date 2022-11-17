@@ -8,6 +8,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/device_serial.dart';
 import 'package:tms/utils/package_version.dart';
 
 void main() {
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'th'; //ตั้งภาษาแรกตามพื้นที่
     initializeDateFormatting('th', null); //ตั้งปฏิทินแรกตามพื้นที่
-    packageVersion(); //ดึงค่าเวอร์ชั่นแอป
+    getPackageVersion(); //ดึงค่าเวอร์ชั่นแอป
+    getDeviceSerial(); //ดึงค่า device_id
 
     return GetMaterialApp(
       title: 'TMS ช่วยขาย true',

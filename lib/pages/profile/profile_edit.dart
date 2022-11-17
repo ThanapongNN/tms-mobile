@@ -2,6 +2,8 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tms/models/user_account.model.dart';
+import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
@@ -43,6 +45,8 @@ class _ProfileEditState extends State<ProfileEdit> {
   bool errorMonth = false;
   bool errorYear = false;
 
+  UserAccountModel userAccount = UserAccountModel.fromJson(Store.userProfile);
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +57,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('แก้ไขข้อมูล')),
+        appBar: AppBar(title: const Text('แก้ไขข้อมูล (MOCK)')),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
@@ -65,11 +69,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                   CircleAvatar(
                     backgroundColor: Colors.brown.shade800,
                     maxRadius: 40,
-                    child: text('AH'),
+                    child: text(
+                      '${userAccount.account.name.substring(0, 1).toUpperCase()}${userAccount.account.surname.substring(0, 1).toUpperCase()}',
+                      fontSize: 28,
+                    ),
                   ),
                   const SizedBox(height: 10),
-                  text('ศนันธฉัตร  ธนพัฒน์พิศาล'),
-                  text('7-11 สาขาเจริญนคร 27'),
+                  text('คุณ${userAccount.account.name} ${userAccount.account.surname}'),
+                  text(userAccount.account.partnerName),
                   const SizedBox(height: 10),
                   listTile(
                     svgicon: 'assets/icons/pinlocation.svg',

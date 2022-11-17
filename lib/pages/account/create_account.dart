@@ -350,15 +350,20 @@ class _CreateAccountState extends State<CreateAccount> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
+                  onChanged: (value) async {
                     if (value.length == 8) {
-                      API.call(method: Method.get, url: '$hostDev/content/v1/partners/${_branch.text}', headers: Authorization.none).then((data) {
-                        if (data.success) {
-                          ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                          _branch.text = shopProfileList.partner[0].code;
-                          _jobBranch.text = shopProfileList.partner[0].name.th;
-                        }
-                      });
+                      CallBack data = await API.call(
+                        method: Method.get,
+                        url: '$hostTrue/content/v1/partners/${_branch.text}',
+                        headers: Authorization.none,
+                        errorMessage: 'ไม่พบรหัสสาขานี้ โปรดระบุใหม่อีกครั้ง',
+                      );
+
+                      if (data.success) {
+                        ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
+                        _branch.text = shopProfileList.partner[0].code;
+                        _jobBranch.text = shopProfileList.partner[0].name.th;
+                      }
                     }
                   },
                 ),
@@ -411,14 +416,15 @@ class _CreateAccountState extends State<CreateAccount> {
                     if (_validateForm()) {
                       CallBack data = await API.call(
                         method: Method.post,
-                        url: '$hostDev/support/v1/otp/request',
+                        url: '$hostTrue/support/v1/otp/request',
                         headers: Authorization.none,
                         body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
                       );
 
                       if (data.success) {
+                        Store.otpRefID.value = data.response['refId'];
                         Store.registerBody.value = {
-                          "otpRefId": data.response['refId'],
+                          "otpRefId": '',
                           "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
                           "partnerCode": _branch.text,
                           "partnerName": _jobBranch.text,
@@ -436,7 +442,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         };
 
                         navigatorTo(
-                          () => ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี', otpRefId: data.response['refId']),
+                          () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
                           transition: Transition.rightToLeft,
                         );
                       }

@@ -20,6 +20,7 @@ class API {
     Object? body,
     bool showDialog = true,
     bool showLoading = true,
+    String? errorMessage,
   }) async {
     try {
       Response response;
@@ -53,8 +54,8 @@ class API {
         return CallBack(success: true, response: jsonDecode(response.body));
       } else {
         Map dataError = jsonDecode(response.body);
-        String errorMessage = dataError["description"] ?? errorNotFound;
-        dialog(content: errorMessage, showDialog: showDialog);
+        errorMessage = errorMessage ?? dataError["description"] ?? errorNotFound;
+        dialog(content: errorMessage!, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
       }
     } on TimeoutException catch (_) {
@@ -66,9 +67,9 @@ class API {
       if (showLoading) EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
     } catch (error) {
-      dialog(content: error.toString());
+      dialog(content: errorNotFound);
       if (showLoading) EasyLoading.dismiss();
-      return CallBack(success: false, response: error);
+      return CallBack(success: false, response: errorNotFound);
     }
   }
 
@@ -77,6 +78,7 @@ class API {
     required String url,
     required List<MultipartFile> files,
     bool showDialog = true,
+    String? errorMessage,
   }) async {
     EasyLoading.show();
     MultipartRequest request = http.MultipartRequest('POST', Uri.parse(url));
@@ -99,8 +101,8 @@ class API {
         return CallBack(success: true, response: jsonDecode(resStr));
       } else {
         Map dataError = jsonDecode(resStr)[0];
-        String errorMessage = dataError["description"] ?? errorNotFound;
-        dialog(content: errorMessage, showDialog: showDialog);
+        errorMessage = errorMessage ?? dataError["description"] ?? errorNotFound;
+        dialog(content: errorMessage!, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
       }
     } on TimeoutException catch (_) {
@@ -112,9 +114,9 @@ class API {
       EasyLoading.dismiss();
       return CallBack(success: false, response: messageOffline);
     } catch (error) {
-      dialog(content: error.toString());
+      dialog(content: errorNotFound);
       EasyLoading.dismiss();
-      return CallBack(success: false, response: error);
+      return CallBack(success: false, response: errorNotFound);
     }
   }
 }

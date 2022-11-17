@@ -1,8 +1,13 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:tms/models/user_account.model.dart';
+import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/deactivate_account.dart';
 import 'package:tms/pages/profile/profile_edit.dart';
+import 'package:tms/state_management.dart';
+import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/listtile.dart';
 import 'package:tms/widgets/navigator.dart';
@@ -17,6 +22,22 @@ class ProfileDetail extends StatefulWidget {
 
 class _ProfileDetailState extends State<ProfileDetail> {
   bool switchValue = true;
+  String userRolesName = '';
+
+  UserAccountModel userAccount = UserAccountModel.fromJson(Store.userProfile);
+  UserRolesModel userRoles = UserRolesModel.fromJson(Store.userRoles);
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (var userRole in userRoles.userRoles) {
+      if (userAccount.account.roleCode == userRole.code) {
+        userRolesName = userRole.name.th;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,26 +51,32 @@ class _ProfileDetailState extends State<ProfileDetail> {
           CircleAvatar(
             backgroundColor: Colors.brown.shade800,
             maxRadius: 40,
-            child: text('AH'),
+            child: text(
+              '${userAccount.account.name.substring(0, 1).toUpperCase()}${userAccount.account.surname.substring(0, 1).toUpperCase()}',
+              fontSize: 28,
+            ),
           ),
           const SizedBox(height: 10),
-          text('ศนันธฉัตร  ธนพัฒน์พิศาล'),
-          text('7-11 สาขาเจริญนคร 27'),
+          text('คุณ${userAccount.account.name} ${userAccount.account.surname}'),
+          text(userAccount.account.partnerName),
           const SizedBox(height: 10),
           listTile(
             svgicon: 'assets/icons/pinlocation.svg',
             title: 'สถานที่ทำงาน',
-            content: '7-11 สาขาเจริญนคร 27',
-            trailing: Column(
-              children: [
-                text('1122334455'),
-              ],
-            ),
+            content: userAccount.account.partnerName,
+            trailing: Column(children: [text(userAccount.account.partnerCode)]),
           ),
-          listTile(svgicon: 'assets/icons/person.svg', title: 'ตำแหน่งงาน', content: 'พนักงานขาย'),
-          listTile(svgicon: 'assets/icons/cake.svg', title: 'วันเดือนปีเกิด', content: '25 มกราคม 2540'),
-          listTile(svgicon: 'assets/icons/phone.svg', title: 'เบอร์มือถือ', content: '089-980-0909'),
-          listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: 'Sananthachat@gmail.com'),
+          listTile(svgicon: 'assets/icons/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
+          listTile(
+              svgicon: 'assets/icons/cake.svg',
+              title: 'วันเดือนปีเกิด',
+              content: DateFormat('dd MMMM ${userAccount.account.birthdate.year + 543}').format(userAccount.account.birthdate)),
+          listTile(
+            svgicon: 'assets/icons/phone.svg',
+            title: 'เบอร์มือถือ',
+            content: TextInputFormatter.maskTextPhoneNumber.maskText(userAccount.account.mobileNo),
+          ),
+          listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: userAccount.account.email),
           const Spacer(),
           button(
               text: 'แก้ไขข้อมูล',

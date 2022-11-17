@@ -89,7 +89,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('ลืมรหัสผ่าน')),
+        appBar: AppBar(title: const Text('ลืมรหัสผ่าน (MOCK)')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Form(

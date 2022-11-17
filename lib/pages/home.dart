@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tms/models/user_account.model.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -21,6 +22,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  UserAccountModel userAccount = UserAccountModel.fromJson(Store.userProfile);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +37,13 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             color: ThemeColor.primaryColor,
             child: Row(children: [
-              CircleAvatar(backgroundColor: Colors.brown.shade800, child: text('AH')),
+              CircleAvatar(
+                backgroundColor: Colors.brown.shade800,
+                child: text('${userAccount.account.name.substring(0, 1).toUpperCase()}${userAccount.account.surname.substring(0, 1).toUpperCase()}'),
+              ),
               const SizedBox(width: 5),
-              Expanded(child: text('คุณทดสอบ ชอบทดลอง', color: Colors.white)),
-              FittedBox(child: text('7-11 สาขาเจริญนคร 27', color: Colors.white))
+              Expanded(child: text('คุณ${userAccount.account.name} ${userAccount.account.surname}', color: Colors.white)),
+              FittedBox(child: text(userAccount.account.partnerName, color: Colors.white))
             ]),
           ),
         ),

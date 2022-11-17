@@ -59,7 +59,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
       drawer: drawer(),
       body: CustomScrollView(slivers: [
         SliverAppBar(
-          title: text('ยอดขาย', fontSize: 20),
+          title: text('ยอดขาย (MOCK)', fontSize: 20),
           centerTitle: true,
           elevation: 0,
           pinned: true,

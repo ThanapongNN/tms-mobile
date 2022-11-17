@@ -1,10 +1,14 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:tms/apis/api.dart';
 import 'package:tms/apis/call/create_account.call.dart';
+import 'package:tms/apis/config.dart';
+import 'package:tms/models/user_token_access.model.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
 import 'package:tms/pages/menu.dart';
+import 'package:tms/state_management.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
@@ -91,13 +95,42 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(35),
                     side: const BorderSide(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
                     });
 
                     if (_formKey.currentState!.validate()) {
-                      navigatorOffAll(() => const Menu());
+                      CallBack data = await API.call(
+                        method: Method.post,
+                        url: '$hostTrue/user/v1/token/access',
+                        headers: Authorization.none,
+                        body: {
+                          "deviceId": Store.deviceSerial.value,
+                          "user": _user.text,
+                          "password": _password.text,
+                        },
+                        errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
+                      );
+
+                      if (data.success) {
+                        UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(data.response);
+                        Store.token.value = userTokenAccess.token;
+
+                        CallBack userProfile = await API.call(
+                          method: Method.get,
+                          url: '$hostTrue/user/v1/accounts/${_user.text}',
+                          headers: Authorization.none,
+                        );
+                        if (userProfile.success) Store.userProfile.value = userProfile.response;
+
+                        if (Store.userRoles.isEmpty) {
+                          CallBack data = await API.call(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none);
+                          if (data.success) Store.userRoles.value = data.response;
+                        }
+
+                        navigatorOffAll(() => const Menu());
+                      }
                     }
                   },
                   child: text('เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
@@ -110,8 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await callCreateAccount();
-                      navigatorTo(() => const CreateAccount());
+                      bool isSuccess = await callCreateAccount();
+                      if (isSuccess) navigatorTo(() => const CreateAccount());
                     },
                     child: text('สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),

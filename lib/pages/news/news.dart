@@ -34,7 +34,13 @@ class _NewsPageState extends State<NewsPage> {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
+              const Text('  (MOCK)'),
+            ],
+          ),
           centerTitle: true,
           elevation: 0,
           bottom: PreferredSize(

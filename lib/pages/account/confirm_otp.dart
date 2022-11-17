@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/index.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -11,17 +12,15 @@ import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/pages/account/new_password.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
-import 'package:tms/widgets/count_down.dart';
-import 'package:tms/widgets/dialog.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/pin_code_field.dart';
 import 'package:tms/widgets/text.dart';
 
 class ConfirmOTP extends StatefulWidget {
-  final String titleAppbar, titleBody, otpRefId;
+  final String titleAppbar, titleBody;
   final bool fromDeactivateAccount;
 
-  const ConfirmOTP({super.key, required this.titleAppbar, required this.titleBody, this.otpRefId = '', this.fromDeactivateAccount = false});
+  const ConfirmOTP({super.key, required this.titleAppbar, required this.titleBody, this.fromDeactivateAccount = false});
 
   @override
   State<ConfirmOTP> createState() => _ConfirmOTPState();
@@ -30,6 +29,7 @@ class ConfirmOTP extends StatefulWidget {
 class _ConfirmOTPState extends State<ConfirmOTP> {
   final _otp = TextEditingController();
   final errorController = StreamController<ErrorAnimationType>();
+
   bool hasError = false;
 
   @override
@@ -51,10 +51,30 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(30)),
-              child: text('Ref: ${widget.otpRefId}', color: Colors.white, fontSize: 14),
+              child: text('Ref: ${Store.otpRefID.value}', color: Colors.white, fontSize: 14),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              countdown(datetime: DateTime.now().add(const Duration(minutes: 3))),
+              CountdownTimer(
+                endTime: DateTime.now().millisecondsSinceEpoch + 1000 * 180,
+                widgetBuilder: (context, time) {
+                  return Flexible(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: 'รหัสยืนยันการใช้งาน จะหมดอายุใน ',
+                        style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
+                        children: [
+                          TextSpan(
+                            text: '0${time?.min ?? 0} : ${time?.sec.toString().padLeft(2, '0') ?? '00'}',
+                            style: const TextStyle(color: ThemeColor.primaryColor, fontWeight: FontWeight.bold),
+                          ),
+                          const TextSpan(text: ' นาที\nหลังทำการขอรหัส หากไม่ได้รับรหัสผ่าน\nกรุณากดขอรหัสผ่านใหม่อีกครั้ง')
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ]).paddingSymmetric(vertical: 20),
             pinCodeField(
               appContext: context,
@@ -65,10 +85,10 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 if (value.length == 6) {
                   CallBack data = await API.call(
                     method: Method.post,
-                    url: '$hostDev/support/v1/otp/validation',
+                    url: '$hostTrue/support/v1/otp/validation',
                     headers: Authorization.none,
-                    body: {"msisdn": Store.registerBody['employee']['mobile'], "refId": Store.registerBody['otpRefId'], "otp": _otp.text},
-                    showDialog: false,
+                    body: {"msisdn": Store.registerBody['employee']['mobile'], "refId": Store.otpRefID.value, "otp": _otp.text},
+                    errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
                   );
 
                   if (data.success) {
@@ -83,23 +103,33 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                         transition: Transition.rightToLeft,
                       );
                     } else {
+                      Store.registerBody['otpRefId'] = Store.otpRefID.value;
                       navigatorOff(
                         () => NewPassword(titleAppbar: widget.titleAppbar),
                         transition: Transition.rightToLeft,
                       );
                     }
-                  } else {
-                    dialog(content: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่');
-                    // dialog(content: 'รหัส OTP หมดอายุ กรุณาขอรหัส OTP และทำรายการใหม่');
                   }
                 }
               },
             ),
-            text(
-              'ขอรหัสอีกครั้ง',
-              color: ThemeColor.primaryColor,
-              decoration: TextDecoration.underline,
-            ).paddingAll(20),
+            GestureDetector(
+              onTap: () async {
+                CallBack data = await API.call(
+                  method: Method.post,
+                  url: '$hostTrue/support/v1/otp/request',
+                  headers: Authorization.none,
+                  body: {"msisdn": Store.registerBody['employee']['mobile']},
+                );
+
+                if (data.success) setState(() {});
+              },
+              child: text(
+                'ขอรหัสอีกครั้ง',
+                color: ThemeColor.primaryColor,
+                decoration: TextDecoration.underline,
+              ).paddingAll(20),
+            ),
           ]),
         ),
       ),

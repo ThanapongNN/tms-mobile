@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:tms/apis/api.dart';
+import 'package:tms/apis/config.dart';
+import 'package:tms/models/user_account.model.dart';
 import 'package:tms/pages/account/change_password.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/pages/profile/profile_detail.dart';
@@ -13,10 +16,11 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 Widget drawer() {
+  UserAccountModel userAccount = UserAccountModel.fromJson(Store.userProfile);
   return Drawer(
     child: Column(children: <Widget>[
       SizedBox(
-        height: 240,
+        height: 220,
         width: double.infinity,
         child: DrawerHeader(
           decoration: const BoxDecoration(color: ThemeColor.primaryColor),
@@ -24,7 +28,7 @@ Widget drawer() {
             CircleAvatar(
               backgroundColor: Colors.brown.shade800,
               maxRadius: 35,
-              child: text('AH'),
+              child: text('${userAccount.account.name.substring(0, 1).toUpperCase()}${userAccount.account.surname.substring(0, 1).toUpperCase()}'),
             ),
             // const SizedBox(height: 5),
             // GestureDetector(
@@ -32,8 +36,8 @@ Widget drawer() {
             //   child: text('แก้ไขรูป', color: Colors.white, fontSize: 16, decoration: TextDecoration.underline),
             // ),
             const SizedBox(height: 15),
-            text('คุณศนันธฉัตร  ธนพัฒน์พิศาล', color: Colors.white),
-            text('7-11 สาขาเจริญนคร 27', color: Colors.white, fontSize: 16),
+            text('คุณ${userAccount.account.name} ${userAccount.account.surname}', color: Colors.white),
+            text(userAccount.account.partnerName, color: Colors.white, fontSize: 16),
           ]),
         ),
       ),
@@ -48,7 +52,7 @@ Widget drawer() {
         horizontalTitleGap: 0,
         leading: const Icon(CustomIcons.change_pass, color: Colors.black, size: 28),
         title: text('เปลี่ยนรหัสผ่าน'),
-        onTap: () => navigatorTo(() => const ChangePassword(titleAppbar: 'เปลี่ยนรหัสผ่าน'), transition: Transition.leftToRight),
+        onTap: () => navigatorTo(() => const ChangePassword(titleAppbar: 'เปลี่ยนรหัสผ่าน (MOCK)'), transition: Transition.leftToRight),
       ),
       const Divider(),
       // ListTile(
@@ -67,7 +71,16 @@ Widget drawer() {
         onPressed: () {
           dialog(
             content: 'คุณต้องการออกจากระบบ',
-            onPressedConfirm: () => navigatorOffAll(() => const LoginPage()),
+            onPressedConfirm: () async {
+              CallBack data = await API.call(method: Method.post, url: '$hostTrue/user/v1/token/terminated', headers: Authorization.none, body: {
+                "deviceId": Store.deviceSerial.value,
+                "token": Store.token.value,
+              });
+
+              if (data.success) {
+                navigatorOffAll(() => const LoginPage());
+              }
+            },
           );
         },
       ).paddingSymmetric(horizontal: 20),
