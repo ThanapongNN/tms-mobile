@@ -171,6 +171,15 @@ class _CreateAccountState extends State<CreateAccount> {
                     }
                     return null;
                   },
+                  onChanged: (value) async {
+                    if (value.length == 7) {
+                      await API.call(
+                        method: Method.get,
+                        url: '$hostTrue/user/v1/check/$value',
+                        headers: Authorization.none,
+                      );
+                    }
+                  },
                 ),
                 formField(
                   controller: _firstName,

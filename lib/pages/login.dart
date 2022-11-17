@@ -113,7 +113,6 @@ class _LoginPageState extends State<LoginPage> {
                           "user": _user.text,
                           "password": _password.text,
                         },
-                        errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
                       );
 
                       if (data.success) {
