@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/models/user_account.model.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -22,110 +21,115 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  UserAccountModel userAccount = UserAccountModel.fromJson(Store.userProfile);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            color: ThemeColor.primaryColor,
-            child: Row(children: [
-              CircleAvatar(
-                backgroundColor: Colors.brown.shade800,
-                child: text('${userAccount.account.name.substring(0, 1).toUpperCase()}${userAccount.account.surname.substring(0, 1).toUpperCase()}'),
+    return Obx(() {
+      return Scaffold(
+        backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
+          centerTitle: true,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: (Store.userAccount.isNotEmpty)
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    color: ThemeColor.primaryColor,
+                    child: Row(children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.brown.shade800,
+                        child: text(
+                            '${Store.userAccountModel.value.account.name.substring(0, 1).toUpperCase()}${Store.userAccountModel.value.account.surname.substring(0, 1).toUpperCase()}'),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                          child: text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}',
+                              color: Colors.white)),
+                      FittedBox(child: text(Store.userAccountModel.value.account.partnerName, color: Colors.white))
+                    ]),
+                  )
+                : const SizedBox(),
+          ),
+        ),
+        onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
+        drawer: drawer(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Column(children: [
+              Container(
+                width: double.infinity,
+                color: const Color(0xFF414F5C),
+                child: Column(
+                  children: [
+                    text('สรุปยอดขายของคุณ', color: Colors.white),
+                    const SizedBox(height: 5),
+                    text(
+                      DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
+                      color: Colors.white,
+                    ),
+                    const SizedBox(height: 15),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 90,
+                        initialPage: 0,
+                        enableInfiniteScroll: false,
+                      ),
+                      items: [
+                        boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '18'),
+                        boxHeadStatus(image: 'assets/images/phone_sim.svg', content: 'ยอดขายเบอร์และมือถือ', quantity: '22'),
+                        boxHeadStatus(image: 'assets/images/tv.svg', content: 'ยอดสมัครเน็ตบ้านและทีวี', quantity: '10'),
+                        boxHeadStatus(image: 'assets/images/coin.svg', content: 'ยอดขายเติมเงินเติมเน็ต', quantity: '9'),
+                      ],
+                    ),
+                  ],
+                ).paddingSymmetric(vertical: 15),
               ),
-              const SizedBox(width: 5),
-              Expanded(child: text('คุณ${userAccount.account.name} ${userAccount.account.surname}', color: Colors.white)),
-              FittedBox(child: text(userAccount.account.partnerName, color: Colors.white))
+              Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    boxSales(phone: false, title: 'ซิมเติมเงิน', quantity: '5', unit: 'ซิม'),
+                    boxSales(phone: false, title: 'ซิม 7-11', quantity: '5', unit: 'ซิม'),
+                    boxSales(phone: false, title: 'ซิมรายเดือน', quantity: '5', unit: 'ซิม'),
+                    boxSales(phone: true, title: 'ยอดมือถือ', quantity: '5', unit: 'เครื่อง'),
+                    const SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () => Store.currentIndex.value = 1,
+                      child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
+                    ),
+                    const SizedBox(height: 15),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15),
+              SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
+                    SizedBox(
+                      height: 300,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 4,
+                        itemBuilder: (BuildContext context, int index) {
+                          return boxNews(
+                              image: 'assets/images/promotion.png',
+                              content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
+                              onTap: () => Get.to(() => const NewDetail()));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ]),
           ),
         ),
-      ),
-      onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
-      drawer: drawer(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Column(children: [
-            Container(
-              width: double.infinity,
-              color: const Color(0xFF414F5C),
-              child: Column(
-                children: [
-                  text('สรุปยอดขายของคุณ', color: Colors.white),
-                  const SizedBox(height: 5),
-                  text(
-                    DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
-                    color: Colors.white,
-                  ),
-                  const SizedBox(height: 15),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: 90,
-                      initialPage: 0,
-                      enableInfiniteScroll: false,
-                    ),
-                    items: [
-                      boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '18'),
-                      boxHeadStatus(image: 'assets/images/phone_sim.svg', content: 'ยอดขายเบอร์และมือถือ', quantity: '22'),
-                      boxHeadStatus(image: 'assets/images/tv.svg', content: 'ยอดสมัครเน็ตบ้านและทีวี', quantity: '10'),
-                      boxHeadStatus(image: 'assets/images/coin.svg', content: 'ยอดขายเติมเงินเติมเน็ต', quantity: '9'),
-                    ],
-                  ),
-                ],
-              ).paddingSymmetric(vertical: 15),
-            ),
-            Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  boxSales(phone: false, title: 'ซิมเติมเงิน', quantity: '5', unit: 'ซิม'),
-                  boxSales(phone: false, title: 'ซิม 7-11', quantity: '5', unit: 'ซิม'),
-                  boxSales(phone: false, title: 'ซิมรายเดือน', quantity: '5', unit: 'ซิม'),
-                  boxSales(phone: true, title: 'ยอดมือถือ', quantity: '5', unit: 'เครื่อง'),
-                  const SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () => Store.currentIndex.value = 1,
-                    child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
-                  ),
-                  const SizedBox(height: 15),
-                ],
-              ),
-            ),
-            const SizedBox(height: 15),
-            SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
-                  SizedBox(
-                    height: 300,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return boxNews(
-                            image: 'assets/images/promotion.png',
-                            content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                            onTap: () => Get.to(() => const NewDetail()));
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ]),
-        ),
-      ),
-    );
+      );
+    });
   }
 }

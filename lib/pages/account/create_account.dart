@@ -442,7 +442,11 @@ class _CreateAccountState extends State<CreateAccount> {
                         };
 
                         navigatorTo(
-                          () => const ConfirmOTP(titleAppbar: 'สร้างบัญชีใหม่', titleBody: 'ยืนยันการสร้างบัญชี'),
+                          () => ConfirmOTP(
+                            titleAppbar: 'สร้างบัญชีใหม่',
+                            titleBody: 'ยืนยันการสร้างบัญชี',
+                            mobileNO: Store.registerBody['employee']['mobile'],
+                          ),
                           transition: Transition.rightToLeft,
                         );
                       }

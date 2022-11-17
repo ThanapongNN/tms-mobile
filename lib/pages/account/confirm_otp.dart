@@ -17,10 +17,10 @@ import 'package:tms/widgets/pin_code_field.dart';
 import 'package:tms/widgets/text.dart';
 
 class ConfirmOTP extends StatefulWidget {
-  final String titleAppbar, titleBody;
+  final String titleAppbar, titleBody, mobileNO;
   final bool fromDeactivateAccount;
 
-  const ConfirmOTP({super.key, required this.titleAppbar, required this.titleBody, this.fromDeactivateAccount = false});
+  const ConfirmOTP({super.key, required this.titleAppbar, required this.titleBody, this.fromDeactivateAccount = false, required this.mobileNO});
 
   @override
   State<ConfirmOTP> createState() => _ConfirmOTPState();
@@ -57,6 +57,9 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               CountdownTimer(
                 endTime: DateTime.now().millisecondsSinceEpoch + 1000 * 180,
                 widgetBuilder: (context, time) {
+                  if (time == null) {
+                    return text('รหัส OTP หมดอายุ กรุณาขอรหัส OTP และทำรายการใหม่', color: ThemeColor.primaryColor);
+                  }
                   return Flexible(
                     child: RichText(
                       textAlign: TextAlign.center,
@@ -65,7 +68,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                         style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
                         children: [
                           TextSpan(
-                            text: '0${time?.min ?? 0} : ${time?.sec.toString().padLeft(2, '0') ?? '00'}',
+                            text: '0${time.min} : ${time.sec.toString().padLeft(2, '0')}',
                             style: const TextStyle(color: ThemeColor.primaryColor, fontWeight: FontWeight.bold),
                           ),
                           const TextSpan(text: ' นาที\nหลังทำการขอรหัส หากไม่ได้รับรหัสผ่าน\nกรุณากดขอรหัสผ่านใหม่อีกครั้ง')
@@ -87,21 +90,30 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                     method: Method.post,
                     url: '$hostTrue/support/v1/otp/validation',
                     headers: Authorization.none,
-                    body: {"msisdn": Store.registerBody['employee']['mobile'], "refId": Store.otpRefID.value, "otp": _otp.text},
+                    body: {"msisdn": widget.mobileNO, "refId": Store.otpRefID.value, "otp": _otp.text},
                     errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
                   );
 
                   if (data.success) {
                     if (widget.fromDeactivateAccount) {
-                      navigatorOffAll(
-                        () => AccountSuccess(
-                          titleAppbar: widget.titleAppbar,
-                          titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
-                          textButton: 'กลับสู่หน้าแรก',
-                          icon: BootstrapIcons.house,
-                        ),
-                        transition: Transition.rightToLeft,
+                      print('$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}');
+                      CallBack data = await API.call(
+                        method: Method.delete,
+                        url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
+                        headers: Authorization.none,
                       );
+
+                      if (data.success) {
+                        navigatorOffAll(
+                          () => AccountSuccess(
+                            titleAppbar: widget.titleAppbar,
+                            titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
+                            textButton: 'กลับสู่หน้าแรก',
+                            icon: BootstrapIcons.house,
+                          ),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
                     } else {
                       Store.registerBody['otpRefId'] = Store.otpRefID.value;
                       navigatorOff(
@@ -119,7 +131,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                   method: Method.post,
                   url: '$hostTrue/support/v1/otp/request',
                   headers: Authorization.none,
-                  body: {"msisdn": Store.registerBody['employee']['mobile']},
+                  body: {"msisdn": widget.mobileNO},
                 );
 
                 if (data.success) setState(() {});

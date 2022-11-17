@@ -3,7 +3,6 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
-import 'package:tms/models/user_account.model.dart';
 import 'package:tms/pages/account/change_password.dart';
 import 'package:tms/pages/login.dart';
 import 'package:tms/pages/profile/profile_detail.dart';
@@ -16,7 +15,6 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 Widget drawer() {
-  UserAccountModel userAccount = UserAccountModel.fromJson(Store.userProfile);
   return Drawer(
     child: Column(children: <Widget>[
       SizedBox(
@@ -24,21 +22,19 @@ Widget drawer() {
         width: double.infinity,
         child: DrawerHeader(
           decoration: const BoxDecoration(color: ThemeColor.primaryColor),
-          child: Column(children: [
-            CircleAvatar(
-              backgroundColor: Colors.brown.shade800,
-              maxRadius: 35,
-              child: text('${userAccount.account.name.substring(0, 1).toUpperCase()}${userAccount.account.surname.substring(0, 1).toUpperCase()}'),
-            ),
-            // const SizedBox(height: 5),
-            // GestureDetector(
-            //   onTap: () {},
-            //   child: text('แก้ไขรูป', color: Colors.white, fontSize: 16, decoration: TextDecoration.underline),
-            // ),
-            const SizedBox(height: 15),
-            text('คุณ${userAccount.account.name} ${userAccount.account.surname}', color: Colors.white),
-            text(userAccount.account.partnerName, color: Colors.white, fontSize: 16),
-          ]),
+          child: (Store.userAccount.isNotEmpty)
+              ? Column(children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.brown.shade800,
+                    maxRadius: 35,
+                    child: text(
+                        '${Store.userAccountModel.value.account.name.substring(0, 1).toUpperCase()}${Store.userAccountModel.value.account.surname.substring(0, 1).toUpperCase()}'),
+                  ),
+                  const SizedBox(height: 15),
+                  text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}', color: Colors.white),
+                  text(Store.userAccountModel.value.account.partnerName, color: Colors.white, fontSize: 16),
+                ])
+              : const SizedBox(),
         ),
       ),
       ListTile(

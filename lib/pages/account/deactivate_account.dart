@@ -2,7 +2,10 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:tms/apis/api.dart';
+import 'package:tms/apis/config.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
+import 'package:tms/state_management.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
 import 'package:tms/widgets/button.dart';
@@ -61,6 +64,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                   hintText: 'กรุณากรอกรหัสผ่าน',
                   obscureText: _hidePassword,
                   maxLength: 8,
+                  textInputAction: TextInputAction.done,
                   inputFormatters: [TextInputFormatter.filterInputENxNumber],
                   suffixIcon: IconButton(
                     onPressed: () => setState(() => _hidePassword = !_hidePassword),
@@ -80,16 +84,44 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                 button(
                   text: 'ยืนยัน',
                   icon: BootstrapIcons.check2_circle,
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       _autovalidateMode = AutovalidateMode.onUserInteraction;
                     });
 
                     if (_formKey.currentState!.validate()) {
-                      navigatorTo(
-                        () => const ConfirmOTP(titleAppbar: 'ปิดบัญชีใช้งาน', titleBody: 'ยืนยันการปิดบัญชี', fromDeactivateAccount: true),
-                        transition: Transition.rightToLeft,
+                      CallBack data = await API.call(
+                        method: Method.post,
+                        url: '$hostTrue/user/v1/token/access',
+                        headers: Authorization.none,
+                        body: {
+                          "deviceId": Store.deviceSerial.value,
+                          "user": _saleID.text,
+                          "password": _password.text,
+                        },
+                        errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
                       );
+
+                      if (data.success) {
+                        CallBack otpRefID = await API.call(
+                          method: Method.post,
+                          url: '$hostTrue/support/v1/otp/request',
+                          headers: Authorization.none,
+                          body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
+                        );
+
+                        Store.otpRefID.value = otpRefID.response['refId'];
+
+                        navigatorTo(
+                          () => ConfirmOTP(
+                            titleAppbar: 'ปิดบัญชีใช้งาน',
+                            titleBody: 'ยืนยันการปิดบัญชี',
+                            mobileNO: Store.userAccountModel.value.account.mobileNo,
+                            fromDeactivateAccount: true,
+                          ),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
                     }
                   },
                 ),

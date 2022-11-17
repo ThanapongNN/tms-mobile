@@ -1,9 +1,11 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:tms/apis/api.dart';
 import 'package:tms/apis/call/create_account.call.dart';
 import 'package:tms/apis/config.dart';
+import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_token_access.model.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forget_password.dart';
@@ -101,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                     });
 
                     if (_formKey.currentState!.validate()) {
+                      Store.userTextInput.value = _user.text;
                       CallBack data = await API.call(
                         method: Method.post,
                         url: '$hostTrue/user/v1/token/access',
@@ -117,12 +120,15 @@ class _LoginPageState extends State<LoginPage> {
                         UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(data.response);
                         Store.token.value = userTokenAccess.token;
 
-                        CallBack userProfile = await API.call(
+                        CallBack userAccount = await API.call(
                           method: Method.get,
                           url: '$hostTrue/user/v1/accounts/${_user.text}',
                           headers: Authorization.none,
                         );
-                        if (userProfile.success) Store.userProfile.value = userProfile.response;
+                        if (userAccount.success) {
+                          Store.userAccount.value = userAccount.response;
+                          Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
+                        }
 
                         if (Store.userRoles.isEmpty) {
                           CallBack data = await API.call(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none);

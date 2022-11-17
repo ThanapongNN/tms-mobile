@@ -247,7 +247,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   onPressed: () {
                     if (_validateForm()) {
                       navigatorTo(
-                        () => const ConfirmOTP(titleAppbar: 'ลืมรหัสผ่าน', titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่'),
+                        () => const ConfirmOTP(
+                          titleAppbar: 'ลืมรหัสผ่าน',
+                          titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่',
+                          mobileNO: '',
+                        ),
                         transition: Transition.rightToLeft,
                       );
                     }
