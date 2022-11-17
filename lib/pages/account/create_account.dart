@@ -171,15 +171,6 @@ class _CreateAccountState extends State<CreateAccount> {
                     }
                     return null;
                   },
-                  onChanged: (value) async {
-                    if (value.length == 7) {
-                      await API.call(
-                        method: Method.get,
-                        url: '$hostTrue/user/v1/check/$value',
-                        headers: Authorization.none,
-                      );
-                    }
-                  },
                 ),
                 formField(
                   controller: _firstName,
@@ -439,41 +430,49 @@ class _CreateAccountState extends State<CreateAccount> {
                   icon: BootstrapIcons.plus,
                   onPressed: () async {
                     if (_validateForm()) {
-                      CallBack data = await API.call(
-                        method: Method.post,
-                        url: '$hostTrue/support/v1/otp/request',
+                      CallBack check = await API.call(
+                        method: Method.get,
+                        url: '$hostTrue/user/v1/check/${_saleID.text}',
                         headers: Authorization.none,
-                        body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
                       );
 
-                      if (data.success) {
-                        Store.otpRefID.value = data.response['refId'];
-                        Store.registerBody.value = {
-                          "otpRefId": '',
-                          "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                          "partnerCode": _branch.text,
-                          "partnerName": _jobBranch.text,
-                          "employee": {
-                            "id": _saleID.text,
-                            "password": '',
-                            "name": _firstName.text,
-                            "surname": _lastName.text,
-                            "birthdate":
-                                '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
-                            "mobile": _phoneNumber.text.replaceAll('-', ''),
-                            "email": _email.text,
-                            "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
-                          }
-                        };
-
-                        navigatorTo(
-                          () => ConfirmOTP(
-                            titleAppbar: 'สร้างบัญชีใหม่',
-                            titleBody: 'ยืนยันการสร้างบัญชี',
-                            mobileNO: Store.registerBody['employee']['mobile'],
-                          ),
-                          transition: Transition.rightToLeft,
+                      if (check.success) {
+                        CallBack data = await API.call(
+                          method: Method.post,
+                          url: '$hostTrue/support/v1/otp/request',
+                          headers: Authorization.none,
+                          body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
                         );
+
+                        if (data.success) {
+                          Store.otpRefID.value = data.response['refId'];
+                          Store.registerBody.value = {
+                            "otpRefId": '',
+                            "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
+                            "partnerCode": _branch.text,
+                            "partnerName": _jobBranch.text,
+                            "employee": {
+                              "id": _saleID.text,
+                              "password": '',
+                              "name": _firstName.text,
+                              "surname": _lastName.text,
+                              "birthdate":
+                                  '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                              "mobile": _phoneNumber.text.replaceAll('-', ''),
+                              "email": _email.text,
+                              "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                            }
+                          };
+
+                          navigatorTo(
+                            () => ConfirmOTP(
+                              titleAppbar: 'สร้างบัญชีใหม่',
+                              titleBody: 'ยืนยันการสร้างบัญชี',
+                              mobileNO: Store.registerBody['employee']['mobile'],
+                            ),
+                            transition: Transition.rightToLeft,
+                          );
+                        }
                       }
                     }
                   },
