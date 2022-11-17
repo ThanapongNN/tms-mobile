@@ -60,7 +60,6 @@ class _NewPasswordState extends State<NewPassword> {
                   controller: _saleID,
                   required: false,
                   textLable: 'รหัสพนักงานขาย',
-                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
                 ),
                 formField(
                   controller: _password,
@@ -77,7 +76,11 @@ class _NewPasswordState extends State<NewPassword> {
                     ),
                   ),
                   validator: (value) {
-                    if (!validatePassword(value!)) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสผ่าน\n';
+                    } else if (value.length != 8) {
+                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก\n';
+                    } else if (!validatePassword(value)) {
                       return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
                     }
                     return null;
@@ -118,11 +121,16 @@ class _NewPasswordState extends State<NewPassword> {
                       Store.registerBody['employee']['password'] = _password.text;
 
                       CallBack data = await API.call(
-                        method: Method.post,
-                        url: '$hostTrue/user/v1/accounts/register',
-                        headers: Authorization.none,
-                        body: Store.registerBody,
-                      );
+                          method: Method.post,
+                          url: '$hostTrue/user/v1/accounts/register',
+                          headers: Authorization.none,
+                          body: Store.registerBody,
+                          compareError: [
+                            ErrorMessage(
+                              errorMessage: 'The user was registered.',
+                              contentDialog: 'รหัสผู้ใช้งาน ${_saleID.text} มีบัญชีเข้าใช้งานเรียบร้อยแล้ว',
+                            ),
+                          ]);
 
                       if (data.success) {
                         navigatorOffAll(

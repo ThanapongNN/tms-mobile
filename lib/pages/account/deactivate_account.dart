@@ -9,6 +9,7 @@ import 'package:tms/state_management.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
 import 'package:tms/widgets/button.dart';
+import 'package:tms/widgets/dialog.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
@@ -74,7 +75,11 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     ),
                   ),
                   validator: (value) {
-                    if (!validatePassword(value!)) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสผ่าน\n';
+                    } else if (value.length != 8) {
+                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก\n';
+                    } else if (!validatePassword(value)) {
                       return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
                     }
                     return null;
@@ -90,37 +95,41 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     });
 
                     if (_formKey.currentState!.validate()) {
-                      CallBack data = await API.call(
-                        method: Method.post,
-                        url: '$hostTrue/user/v1/token/access',
-                        headers: Authorization.none,
-                        body: {
-                          "deviceId": Store.deviceSerial.value,
-                          "user": _saleID.text,
-                          "password": _password.text,
-                        },
-                        errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
-                      );
-
-                      if (data.success) {
-                        CallBack otpRefID = await API.call(
+                      if (Store.userAccountModel.value.account.createBy == _saleID.text) {
+                        CallBack data = await API.call(
                           method: Method.post,
-                          url: '$hostTrue/support/v1/otp/request',
+                          url: '$hostTrue/user/v1/token/access',
                           headers: Authorization.none,
-                          body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
+                          body: {
+                            "deviceId": Store.deviceSerial.value,
+                            "user": _saleID.text,
+                            "password": _password.text,
+                          },
+                          errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
                         );
 
-                        Store.otpRefID.value = otpRefID.response['refId'];
+                        if (data.success) {
+                          CallBack otpRefID = await API.call(
+                            method: Method.post,
+                            url: '$hostTrue/support/v1/otp/request',
+                            headers: Authorization.none,
+                            body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
+                          );
 
-                        navigatorTo(
-                          () => ConfirmOTP(
-                            titleAppbar: 'ปิดบัญชีใช้งาน',
-                            titleBody: 'ยืนยันการปิดบัญชี',
-                            mobileNO: Store.userAccountModel.value.account.mobileNo,
-                            fromDeactivateAccount: true,
-                          ),
-                          transition: Transition.rightToLeft,
-                        );
+                          Store.otpRefID.value = otpRefID.response['refId'];
+
+                          navigatorTo(
+                            () => ConfirmOTP(
+                              titleAppbar: 'ปิดบัญชีใช้งาน',
+                              titleBody: 'ยืนยันการปิดบัญชี',
+                              mobileNO: Store.userAccountModel.value.account.mobileNo,
+                              fromDeactivateAccount: true,
+                            ),
+                            transition: Transition.rightToLeft,
+                          );
+                        }
+                      } else {
+                        dialog(content: 'รหัสพนักงานขายไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง');
                       }
                     }
                   },

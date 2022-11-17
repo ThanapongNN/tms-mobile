@@ -96,7 +96,6 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
 
                   if (data.success) {
                     if (widget.fromDeactivateAccount) {
-                      print('$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}');
                       CallBack data = await API.call(
                         method: Method.delete,
                         url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',

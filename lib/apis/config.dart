@@ -24,3 +24,14 @@ class CallBack {
   bool success;
   dynamic response;
 }
+
+class ErrorMessage {
+  ErrorMessage({
+    required this.errorMessage, //ข้อความที่ต้องการเอามาเปรียบเทียบ
+    this.titleDialog, //หัวข้อที่ต้องการเปลี่ยนแทน
+    this.contentDialog, //เนื้อหาที่ต้องการเปลี่ยนแทน
+  });
+
+  String errorMessage;
+  String? titleDialog, contentDialog;
+}

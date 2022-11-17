@@ -21,6 +21,7 @@ class API {
     bool showDialog = true,
     bool showLoading = true,
     String? errorMessage,
+    List<ErrorMessage>? compareError,
   }) async {
     try {
       Response response;
@@ -55,6 +56,16 @@ class API {
       } else {
         Map dataError = jsonDecode(response.body);
         errorMessage = errorMessage ?? dataError["description"] ?? errorNotFound;
+
+        if (compareError != null) {
+          for (var message in compareError) {
+            if (errorMessage == message.errorMessage) {
+              errorMessage = message.contentDialog;
+              break;
+            }
+          }
+        }
+
         dialog(content: errorMessage!, showDialog: showDialog);
         return CallBack(success: false, response: dataError);
       }

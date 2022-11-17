@@ -16,6 +16,7 @@ import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/button.dart';
+import 'package:tms/widgets/dialog.dart';
 import 'package:tms/widgets/dropdown.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/list_string_number.dart';
@@ -165,6 +166,8 @@ class _CreateAccountState extends State<CreateAccount> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสพนักงานขาย\n';
+                    } else if (value.length != 7) {
+                      return 'รหัสพนักงานไม่ถูกต้อง\n';
                     }
                     return null;
                   },
@@ -347,22 +350,29 @@ class _CreateAccountState extends State<CreateAccount> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
+                    } else if (value.length != 8) {
+                      return 'รหัสสาขาไม่ถูกต้อง\n';
                     }
                     return null;
                   },
                   onChanged: (value) async {
                     if (value.length == 8) {
+                      _jobBranch.clear();
+
                       CallBack data = await API.call(
                         method: Method.get,
                         url: '$hostTrue/content/v1/partners/${_branch.text}',
                         headers: Authorization.none,
-                        errorMessage: 'ไม่พบรหัสสาขานี้ โปรดระบุใหม่อีกครั้ง',
                       );
 
                       if (data.success) {
-                        ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                        _branch.text = shopProfileList.partner[0].code;
-                        _jobBranch.text = shopProfileList.partner[0].name.th;
+                        if (data.response['partner'] != null) {
+                          ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
+                          _branch.text = shopProfileList.partner[0].code;
+                          _jobBranch.text = shopProfileList.partner[0].name.th;
+                        } else {
+                          dialog(content: 'ไม่พบรหัสสาขาในระบบ');
+                        }
                       }
                     }
                   },
@@ -372,6 +382,12 @@ class _CreateAccountState extends State<CreateAccount> {
                   textLable: 'สาขาปฏิบัติงาน',
                   required: false,
                   disable: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'กรุณาระบุรหัสสาขาให้ถูกต้อง\n';
+                    }
+                    return null;
+                  },
                 ),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
