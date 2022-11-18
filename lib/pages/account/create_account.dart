@@ -44,6 +44,7 @@ class _CreateAccountState extends State<CreateAccount> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   bool accept = false;
+  bool disable = true;
   bool errorAccept = false;
   bool errorDay = false;
   bool errorMonth = false;
@@ -98,6 +99,24 @@ class _CreateAccountState extends State<CreateAccount> {
         text(nameShop[index], color: index == 0 ? Colors.black : Colors.grey),
       ]),
     );
+  }
+
+  checkAllInput() {
+    if (_saleID.text.isNotEmpty &&
+        _firstName.text.isNotEmpty &&
+        _lastName.text.isNotEmpty &&
+        selectedDay!.isNotEmpty &&
+        selectedMonth!.isNotEmpty &&
+        selectedYear!.isNotEmpty &&
+        _phoneNumber.text.isNotEmpty &&
+        selectedJob!.isNotEmpty &&
+        _branch.text.isNotEmpty &&
+        _jobBranch.text.isNotEmpty &&
+        accept) {
+      disable = false;
+    } else {
+      disable = true;
+    }
   }
 
   bool _validateForm() {
@@ -158,19 +177,20 @@ class _CreateAccountState extends State<CreateAccount> {
                 Center(child: text('ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
                 formField(
                   controller: _saleID,
-                  textLable: 'รหัสพนักงานขาย',
-                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  textLable: 'รหัสพนักงาน',
+                  hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: is711 ? 7 : 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                      return 'กรุณาระบุรหัสพนักงาน\n';
                     } else if (value.length != 7) {
                       return 'รหัสพนักงานไม่ถูกต้อง\n';
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _firstName,
@@ -182,6 +202,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _lastName,
@@ -193,6 +214,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 Row(children: [
                   text('วันเดือนปีเกิด', fontSize: 18),
@@ -210,6 +232,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         borderDay = Colors.grey;
                         errorDay = false;
                         selectedDay = day;
+                        checkAllInput();
                       });
                     },
                   ),
@@ -234,6 +257,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         borderMonth = Colors.grey;
                         errorMonth = false;
                         selectedMonth = month;
+                        checkAllInput();
                       });
                     },
                   ),
@@ -258,6 +282,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         borderYear = Colors.grey;
                         errorYear = false;
                         selectedYear = year;
+                        checkAllInput();
                       });
                     },
                   ),
@@ -301,16 +326,16 @@ class _CreateAccountState extends State<CreateAccount> {
 
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _email,
                   textLable: 'อีเมล',
                   hintText: 'กรุณากรอก',
+                  required: false,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'กรุณาระบุอีเมล\n';
-                    } else if (!EmailValidator.validate(value)) {
+                    if (value!.isNotEmpty && !EmailValidator.validate(value)) {
                       return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
                     }
                     return null;
@@ -332,6 +357,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           borderJob = Colors.grey;
                           errorJob = false;
                           selectedJob = job;
+                          checkAllInput();
                         });
                       },
                     ),
@@ -340,8 +366,8 @@ class _CreateAccountState extends State<CreateAccount> {
                 ]).paddingOnly(bottom: 10),
                 formField(
                   controller: _branch,
-                  textLable: 'รหัสสาขา',
-                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  textLable: 'รหัสสาขาทรู',
+                  hintText: 'กรุณาค้นหาด้วยรหัสสาขาทรู',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
@@ -349,13 +375,14 @@ class _CreateAccountState extends State<CreateAccount> {
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
+                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
                     } else if (value.length != 8) {
-                      return 'รหัสสาขาไม่ถูกต้อง\n';
+                      return 'รหัสสาขาทรูไม่ถูกต้อง\n';
                     }
                     return null;
                   },
                   onChanged: (value) async {
+                    checkAllInput();
                     if (value.length == 8) {
                       _jobBranch.clear();
 
@@ -371,7 +398,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           _branch.text = shopProfileList.partner[0].code;
                           _jobBranch.text = shopProfileList.partner[0].name.th;
                         } else {
-                          dialog(content: 'ไม่พบรหัสสาขาในระบบ');
+                          dialog(content: 'ไม่พบรหัสสาขาทรูในระบบ');
                         }
                       }
                     }
@@ -384,10 +411,11 @@ class _CreateAccountState extends State<CreateAccount> {
                   disable: true,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาให้ถูกต้อง\n';
+                      return 'กรุณาระบุรหัสสาขาทรูให้ถูกต้อง\n';
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
@@ -399,6 +427,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     onChanged: (bool? v) => setState(() {
                       accept = v!;
                       errorAccept = !v;
+                      checkAllInput();
                     }),
                     tristate: false,
                   ),
@@ -428,54 +457,57 @@ class _CreateAccountState extends State<CreateAccount> {
                 button(
                   text: 'สร้างบัญชี',
                   icon: BootstrapIcons.plus,
-                  onPressed: () async {
-                    if (_validateForm()) {
-                      CallBack check = await API.call(
-                        method: Method.get,
-                        url: '$hostTrue/user/v1/check/${_saleID.text}',
-                        headers: Authorization.none,
-                      );
+                  disable: disable,
+                  onPressed: !disable
+                      ? () async {
+                          if (_validateForm()) {
+                            CallBack check = await API.call(
+                              method: Method.get,
+                              url: '$hostTrue/user/v1/check/${_saleID.text}',
+                              headers: Authorization.none,
+                            );
 
-                      if (check.success) {
-                        CallBack data = await API.call(
-                          method: Method.post,
-                          url: '$hostTrue/support/v1/otp/request',
-                          headers: Authorization.none,
-                          body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
-                        );
+                            if (check.success) {
+                              CallBack data = await API.call(
+                                method: Method.post,
+                                url: '$hostTrue/support/v1/otp/request',
+                                headers: Authorization.none,
+                                body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
+                              );
 
-                        if (data.success) {
-                          Store.otpRefID.value = data.response['refId'];
-                          Store.registerBody.value = {
-                            "otpRefId": '',
-                            "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                            "partnerCode": _branch.text,
-                            "partnerName": _jobBranch.text,
-                            "employee": {
-                              "id": _saleID.text,
-                              "password": '',
-                              "name": _firstName.text,
-                              "surname": _lastName.text,
-                              "birthdate":
-                                  '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
-                              "mobile": _phoneNumber.text.replaceAll('-', ''),
-                              "email": _email.text,
-                              "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                              if (data.success) {
+                                Store.otpRefID.value = data.response['refId'];
+                                Store.registerBody.value = {
+                                  "otpRefId": '',
+                                  "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
+                                  "partnerCode": _branch.text,
+                                  "partnerName": _jobBranch.text,
+                                  "employee": {
+                                    "id": _saleID.text,
+                                    "password": '',
+                                    "name": _firstName.text,
+                                    "surname": _lastName.text,
+                                    "birthdate":
+                                        '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                                    "mobile": _phoneNumber.text.replaceAll('-', ''),
+                                    "email": _email.text,
+                                    "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                                  }
+                                };
+
+                                navigatorTo(
+                                  () => ConfirmOTP(
+                                    titleAppbar: 'สร้างบัญชีใหม่',
+                                    titleBody: 'ยืนยันการสร้างบัญชี',
+                                    mobileNO: Store.registerBody['employee']['mobile'],
+                                  ),
+                                  transition: Transition.rightToLeft,
+                                );
+                              }
                             }
-                          };
-
-                          navigatorTo(
-                            () => ConfirmOTP(
-                              titleAppbar: 'สร้างบัญชีใหม่',
-                              titleBody: 'ยืนยันการสร้างบัญชี',
-                              mobileNO: Store.registerBody['employee']['mobile'],
-                            ),
-                            transition: Transition.rightToLeft,
-                          );
+                          }
                         }
-                      }
-                    }
-                  },
+                      : () {},
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),

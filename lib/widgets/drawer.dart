@@ -24,11 +24,10 @@ Widget drawer() {
           decoration: const BoxDecoration(color: ThemeColor.primaryColor),
           child: (Store.userAccount.isNotEmpty)
               ? Column(children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.brown.shade800,
-                    maxRadius: 35,
-                    child: text(
-                        '${Store.userAccountModel.value.account.name.substring(0, 1).toUpperCase()}${Store.userAccountModel.value.account.surname.substring(0, 1).toUpperCase()}'),
+                  const CircleAvatar(
+                    radius: 32,
+                    backgroundColor: Colors.red,
+                    backgroundImage: AssetImage('assets/images/no_avatar.png'),
                   ),
                   const SizedBox(height: 15),
                   text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}', color: Colors.white),

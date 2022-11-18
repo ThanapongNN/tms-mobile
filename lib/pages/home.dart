@@ -36,10 +36,9 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: ThemeColor.primaryColor,
                     child: Row(children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.brown.shade800,
-                        child: text(
-                            '${Store.userAccountModel.value.account.name.substring(0, 1).toUpperCase()}${Store.userAccountModel.value.account.surname.substring(0, 1).toUpperCase()}'),
+                      const CircleAvatar(
+                        backgroundColor: Colors.red,
+                        backgroundImage: AssetImage('assets/images/no_avatar.png'),
                       ),
                       const SizedBox(width: 5),
                       Expanded(

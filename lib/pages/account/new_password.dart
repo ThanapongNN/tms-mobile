@@ -59,7 +59,7 @@ class _NewPasswordState extends State<NewPassword> {
                   disable: true,
                   controller: _saleID,
                   required: false,
-                  textLable: 'รหัสพนักงานขาย',
+                  textLable: 'รหัสพนักงาน',
                 ),
                 formField(
                   controller: _password,

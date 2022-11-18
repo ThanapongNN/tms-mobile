@@ -49,14 +49,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                 const SizedBox(height: 25),
                 formField(
                   controller: _saleID,
-                  textLable: 'รหัสพนักงานขาย',
-                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  textLable: 'รหัสพนักงาน',
+                  hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                      return 'กรุณาระบุรหัสพนักงาน\n';
                     }
                     return null;
                   },

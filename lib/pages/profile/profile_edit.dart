@@ -62,13 +62,10 @@ class _ProfileEditState extends State<ProfileEdit> {
             key: _formKey,
             child: Column(children: [
               const SizedBox(height: 20),
-              CircleAvatar(
-                backgroundColor: Colors.brown.shade800,
-                maxRadius: 40,
-                child: text(
-                  '${Store.userAccountModel.value.account.name.substring(0, 1).toUpperCase()}${Store.userAccountModel.value.account.surname.substring(0, 1).toUpperCase()}',
-                  fontSize: 28,
-                ),
+              const CircleAvatar(
+                radius: 32,
+                backgroundColor: Colors.red,
+                backgroundImage: AssetImage('assets/images/no_avatar.png'),
               ),
               const SizedBox(height: 10),
               text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}'),
@@ -80,12 +77,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                 subtitle: formField(
                   controller: _branch,
                   showTextLable: false,
-                  // textLable: 'รหัสสาขา',
-                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  hintText: 'กรุณาค้นหาด้วยรหัสสาขาทรู',
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
+                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
                     }
                     return null;
                   },

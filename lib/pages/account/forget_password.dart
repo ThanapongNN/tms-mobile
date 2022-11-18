@@ -100,14 +100,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 formField(
                   controller: _saleID,
-                  textLable: 'รหัสพนักงานขาย',
-                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  textLable: 'รหัสพนักงาน',
+                  hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                      return 'กรุณาระบุรหัสพนักงาน\n';
                     }
                     return null;
                   },
@@ -136,8 +136,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ]).paddingOnly(bottom: 10),
                 formField(
                   controller: _branch,
-                  textLable: 'รหัสสาขา',
-                  hintText: 'กรุณาค้นหาด้วยรหัสสาขา',
+                  textLable: 'รหัสสาขาทรู',
+                  hintText: 'กรุณาค้นหาด้วยรหัสสาขาทรู',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
@@ -145,7 +145,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาปฏิบัติงาน\n';
+                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
                     }
                     return null;
                   },

@@ -6,13 +6,18 @@ Widget button({
   void Function()? onPressed,
   required String text,
   IconData? icon,
+  bool disable = false,
   bool outline = false,
   Color? colorOutline,
   double space = 5,
 }) {
   return MaterialButton(
     height: 50,
-    color: outline ? Colors.white : ThemeColor.primaryColor,
+    color: outline
+        ? Colors.white
+        : disable
+            ? Colors.grey
+            : ThemeColor.primaryColor,
     minWidth: double.infinity,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(25),

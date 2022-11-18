@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: Get.height / 4),
                 formField(
                   controller: _user,
-                  hintText: 'รหัสพนักงานขาย',
+                  hintText: 'รหัสพนักงาน',
                   maxLength: 8,
                   height: 15,
                   required: false,
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   errorTextColor: Colors.white,
                   validator: (user) {
-                    if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงานขาย';
+                    if (user!.isEmpty) return 'กรุณาใส่รหัสพนักงาน';
                     return null;
                   },
                 ),

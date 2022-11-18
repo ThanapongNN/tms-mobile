@@ -47,14 +47,14 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                 Center(child: text('ยืนยันการปิดบัญชีใช้งาน', fontSize: 24).paddingSymmetric(vertical: 20)),
                 formField(
                   controller: _saleID,
-                  textLable: 'รหัสพนักงานขาย',
-                  hintText: 'กรุณากรอกรหัสพนักงานขาย',
+                  textLable: 'รหัสพนักงาน',
+                  hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงานขาย\n';
+                      return 'กรุณาระบุรหัสพนักงาน\n';
                     }
                     return null;
                   },
@@ -129,7 +129,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                           );
                         }
                       } else {
-                        dialog(content: 'รหัสพนักงานขายไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง');
+                        dialog(content: 'รหัสพนักงานไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง');
                       }
                     }
                   },

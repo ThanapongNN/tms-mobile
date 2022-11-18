@@ -19,10 +19,9 @@ Widget boxHeadUser({
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.brown.shade800,
-              maxRadius: 20,
-              child: text('AH'),
+            const CircleAvatar(
+              backgroundColor: Colors.red,
+              backgroundImage: AssetImage('assets/images/no_avatar.png'),
             ),
             const SizedBox(width: 10),
             text(name, fontSize: 20),
