@@ -42,8 +42,12 @@ class _HomeState extends State<Home> {
                       ),
                       const SizedBox(width: 5),
                       Expanded(
-                          child: text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}',
-                              color: Colors.white)),
+                        child: text(
+                          'คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}',
+                          color: Colors.white,
+                        ),
+                      ),
+                      SvgPicture.asset('assets/icons/pinlocation.svg', color: Colors.white).paddingOnly(right: 5),
                       FittedBox(child: text(Store.userAccountModel.value.account.partnerName, color: Colors.white))
                     ]),
                   )

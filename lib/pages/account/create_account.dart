@@ -105,11 +105,11 @@ class _CreateAccountState extends State<CreateAccount> {
     if (_saleID.text.isNotEmpty &&
         _firstName.text.isNotEmpty &&
         _lastName.text.isNotEmpty &&
-        selectedDay!.isNotEmpty &&
-        selectedMonth!.isNotEmpty &&
-        selectedYear!.isNotEmpty &&
+        (selectedDay != null) &&
+        (selectedMonth != null) &&
+        (selectedYear != null) &&
         _phoneNumber.text.isNotEmpty &&
-        selectedJob!.isNotEmpty &&
+        (selectedJob != null) &&
         _branch.text.isNotEmpty &&
         _jobBranch.text.isNotEmpty &&
         accept) {
