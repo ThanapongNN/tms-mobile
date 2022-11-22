@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/index.dart';
@@ -155,7 +154,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                       {
                         Store.registerBody['otpRefId'] = Store.otpRefID.value;
                         navigatorOff(
-                          () => NewPassword(titleAppbar: titleAppbar),
+                          () => const NewPassword(sendOTP: SendOTP.createAccount),
                           transition: Transition.rightToLeft,
                         );
                       }
@@ -170,12 +169,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
 
                         if (data.success) {
                           navigatorOffAll(
-                            () => AccountSuccess(
-                              titleAppbar: titleAppbar,
-                              titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
-                              textButton: 'กลับสู่หน้าแรก',
-                              icon: BootstrapIcons.house,
-                            ),
+                            () => const AccountSuccess(sendOTP: SendOTP.deactivateAccount),
                             transition: Transition.rightToLeft,
                           );
                         }
@@ -184,7 +178,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                     case SendOTP.forgetPassword:
                       {
                         navigatorOff(
-                          () => NewPassword(titleAppbar: titleAppbar),
+                          () => const NewPassword(sendOTP: SendOTP.forgetPassword),
                           transition: Transition.rightToLeft,
                         );
                       }

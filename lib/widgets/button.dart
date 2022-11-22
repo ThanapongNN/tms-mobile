@@ -16,7 +16,7 @@ Widget button({
     color: outline
         ? Colors.white
         : disable
-            ? Colors.grey
+            ? const Color(0xFFCED4DA)
             : ThemeColor.primaryColor,
     minWidth: double.infinity,
     shape: RoundedRectangleBorder(

@@ -47,7 +47,7 @@ Widget drawer() {
         horizontalTitleGap: 0,
         leading: const Icon(CustomIcons.change_pass, color: Colors.black, size: 28),
         title: text('เปลี่ยนรหัสผ่าน'),
-        onTap: () => navigatorTo(() => const ChangePassword(titleAppbar: 'เปลี่ยนรหัสผ่าน (MOCK)'), transition: Transition.leftToRight),
+        onTap: () => navigatorTo(() => const ChangePassword(), transition: Transition.leftToRight),
       ),
       const Divider(),
       // ListTile(

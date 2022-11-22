@@ -13,4 +13,4 @@ final List<String> itemsMonths = [
   'ธันวาคม',
 ];
 
-enum SendOTP { createAccount, forgetPassword, deactivateAccount }
+enum SendOTP { createAccount, deactivateAccount, forgetPassword, changePassword }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:tms/apis/api.dart';
-import 'package:tms/apis/call/create_account.call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_token_access.model.dart';

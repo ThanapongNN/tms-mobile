@@ -4,6 +4,7 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
 import 'package:tms/widgets/button.dart';
@@ -12,8 +13,7 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class ChangePassword extends StatefulWidget {
-  final String titleAppbar;
-  const ChangePassword({super.key, required this.titleAppbar});
+  const ChangePassword({super.key});
 
   @override
   State<ChangePassword> createState() => _ChangePasswordState();
@@ -38,7 +38,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.titleAppbar)),
+        appBar: AppBar(title: const Text('เปลี่ยนรหัสผ่าน')),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -134,12 +134,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     });
                     // print(_formKey.currentState!.validate());
                     navigatorOffAll(
-                      () => AccountSuccess(
-                        titleAppbar: widget.titleAppbar,
-                        titleBody: (widget.titleAppbar.startsWith('สร้าง'))
-                            ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'
-                            : 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว',
-                      ),
+                      () => const AccountSuccess(sendOTP: SendOTP.changePassword),
                       transition: Transition.rightToLeft,
                     );
                   },

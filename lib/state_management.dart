@@ -51,6 +51,7 @@ class Store {
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
 
   static RxString deviceSerial = ''.obs;
+  static RxString saleID = ''.obs;
   static RxString otpRefID = ''.obs;
   static RxString token = ''.obs;
   static RxString userTextInput = ''.obs;

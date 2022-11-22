@@ -1,6 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/api.dart';
@@ -8,6 +7,7 @@ import 'package:tms/apis/config.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
 import 'package:tms/widgets/button.dart';
@@ -16,8 +16,9 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class NewPassword extends StatefulWidget {
-  final String titleAppbar;
-  const NewPassword({super.key, required this.titleAppbar});
+  final SendOTP sendOTP;
+
+  const NewPassword({super.key, required this.sendOTP});
 
   @override
   State<NewPassword> createState() => _NewPasswordState();
@@ -33,20 +34,41 @@ class _NewPasswordState extends State<NewPassword> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   bool _hidePassword = true;
   bool _hideConfirmPassword = true;
+  bool disable = true;
+
+  late String titleAppbar;
 
   @override
   void initState() {
     super.initState();
-    _saleID.text = Store.registerBody['employee']['id'];
+
+    switch (widget.sendOTP) {
+      case SendOTP.createAccount:
+        titleAppbar = 'สร้างบัญชีใหม่';
+        _saleID.text = Store.registerBody['employee']['id'];
+        break;
+      case SendOTP.forgetPassword:
+        titleAppbar = 'ลืมรหัสผ่าน';
+        _saleID.text = Store.saleID.value;
+        break;
+      default:
+    }
+  }
+
+  void checkAllInput() {
+    if (_saleID.text.isNotEmpty && _password.text.isNotEmpty && _confirmPassword.text.isNotEmpty) {
+      disable = false;
+    } else {
+      disable = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    EasyLoading.dismiss();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.titleAppbar)),
+        appBar: AppBar(title: Text(titleAppbar)),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -85,6 +107,7 @@ class _NewPasswordState extends State<NewPassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _confirmPassword,
@@ -107,44 +130,53 @@ class _NewPasswordState extends State<NewPassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 text('กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วย ตัวเลขและตัวอักษร', color: ThemeColor.primaryColor).paddingOnly(bottom: 10),
                 button(
                   text: 'ยืนยัน',
                   icon: BootstrapIcons.check2_circle,
-                  onPressed: () async {
-                    setState(() {
-                      _autovalidateMode = AutovalidateMode.onUserInteraction;
-                    });
+                  disable: disable,
+                  onPressed: disable
+                      ? () {}
+                      : () {
+                          setState(() {
+                            _autovalidateMode = AutovalidateMode.onUserInteraction;
+                          });
 
-                    if (_formKey.currentState!.validate()) {
-                      Store.registerBody['employee']['password'] = _password.text;
+                          if (_formKey.currentState!.validate()) {
+                            switch (widget.sendOTP) {
+                              case SendOTP.createAccount:
+                                {
+                                  Store.registerBody['employee']['password'] = _password.text;
 
-                      CallBack data = await API.call(
-                          method: Method.post,
-                          url: '$hostTrue/user/v1/accounts/register',
-                          headers: Authorization.none,
-                          body: Store.registerBody,
-                          compareError: [
-                            ErrorMessage(
-                              errorMessage: 'The user was registered.',
-                              contentDialog: 'รหัสผู้ใช้งาน ${_saleID.text} มีบัญชีเข้าใช้งานเรียบร้อยแล้ว',
-                            ),
-                          ]);
-
-                      if (data.success) {
-                        navigatorOffAll(
-                          () => AccountSuccess(
-                            titleAppbar: widget.titleAppbar,
-                            titleBody: (widget.titleAppbar.endsWith('ใหม่'))
-                                ? 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว'
-                                : 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว',
-                          ),
-                          transition: Transition.rightToLeft,
-                        );
-                      }
-                    }
-                  },
+                                  API.call(
+                                    method: Method.post,
+                                    url: '$hostTrue/user/v1/accounts/register',
+                                    headers: Authorization.none,
+                                    body: Store.registerBody,
+                                    compareError: [
+                                      ErrorMessage(
+                                        errorMessage: 'The user was registered.',
+                                        contentDialog: 'รหัสผู้ใช้งาน ${_saleID.text} มีบัญชีเข้าใช้งานเรียบร้อยแล้ว',
+                                      ),
+                                    ],
+                                  ).then((register) {
+                                    if (register.success) {
+                                      navigatorOffAll(
+                                        () => AccountSuccess(sendOTP: widget.sendOTP),
+                                        transition: Transition.rightToLeft,
+                                      );
+                                    }
+                                  });
+                                }
+                                break;
+                              case SendOTP.forgetPassword:
+                                break;
+                              default:
+                            }
+                          }
+                        },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
+import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
@@ -232,6 +233,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       ? () {}
                       : () {
                           if (_validateForm()) {
+                            Store.saleID.value = _saleID.text;
                             navigatorTo(
                               () => const ConfirmOTP(
                                 sendOTP: SendOTP.forgetPassword,
