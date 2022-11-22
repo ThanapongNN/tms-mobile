@@ -134,7 +134,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     });
                     // print(_formKey.currentState!.validate());
                     navigatorOffAll(
-                      () => const AccountSuccess(sendOTP: SendOTP.changePassword),
+                      () => const AccountSuccess(otp: OTP.changePassword),
                       transition: Transition.rightToLeft,
                     );
                   },

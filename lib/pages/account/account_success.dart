@@ -10,8 +10,8 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class AccountSuccess extends StatefulWidget {
-  final SendOTP sendOTP;
-  const AccountSuccess({super.key, required this.sendOTP});
+  final OTP otp;
+  const AccountSuccess({super.key, required this.otp});
 
   @override
   State<AccountSuccess> createState() => _AccountSuccessState();
@@ -26,22 +26,22 @@ class _AccountSuccessState extends State<AccountSuccess> {
   void initState() {
     super.initState();
 
-    switch (widget.sendOTP) {
-      case SendOTP.createAccount:
+    switch (widget.otp) {
+      case OTP.createAccount:
         titleAppbar = 'สร้างบัญชีใหม่';
         titleBody = 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว';
         break;
-      case SendOTP.deactivateAccount:
+      case OTP.deactivateAccount:
         titleAppbar = 'ปิดบัญชีใช้งาน';
         titleBody = 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว';
         textButton = 'กลับสู่หน้าแรก';
         icon = BootstrapIcons.house;
         break;
-      case SendOTP.forgetPassword:
+      case OTP.forgotPassword:
         titleAppbar = 'ลืมรหัสผ่าน';
         titleBody = 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว';
         break;
-      case SendOTP.changePassword:
+      case OTP.changePassword:
         titleAppbar = 'เปลี่ยนรหัสผ่าน';
         titleBody = 'ระบบทำการเปลี่ยนรหัสผ่านให้ท่านเรียบร้อยแล้ว';
         break;

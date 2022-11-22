@@ -2,12 +2,12 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:tms/apis/api.dart';
+import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_token_access.model.dart';
 import 'package:tms/pages/account/create_account.dart';
-import 'package:tms/pages/account/forget_password.dart';
+import 'package:tms/pages/account/forgot_password.dart';
 import 'package:tms/pages/menu.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/utils/text_input_formatter.dart';
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     if (_formKey.currentState!.validate()) {
                       Store.userTextInput.value = _user.text;
-                      CallBack data = await API.call(
+                      CallBack data = await Call.raw(
                         method: Method.post,
                         url: '$hostTrue/user/v1/token/access',
                         headers: Authorization.none,
@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                         UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(data.response);
                         Store.token.value = userTokenAccess.token;
 
-                        CallBack userAccount = await API.call(
+                        CallBack userAccount = await Call.raw(
                           method: Method.get,
                           url: '$hostTrue/user/v1/accounts/${_user.text}',
                           headers: Authorization.none,
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
 
                         if (Store.userRoles.isEmpty) {
-                          CallBack data = await API.call(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none);
+                          CallBack data = await Call.raw(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none);
                           if (data.success) Store.userRoles.value = data.response;
                         }
 
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   GestureDetector(
-                    onTap: () => navigatorTo(() => const ForgetPassword()),
+                    onTap: () => navigatorTo(() => const ForgotPassword()),
                     child: text('ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(

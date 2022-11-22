@@ -6,7 +6,7 @@ import 'package:flutter_countdown_timer/index.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:tms/apis/api.dart';
+import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/pages/account/new_password.dart';
@@ -18,9 +18,9 @@ import 'package:tms/widgets/text.dart';
 
 class ConfirmOTP extends StatefulWidget {
   final String mobileNO;
-  final SendOTP sendOTP;
+  final OTP otp;
 
-  const ConfirmOTP({super.key, required this.mobileNO, required this.sendOTP});
+  const ConfirmOTP({super.key, required this.mobileNO, required this.otp});
 
   @override
   State<ConfirmOTP> createState() => _ConfirmOTPState();
@@ -32,28 +32,25 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
 
   DateTime countDown = DateTime.now();
 
-  late String titleAppbar, titleBody, url;
+  late String titleAppbar, titleBody;
 
   @override
   void initState() {
     super.initState();
     errorController = StreamController<ErrorAnimationType>();
 
-    switch (widget.sendOTP) {
-      case SendOTP.createAccount:
+    switch (widget.otp) {
+      case OTP.createAccount:
         titleAppbar = 'สร้างบัญชีใหม่';
         titleBody = 'ยืนยันการสร้างบัญชี';
-        url = '$hostTrue/support/v1/otp/validation';
         break;
-      case SendOTP.deactivateAccount:
+      case OTP.deactivateAccount:
         titleAppbar = 'ปิดบัญชีใช้งาน';
         titleBody = 'ยืนยันการปิดบัญชี';
-        url = '$hostTrue/support/v1/otp/validation';
         break;
-      case SendOTP.forgetPassword:
+      case OTP.forgotPassword:
         titleAppbar = 'ลืมรหัสผ่าน';
         titleBody = 'ยืนยันการสร้างรหัสผ่านใหม่';
-        url = '$hostTrue/support/v1/otp/validation';
         break;
       default:
     }
@@ -139,71 +136,70 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               boxShadows: const [BoxShadow(offset: Offset(0, 1), color: Colors.black12, blurRadius: 10)],
               beforeTextPaste: (text) => true,
               onChanged: (value) {},
-              onCompleted: (value) async {
-                CallBack data = await API.call(
+              onCompleted: (value) {
+                Call.raw(
                   method: Method.post,
-                  url: url,
+                  url: '$hostTrue/support/v1/otp/validation',
                   headers: Authorization.none,
                   body: {"msisdn": widget.mobileNO, "refId": Store.otpRefID.value, "otp": _otp.text},
                   errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
-                );
-
-                if (data.success) {
-                  switch (widget.sendOTP) {
-                    case SendOTP.createAccount:
-                      {
-                        Store.registerBody['otpRefId'] = Store.otpRefID.value;
-                        navigatorOff(
-                          () => const NewPassword(sendOTP: SendOTP.createAccount),
-                          transition: Transition.rightToLeft,
-                        );
-                      }
-                      break;
-                    case SendOTP.deactivateAccount:
-                      {
-                        CallBack data = await API.call(
-                          method: Method.delete,
-                          url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
-                          headers: Authorization.none,
-                        );
-
-                        if (data.success) {
-                          navigatorOffAll(
-                            () => const AccountSuccess(sendOTP: SendOTP.deactivateAccount),
+                ).then((otp) {
+                  if (otp.success) {
+                    switch (widget.otp) {
+                      case OTP.createAccount:
+                        {
+                          Store.registerBody['otpRefId'] = Store.otpRefID.value;
+                          navigatorOff(
+                            () => const NewPassword(otp: OTP.createAccount),
                             transition: Transition.rightToLeft,
                           );
                         }
-                      }
-                      break;
-                    case SendOTP.forgetPassword:
-                      {
-                        navigatorOff(
-                          () => const NewPassword(sendOTP: SendOTP.forgetPassword),
-                          transition: Transition.rightToLeft,
-                        );
-                      }
-                      break;
-                    default:
+                        break;
+                      case OTP.deactivateAccount:
+                        {
+                          Call.raw(
+                            method: Method.delete,
+                            url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
+                            headers: Authorization.none,
+                          ).then((deactivateAccount) {
+                            if (deactivateAccount.success) {
+                              navigatorOffAll(
+                                () => const AccountSuccess(otp: OTP.deactivateAccount),
+                                transition: Transition.rightToLeft,
+                              );
+                            }
+                          });
+                        }
+                        break;
+                      case OTP.forgotPassword:
+                        {
+                          navigatorOff(
+                            () => const NewPassword(otp: OTP.forgotPassword),
+                            transition: Transition.rightToLeft,
+                          );
+                        }
+                        break;
+                      default:
+                    }
+                  } else {
+                    errorController.add(ErrorAnimationType.shake);
                   }
-                } else {
-                  errorController.add(ErrorAnimationType.shake);
-                }
+                });
               },
             ),
             GestureDetector(
-              onTap: () async {
-                CallBack data = await API.call(
+              onTap: () {
+                Call.raw(
                   method: Method.post,
                   url: '$hostTrue/support/v1/otp/request',
                   headers: Authorization.none,
                   body: {"msisdn": widget.mobileNO},
-                );
-
-                if (data.success) {
-                  setState(() {
-                    countDown = DateTime.now();
-                  });
-                }
+                ).then((otp) {
+                  if (otp.success) {
+                    Store.otpRefID.value = otp.response['refId'];
+                    setState(() => countDown = DateTime.now());
+                  }
+                });
               },
               child: text(
                 'ขอรหัสอีกครั้ง',

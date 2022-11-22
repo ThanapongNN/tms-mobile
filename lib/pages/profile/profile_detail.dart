@@ -2,7 +2,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/apis/api.dart';
+import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_roles.model.dart';
@@ -101,7 +101,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
             )
           : NoDataPage(
               onPressed: () async {
-                CallBack userAccount = await API.call(
+                CallBack userAccount = await Call.raw(
                   method: Method.get,
                   url: '$hostTrue/user/v1/accounts/${Store.userTextInput.value}',
                   headers: Authorization.none,

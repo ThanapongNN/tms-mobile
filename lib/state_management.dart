@@ -1,4 +1,5 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:tms/models/forgot_password.model.dart';
 import 'package:tms/models/user_account.model.dart';
 
 //ตัวแปรกองกลาง
@@ -57,5 +58,6 @@ class Store {
   static RxString userTextInput = ''.obs;
   static RxString version = ''.obs;
 
+  static late Rx<ForgotPasswordModel> forgotPasswordModel;
   static late Rx<UserAccountModel> userAccountModel;
 }

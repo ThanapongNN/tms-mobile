@@ -2,6 +2,11 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
+import 'package:tms/apis/call.dart';
+import 'package:tms/apis/config.dart';
+import 'package:tms/models/forgot_password.model.dart';
+import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -14,14 +19,14 @@ import 'package:tms/widgets/list_string_number.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _saleID = TextEditingController();
@@ -33,18 +38,23 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   bool errorDay = false;
   bool errorMonth = false;
   bool errorYear = false;
+  bool errorJob = false;
 
   Color borderDay = Colors.grey;
   Color borderMonth = Colors.grey;
   Color borderYear = Colors.grey;
+  Color borderJob = Colors.grey;
 
-  List<String> itemsDays = [], itemsYears = [];
+  List<String> itemsDays = [], itemsYears = [], itemsJobs = [];
 
-  String? selectedDay, selectedMonth, selectedYear;
+  String? selectedDay, selectedMonth, selectedYear, selectedJob;
+
+  UserRolesModel user = UserRolesModel.fromJson(Store.userRoles);
 
   @override
   void initState() {
     super.initState();
+    itemsJobs = user.userRoles.map((e) => e.name.th).toList();
     itemsDays = listStringNumber(start: 1, end: 31);
     itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
   }
@@ -78,7 +88,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   }
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty && (selectedDay != null) && (selectedMonth != null) && (selectedYear != null) && _branch.text.isNotEmpty) {
+    if (_saleID.text.isNotEmpty &&
+        (selectedDay != null) &&
+        (selectedMonth != null) &&
+        (selectedYear != null) &&
+        (selectedJob != null) &&
+        _branch.text.isNotEmpty) {
       disable = false;
     } else {
       disable = true;
@@ -114,6 +129,29 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   },
                   onChanged: (v) => checkAllInput(),
                 ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(children: [
+                    text('ตำแหน่งงาน', fontSize: 18),
+                    text('*', fontSize: 20, color: Colors.red),
+                  ]),
+                  Row(children: [
+                    dropdown(
+                      hint: 'เลือกตำแหน่งงาน',
+                      items: itemsJobs,
+                      selectedValue: selectedJob,
+                      borderColor: borderJob,
+                      onChanged: (job) {
+                        setState(() {
+                          borderJob = Colors.grey;
+                          errorJob = false;
+                          selectedJob = job;
+                          checkAllInput();
+                        });
+                      },
+                    ),
+                  ]),
+                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
+                ]).paddingOnly(bottom: 10),
                 formField(
                   controller: _branch,
                   textLable: 'รหัสสาขาทรู',
@@ -231,16 +269,43 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   disable: disable,
                   onPressed: disable
                       ? () {}
-                      : () {
+                      : () async {
                           if (_validateForm()) {
                             Store.saleID.value = _saleID.text;
-                            navigatorTo(
-                              () => const ConfirmOTP(
-                                sendOTP: SendOTP.forgetPassword,
-                                mobileNO: '',
-                              ),
-                              transition: Transition.rightToLeft,
-                            );
+
+                            Call.raw(
+                              method: Method.post,
+                              url: '$hostTrue/user/v1/accounts/${_saleID.text}',
+                              headers: Authorization.none,
+                              body: {
+                                "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                                "partnerCode": _branch.text,
+                                "birthdate":
+                                    '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                              },
+                            ).then((forgotPassword) {
+                              if (forgotPassword.success) {
+                                Store.forgotPasswordModel = ForgotPasswordModel.fromJson(forgotPassword.response).obs;
+
+                                Call.raw(
+                                  method: Method.post,
+                                  url: '$hostTrue/support/v1/otp/request',
+                                  headers: Authorization.none,
+                                  body: {"msisdn": Store.forgotPasswordModel.value.mobile},
+                                ).then((otp) {
+                                  if (otp.success) {
+                                    Store.otpRefID.value = otp.response['refId'];
+                                    navigatorTo(
+                                      () => ConfirmOTP(
+                                        otp: OTP.forgotPassword,
+                                        mobileNO: Store.forgotPasswordModel.value.mobile,
+                                      ),
+                                      transition: Transition.rightToLeft,
+                                    );
+                                  }
+                                });
+                              }
+                            });
                           }
                         },
                 ),

@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:tms/apis/api.dart';
+import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/partner_types.model.dart';
 import 'package:tms/models/shop_profile_list.model.dart';
@@ -426,7 +426,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       if (value.length == 8) {
                         _jobBranch.clear();
 
-                        CallBack data = await API.call(
+                        CallBack data = await Call.raw(
                           method: Method.get,
                           url: '$hostTrue/content/v1/partners/${_branch.text}',
                           headers: Authorization.none,
@@ -502,14 +502,14 @@ class _CreateAccountState extends State<CreateAccount> {
                   onPressed: !disable
                       ? () async {
                           if (_validateForm()) {
-                            CallBack check = await API.call(
+                            CallBack check = await Call.raw(
                               method: Method.get,
                               url: '$hostTrue/user/v1/check/${_saleID.text}',
                               headers: Authorization.none,
                             );
 
                             if (check.success) {
-                              CallBack data = await API.call(
+                              CallBack data = await Call.raw(
                                 method: Method.post,
                                 url: '$hostTrue/support/v1/otp/request',
                                 headers: Authorization.none,
@@ -538,7 +538,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                                 navigatorTo(
                                   () => ConfirmOTP(
-                                    sendOTP: SendOTP.createAccount,
+                                    otp: OTP.createAccount,
                                     mobileNO: Store.registerBody['employee']['mobile'],
                                   ),
                                   transition: Transition.rightToLeft,

@@ -2,7 +2,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:tms/apis/api.dart';
+import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/state_management.dart';
@@ -16,9 +16,9 @@ import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class NewPassword extends StatefulWidget {
-  final SendOTP sendOTP;
+  final OTP otp;
 
-  const NewPassword({super.key, required this.sendOTP});
+  const NewPassword({super.key, required this.otp});
 
   @override
   State<NewPassword> createState() => _NewPasswordState();
@@ -42,12 +42,12 @@ class _NewPasswordState extends State<NewPassword> {
   void initState() {
     super.initState();
 
-    switch (widget.sendOTP) {
-      case SendOTP.createAccount:
+    switch (widget.otp) {
+      case OTP.createAccount:
         titleAppbar = 'สร้างบัญชีใหม่';
         _saleID.text = Store.registerBody['employee']['id'];
         break;
-      case SendOTP.forgetPassword:
+      case OTP.forgotPassword:
         titleAppbar = 'ลืมรหัสผ่าน';
         _saleID.text = Store.saleID.value;
         break;
@@ -145,12 +145,12 @@ class _NewPasswordState extends State<NewPassword> {
                           });
 
                           if (_formKey.currentState!.validate()) {
-                            switch (widget.sendOTP) {
-                              case SendOTP.createAccount:
+                            switch (widget.otp) {
+                              case OTP.createAccount:
                                 {
                                   Store.registerBody['employee']['password'] = _password.text;
 
-                                  API.call(
+                                  Call.raw(
                                     method: Method.post,
                                     url: '$hostTrue/user/v1/accounts/register',
                                     headers: Authorization.none,
@@ -164,14 +164,29 @@ class _NewPasswordState extends State<NewPassword> {
                                   ).then((register) {
                                     if (register.success) {
                                       navigatorOffAll(
-                                        () => AccountSuccess(sendOTP: widget.sendOTP),
+                                        () => const AccountSuccess(otp: OTP.createAccount),
                                         transition: Transition.rightToLeft,
                                       );
                                     }
                                   });
                                 }
                                 break;
-                              case SendOTP.forgetPassword:
+                              case OTP.forgotPassword:
+                                {
+                                  Call.raw(
+                                    method: Method.patch,
+                                    url: '$hostTrue/user/v1/accounts/${Store.forgotPasswordModel.value.employeeId}',
+                                    headers: Authorization.none,
+                                    body: {"password": _password.text},
+                                  ).then((forgotPassword) {
+                                    if (forgotPassword.success) {
+                                      navigatorOffAll(
+                                        () => const AccountSuccess(otp: OTP.forgotPassword),
+                                        transition: Transition.rightToLeft,
+                                      );
+                                    }
+                                  });
+                                }
                                 break;
                               default:
                             }

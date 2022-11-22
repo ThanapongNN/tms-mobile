@@ -11,9 +11,9 @@ import 'package:tms/utils/logger.dart';
 import 'package:tms/widgets/dialog.dart';
 import 'package:http/http.dart' as http;
 
-class API {
+class Call {
   //Call raw
-  static Future<CallBack> call({
+  static Future<CallBack> raw({
     required Method method,
     required String url,
     required Authorization headers,
@@ -85,7 +85,7 @@ class API {
   }
 
   //Call form-data
-  static Future<CallBack> callFormData({
+  static Future<CallBack> formData({
     required String url,
     required List<MultipartFile> files,
     bool showDialog = true,
