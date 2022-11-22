@@ -38,23 +38,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   bool errorDay = false;
   bool errorMonth = false;
   bool errorYear = false;
-  bool errorJob = false;
 
   Color borderDay = Colors.grey;
   Color borderMonth = Colors.grey;
   Color borderYear = Colors.grey;
-  Color borderJob = Colors.grey;
 
-  List<String> itemsDays = [], itemsYears = [], itemsJobs = [];
+  List<String> itemsDays = [], itemsYears = [];
 
-  String? selectedDay, selectedMonth, selectedYear, selectedJob;
+  String? selectedDay, selectedMonth, selectedYear;
 
   UserRolesModel user = UserRolesModel.fromJson(Store.userRoles);
 
   @override
   void initState() {
     super.initState();
-    itemsJobs = user.userRoles.map((e) => e.name.th).toList();
     itemsDays = listStringNumber(start: 1, end: 31);
     itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
   }
@@ -88,12 +85,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty &&
-        (selectedDay != null) &&
-        (selectedMonth != null) &&
-        (selectedYear != null) &&
-        (selectedJob != null) &&
-        _branch.text.isNotEmpty) {
+    if (_saleID.text.isNotEmpty && (selectedDay != null) && (selectedMonth != null) && (selectedYear != null) && _branch.text.isNotEmpty) {
       disable = false;
     } else {
       disable = true;
@@ -129,29 +121,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   },
                   onChanged: (v) => checkAllInput(),
                 ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [
-                    text('ตำแหน่งงาน', fontSize: 18),
-                    text('*', fontSize: 20, color: Colors.red),
-                  ]),
-                  Row(children: [
-                    dropdown(
-                      hint: 'เลือกตำแหน่งงาน',
-                      items: itemsJobs,
-                      selectedValue: selectedJob,
-                      borderColor: borderJob,
-                      onChanged: (job) {
-                        setState(() {
-                          borderJob = Colors.grey;
-                          errorJob = false;
-                          selectedJob = job;
-                          checkAllInput();
-                        });
-                      },
-                    ),
-                  ]),
-                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
-                ]).paddingOnly(bottom: 10),
                 formField(
                   controller: _branch,
                   textLable: 'รหัสสาขาทรู',
@@ -278,7 +247,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               url: '$hostTrue/user/v1/accounts/${_saleID.text}',
                               headers: Authorization.none,
                               body: {
-                                "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
                                 "partnerCode": _branch.text,
                                 "birthdate":
                                     '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',

@@ -16,6 +16,7 @@ import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/screen.dart';
 import 'package:tms/utils/text_input_formatter.dart';
+import 'package:tms/utils/validate_thai_national_id.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dialog.dart';
 import 'package:tms/widgets/dropdown.dart';
@@ -35,7 +36,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _saleID = TextEditingController();
-  final _idCard = TextEditingController();
+  final _thaiID = TextEditingController();
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _phoneNumber = TextEditingController();
@@ -210,7 +211,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     onChanged: (v) => checkAllInput(),
                   ),
                   formField(
-                    controller: _idCard,
+                    controller: _thaiID,
                     textLable: 'เลขบัตรประชาชน',
                     hintText: 'กรุณากรอกเลขบัตรประชาชน',
                     maxLength: 17,
@@ -219,7 +220,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'กรุณาระบุเลขบัตรประชาชน\n';
-                      } else if (value.length != 17) {
+                      } else if ((value.length != 17) || !validateThaiNationalID(value.replaceAll('-', ''))) {
                         return 'เลขบัตรประชาชนไม่ถูกต้อง\n';
                       }
                       return null;
@@ -524,6 +525,7 @@ class _CreateAccountState extends State<CreateAccount> {
                                   "partnerCode": _branch.text,
                                   "partnerName": _jobBranch.text,
                                   "employee": {
+                                    "thaiId": _thaiID.text.replaceAll('-', ''),
                                     "id": _saleID.text,
                                     "password": '',
                                     "name": _firstName.text,
