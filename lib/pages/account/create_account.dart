@@ -538,8 +538,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                                 navigatorTo(
                                   () => ConfirmOTP(
-                                    titleAppbar: 'สร้างบัญชีใหม่',
-                                    titleBody: 'ยืนยันการสร้างบัญชี',
+                                    sendOTP: SendOTP.createAccount,
                                     mobileNO: Store.registerBody['employee']['mobile'],
                                   ),
                                   transition: Transition.rightToLeft,

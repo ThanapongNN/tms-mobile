@@ -6,6 +6,7 @@ import 'package:tms/apis/api.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
+import 'package:tms/utils/constructor.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/utils/validate_password.dart';
 import 'package:tms/widgets/button.dart';
@@ -120,10 +121,8 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
 
                           navigatorTo(
                             () => ConfirmOTP(
-                              titleAppbar: 'ปิดบัญชีใช้งาน',
-                              titleBody: 'ยืนยันการปิดบัญชี',
+                              sendOTP: SendOTP.deactivateAccount,
                               mobileNO: Store.userAccountModel.value.account.mobileNo,
-                              fromDeactivateAccount: true,
                             ),
                             transition: Transition.rightToLeft,
                           );

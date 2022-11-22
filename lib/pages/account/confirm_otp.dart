@@ -13,14 +13,15 @@ import 'package:tms/pages/account/account_success.dart';
 import 'package:tms/pages/account/new_password.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/constructor.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class ConfirmOTP extends StatefulWidget {
-  final String titleAppbar, titleBody, mobileNO;
-  final bool fromDeactivateAccount;
+  final String mobileNO;
+  final SendOTP sendOTP;
 
-  const ConfirmOTP({super.key, required this.titleAppbar, required this.titleBody, this.fromDeactivateAccount = false, required this.mobileNO});
+  const ConfirmOTP({super.key, required this.mobileNO, required this.sendOTP});
 
   @override
   State<ConfirmOTP> createState() => _ConfirmOTPState();
@@ -32,10 +33,31 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
 
   DateTime countDown = DateTime.now();
 
+  late String titleAppbar, titleBody, url;
+
   @override
   void initState() {
     super.initState();
     errorController = StreamController<ErrorAnimationType>();
+
+    switch (widget.sendOTP) {
+      case SendOTP.createAccount:
+        titleAppbar = 'สร้างบัญชีใหม่';
+        titleBody = 'ยืนยันการสร้างบัญชี';
+        url = '$hostTrue/support/v1/otp/validation';
+        break;
+      case SendOTP.deactivateAccount:
+        titleAppbar = 'ปิดบัญชีใช้งาน';
+        titleBody = 'ยืนยันการปิดบัญชี';
+        url = '$hostTrue/support/v1/otp/validation';
+        break;
+      case SendOTP.forgetPassword:
+        titleAppbar = 'ลืมรหัสผ่าน';
+        titleBody = 'ยืนยันการสร้างรหัสผ่านใหม่';
+        url = '$hostTrue/support/v1/otp/validation';
+        break;
+      default:
+    }
   }
 
   @override
@@ -49,11 +71,11 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.titleAppbar)),
+        appBar: AppBar(title: Text(titleAppbar)),
         body: SizedBox(
           width: double.infinity,
           child: Column(children: [
-            text(widget.titleBody, fontSize: 24).paddingOnly(top: 40, bottom: 20),
+            text(titleBody, fontSize: 24).paddingOnly(top: 40, bottom: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(30)),
@@ -121,37 +143,53 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               onCompleted: (value) async {
                 CallBack data = await API.call(
                   method: Method.post,
-                  url: '$hostTrue/support/v1/otp/validation',
+                  url: url,
                   headers: Authorization.none,
                   body: {"msisdn": widget.mobileNO, "refId": Store.otpRefID.value, "otp": _otp.text},
                   errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
                 );
 
                 if (data.success) {
-                  if (widget.fromDeactivateAccount) {
-                    CallBack data = await API.call(
-                      method: Method.delete,
-                      url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
-                      headers: Authorization.none,
-                    );
+                  switch (widget.sendOTP) {
+                    case SendOTP.createAccount:
+                      {
+                        Store.registerBody['otpRefId'] = Store.otpRefID.value;
+                        navigatorOff(
+                          () => NewPassword(titleAppbar: titleAppbar),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
+                      break;
+                    case SendOTP.deactivateAccount:
+                      {
+                        CallBack data = await API.call(
+                          method: Method.delete,
+                          url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
+                          headers: Authorization.none,
+                        );
 
-                    if (data.success) {
-                      navigatorOffAll(
-                        () => AccountSuccess(
-                          titleAppbar: widget.titleAppbar,
-                          titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
-                          textButton: 'กลับสู่หน้าแรก',
-                          icon: BootstrapIcons.house,
-                        ),
-                        transition: Transition.rightToLeft,
-                      );
-                    }
-                  } else {
-                    Store.registerBody['otpRefId'] = Store.otpRefID.value;
-                    navigatorOff(
-                      () => NewPassword(titleAppbar: widget.titleAppbar),
-                      transition: Transition.rightToLeft,
-                    );
+                        if (data.success) {
+                          navigatorOffAll(
+                            () => AccountSuccess(
+                              titleAppbar: titleAppbar,
+                              titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
+                              textButton: 'กลับสู่หน้าแรก',
+                              icon: BootstrapIcons.house,
+                            ),
+                            transition: Transition.rightToLeft,
+                          );
+                        }
+                      }
+                      break;
+                    case SendOTP.forgetPassword:
+                      {
+                        navigatorOff(
+                          () => NewPassword(titleAppbar: titleAppbar),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
+                      break;
+                    default:
                   }
                 } else {
                   errorController.add(ErrorAnimationType.shake);

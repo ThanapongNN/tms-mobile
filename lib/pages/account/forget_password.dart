@@ -28,6 +28,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
+  bool disable = true;
   bool errorDay = false;
   bool errorMonth = false;
   bool errorYear = false;
@@ -75,12 +76,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return isValid;
   }
 
+  void checkAllInput() {
+    if (_saleID.text.isNotEmpty && (selectedDay != null) && (selectedMonth != null) && (selectedYear != null) && _branch.text.isNotEmpty) {
+      disable = false;
+    } else {
+      disable = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('ลืมรหัสผ่าน (MOCK)')),
+        appBar: AppBar(title: const Text('ลืมรหัสผ่าน')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Form(
@@ -102,11 +111,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _branch,
                   textLable: 'รหัสสาขาทรู',
-                  hintText: 'กรุณาค้นหาด้วยรหัสสาขาทรู',
+                  hintText: 'ค้นหาด้วยรหัสสาขาทรู',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
@@ -118,6 +128,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 Row(children: [
                   text('วันเดือนปีเกิด', fontSize: 18),
@@ -135,6 +146,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         borderDay = Colors.grey;
                         errorDay = false;
                         selectedDay = day;
+                        checkAllInput();
                       });
                     },
                   ),
@@ -159,6 +171,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         borderMonth = Colors.grey;
                         errorMonth = false;
                         selectedMonth = month;
+                        checkAllInput();
                       });
                     },
                   ),
@@ -183,6 +196,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         borderYear = Colors.grey;
                         errorYear = false;
                         selectedYear = year;
+                        checkAllInput();
                       });
                     },
                   ),
@@ -213,18 +227,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 button(
                   text: 'ถัดไป',
                   icon: BootstrapIcons.arrow_right,
-                  onPressed: () {
-                    if (_validateForm()) {
-                      navigatorTo(
-                        () => const ConfirmOTP(
-                          titleAppbar: 'ลืมรหัสผ่าน',
-                          titleBody: 'ยืนยันการสร้างรหัสผ่านใหม่',
-                          mobileNO: '',
-                        ),
-                        transition: Transition.rightToLeft,
-                      );
-                    }
-                  },
+                  disable: disable,
+                  onPressed: disable
+                      ? () {}
+                      : () {
+                          if (_validateForm()) {
+                            navigatorTo(
+                              () => const ConfirmOTP(
+                                sendOTP: SendOTP.forgetPassword,
+                                mobileNO: '',
+                              ),
+                              transition: Transition.rightToLeft,
+                            );
+                          }
+                        },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
