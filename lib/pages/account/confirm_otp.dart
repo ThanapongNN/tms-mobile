@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
@@ -13,7 +14,6 @@ import 'package:tms/pages/account/new_password.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/navigator.dart';
-import 'package:tms/widgets/pin_code_field.dart';
 import 'package:tms/widgets/text.dart';
 
 class ConfirmOTP extends StatefulWidget {
@@ -28,9 +28,15 @@ class ConfirmOTP extends StatefulWidget {
 
 class _ConfirmOTPState extends State<ConfirmOTP> {
   final _otp = TextEditingController();
-  final errorController = StreamController<ErrorAnimationType>();
+  late StreamController<ErrorAnimationType> errorController;
 
-  bool hasError = false;
+  DateTime countDown = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    errorController = StreamController<ErrorAnimationType>();
+  }
 
   @override
   void dispose() {
@@ -55,7 +61,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               CountdownTimer(
-                endTime: DateTime.now().millisecondsSinceEpoch + 1000 * 180,
+                endTime: countDown.millisecondsSinceEpoch + 1000 * 180,
                 widgetBuilder: (context, time) {
                   if (time == null) {
                     return text('รหัส OTP หมดอายุ กรุณาขอรหัส OTP และทำรายการใหม่', color: ThemeColor.primaryColor);
@@ -79,48 +85,76 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 },
               ),
             ]).paddingSymmetric(vertical: 20),
-            pinCodeField(
+            PinCodeTextField(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               appContext: context,
-              controller: _otp,
+              pastedTextStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              length: 6,
+              obscureText: false,
+              obscuringCharacter: '*',
+              animationType: AnimationType.fade,
+              pinTheme: PinTheme(
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(5),
+                fieldHeight: 50,
+                fieldWidth: 43,
+                activeColor: Colors.white,
+                selectedColor: ThemeColor.primaryColor,
+                inactiveColor: Colors.grey[300],
+                disabledColor: Colors.grey[300],
+                activeFillColor: Colors.white,
+                selectedFillColor: Colors.white,
+                inactiveFillColor: Colors.white,
+              ),
+              cursorColor: Colors.black,
+              animationDuration: const Duration(milliseconds: 300),
+              textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              backgroundColor: Colors.white,
+              enableActiveFill: true,
               errorAnimationController: errorController,
-              hasError: hasError,
+              controller: _otp,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              boxShadows: const [BoxShadow(offset: Offset(0, 1), color: Colors.black12, blurRadius: 10)],
+              beforeTextPaste: (text) => true,
+              onChanged: (value) {},
               onCompleted: (value) async {
-                if (value.length == 6) {
-                  CallBack data = await API.call(
-                    method: Method.post,
-                    url: '$hostTrue/support/v1/otp/validation',
-                    headers: Authorization.none,
-                    body: {"msisdn": widget.mobileNO, "refId": Store.otpRefID.value, "otp": _otp.text},
-                    errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
-                  );
+                CallBack data = await API.call(
+                  method: Method.post,
+                  url: '$hostTrue/support/v1/otp/validation',
+                  headers: Authorization.none,
+                  body: {"msisdn": widget.mobileNO, "refId": Store.otpRefID.value, "otp": _otp.text},
+                  errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
+                );
 
-                  if (data.success) {
-                    if (widget.fromDeactivateAccount) {
-                      CallBack data = await API.call(
-                        method: Method.delete,
-                        url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
-                        headers: Authorization.none,
-                      );
+                if (data.success) {
+                  if (widget.fromDeactivateAccount) {
+                    CallBack data = await API.call(
+                      method: Method.delete,
+                      url: '$hostTrue/user/v1/accounts/${Store.userAccountModel.value.account.employeeId}',
+                      headers: Authorization.none,
+                    );
 
-                      if (data.success) {
-                        navigatorOffAll(
-                          () => AccountSuccess(
-                            titleAppbar: widget.titleAppbar,
-                            titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
-                            textButton: 'กลับสู่หน้าแรก',
-                            icon: BootstrapIcons.house,
-                          ),
-                          transition: Transition.rightToLeft,
-                        );
-                      }
-                    } else {
-                      Store.registerBody['otpRefId'] = Store.otpRefID.value;
-                      navigatorOff(
-                        () => NewPassword(titleAppbar: widget.titleAppbar),
+                    if (data.success) {
+                      navigatorOffAll(
+                        () => AccountSuccess(
+                          titleAppbar: widget.titleAppbar,
+                          titleBody: 'ระบบได้ปิดบัญชีของท่านเรียบร้อยแล้ว',
+                          textButton: 'กลับสู่หน้าแรก',
+                          icon: BootstrapIcons.house,
+                        ),
                         transition: Transition.rightToLeft,
                       );
                     }
+                  } else {
+                    Store.registerBody['otpRefId'] = Store.otpRefID.value;
+                    navigatorOff(
+                      () => NewPassword(titleAppbar: widget.titleAppbar),
+                      transition: Transition.rightToLeft,
+                    );
                   }
+                } else {
+                  errorController.add(ErrorAnimationType.shake);
                 }
               },
             ),
@@ -133,7 +167,11 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                   body: {"msisdn": widget.mobileNO},
                 );
 
-                if (data.success) setState(() {});
+                if (data.success) {
+                  setState(() {
+                    countDown = DateTime.now();
+                  });
+                }
               },
               child: text(
                 'ขอรหัสอีกครั้ง',

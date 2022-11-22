@@ -7,6 +7,7 @@ Widget text(
   TextDecoration? decoration,
   bool fontBold = false,
   TextAlign? textAlign,
+  TextOverflow? overflow,
 }) {
   return Text(
     text,
@@ -16,6 +17,7 @@ Widget text(
       fontSize: fontSize,
       fontWeight: fontBold ? FontWeight.bold : FontWeight.normal,
       decoration: decoration,
+      overflow: overflow,
     ),
   );
 }

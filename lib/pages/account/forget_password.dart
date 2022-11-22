@@ -31,17 +31,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   bool errorDay = false;
   bool errorMonth = false;
   bool errorYear = false;
-  bool errorJob = false;
 
   Color borderDay = Colors.grey;
   Color borderMonth = Colors.grey;
   Color borderYear = Colors.grey;
-  Color borderJob = Colors.grey;
 
   List<String> itemsDays = [], itemsYears = [];
-  final List<String> itemsJobs = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
 
-  String? selectedDay, selectedMonth, selectedYear, selectedJob;
+  String? selectedDay, selectedMonth, selectedYear;
 
   @override
   void initState() {
@@ -71,12 +68,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       if (selectedYear == null) {
         borderYear = Colors.red;
         errorYear = true;
-        isValid = false;
-      }
-
-      if (selectedJob == null) {
-        borderJob = Colors.red;
-        errorJob = true;
         isValid = false;
       }
     });
@@ -112,28 +103,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     return null;
                   },
                 ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [
-                    text('ตำแหน่งงาน', fontSize: 18),
-                    text('*', fontSize: 20, color: Colors.red),
-                  ]),
-                  Row(children: [
-                    dropdown(
-                      hint: 'กรุณาเลือกตำแหน่งงาน',
-                      items: itemsJobs,
-                      selectedValue: selectedJob,
-                      borderColor: borderJob,
-                      onChanged: (job) {
-                        setState(() {
-                          borderJob = Colors.grey;
-                          errorJob = false;
-                          selectedJob = job;
-                        });
-                      },
-                    ),
-                  ]),
-                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
-                ]).paddingOnly(bottom: 10),
                 formField(
                   controller: _branch,
                   textLable: 'รหัสสาขาทรู',

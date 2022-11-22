@@ -14,6 +14,7 @@ import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
+import 'package:tms/utils/screen.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/button.dart';
 import 'package:tms/widgets/dialog.dart';
@@ -34,6 +35,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _saleID = TextEditingController();
+  final _idCard = TextEditingController();
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _phoneNumber = TextEditingController();
@@ -82,26 +84,7 @@ class _CreateAccountState extends State<CreateAccount> {
     itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
   }
 
-  Widget checkBoxShop(int index) {
-    return SizedBox(
-      width: (Get.width / 2),
-      child: Row(children: [
-        Checkbox(
-          value: selectShop[index],
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          onChanged: (value) {
-            // setState(() {
-            //   selectShop = [false, false, false, false, false];
-            //   selectShop[index] = value!;
-            // });
-          },
-        ),
-        text(nameShop[index], color: index == 0 ? Colors.black : Colors.grey),
-      ]),
-    );
-  }
-
-  checkAllInput() {
+  void checkAllInput() {
     if (_saleID.text.isNotEmpty &&
         _firstName.text.isNotEmpty &&
         _lastName.text.isNotEmpty &&
@@ -158,6 +141,14 @@ class _CreateAccountState extends State<CreateAccount> {
     return isValid;
   }
 
+  Widget rowForm(Widget inputLeft, Widget inputRight) {
+    return Row(children: [
+      Expanded(child: inputLeft),
+      const SizedBox(width: 10),
+      Expanded(child: inputRight),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -171,50 +162,96 @@ class _CreateAccountState extends State<CreateAccount> {
             autovalidateMode: _autovalidateMode,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: text('เลือกร้านค้าปฏิบัติงาน', fontSize: 24).paddingAll(10)),
-              Wrap(children: nameShop.map<Widget>((e) => checkBoxShop(nameShop.indexOf(e))).toList()).paddingSymmetric(horizontal: 20),
+              Wrap(
+                children: nameShop.map<Widget>((e) {
+                  return SizedBox(
+                    width: (Screen.width(context) / 2) - 40,
+                    child: Row(children: [
+                      Checkbox(
+                        value: selectShop[nameShop.indexOf(e)],
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onChanged: (value) {
+                          // setState(() {
+                          //   selectShop = [false, false, false, false, false];
+                          //   selectShop[index] = value!;
+                          // });
+                        },
+                      ),
+                      Expanded(
+                        child: text(
+                          nameShop[nameShop.indexOf(e)],
+                          color: nameShop.indexOf(e) == 0 ? Colors.black : Colors.grey,
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ]),
+                  );
+                }).toList(),
+              ).paddingSymmetric(horizontal: 20),
               Divider(thickness: 5, color: Colors.grey[200]),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Center(child: text('ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
-                formField(
-                  controller: _saleID,
-                  textLable: 'รหัสพนักงาน',
-                  hintText: 'กรุณากรอกรหัสพนักงาน',
-                  maxLength: is711 ? 7 : 8,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [TextInputFormatter.filterInputNumber],
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงาน\n';
-                    } else if (value.length != 7) {
-                      return 'รหัสพนักงานไม่ถูกต้อง\n';
-                    }
-                    return null;
-                  },
-                  onChanged: (v) => checkAllInput(),
+                rowForm(
+                  formField(
+                    controller: _saleID,
+                    textLable: 'รหัสพนักงาน',
+                    hintText: 'กรุณากรอกรหัสพนักงาน',
+                    maxLength: is711 ? 7 : 8,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [TextInputFormatter.filterInputNumber],
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'กรุณาระบุรหัสพนักงาน\n';
+                      } else if (value.length != 7) {
+                        return 'รหัสพนักงานไม่ถูกต้อง\n';
+                      }
+                      return null;
+                    },
+                    onChanged: (v) => checkAllInput(),
+                  ),
+                  formField(
+                    controller: _idCard,
+                    textLable: 'เลขบัตรประชาชน',
+                    hintText: 'กรุณากรอกเลขบัตรประชาชน',
+                    maxLength: 17,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [TextInputFormatter.maskTextIDCardTH],
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'กรุณาระบุเลขบัตรประชาชน\n';
+                      } else if (value.length != 17) {
+                        return 'เลขบัตรประชาชนไม่ถูกต้อง\n';
+                      }
+                      return null;
+                    },
+                    onChanged: (v) => checkAllInput(),
+                  ),
                 ),
-                formField(
-                  controller: _firstName,
-                  textLable: 'ชื่อ',
-                  hintText: 'กรุณากรอก',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'กรุณาระบุชื่อ\n';
-                    }
-                    return null;
-                  },
-                  onChanged: (v) => checkAllInput(),
-                ),
-                formField(
-                  controller: _lastName,
-                  textLable: 'นามสกุล',
-                  hintText: 'กรุณากรอก',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'กรุณาระบุนามสกุล\n';
-                    }
-                    return null;
-                  },
-                  onChanged: (v) => checkAllInput(),
+                rowForm(
+                  formField(
+                    controller: _firstName,
+                    textLable: 'ชื่อ',
+                    hintText: 'กรุณากรอกชื่อ',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'กรุณาระบุชื่อ\n';
+                      }
+                      return null;
+                    },
+                    onChanged: (v) => checkAllInput(),
+                  ),
+                  formField(
+                    controller: _lastName,
+                    textLable: 'นามสกุล',
+                    hintText: 'กรุณากรอกนามสกุล',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'กรุณาระบุนามสกุล\n';
+                      }
+                      return null;
+                    },
+                    onChanged: (v) => checkAllInput(),
+                  ),
                 ),
                 Row(children: [
                   text('วันเดือนปีเกิด', fontSize: 18),
@@ -309,100 +346,104 @@ class _CreateAccountState extends State<CreateAccount> {
                         : const SizedBox.shrink(),
                   ),
                 ]).paddingOnly(bottom: 10),
-                formField(
-                  controller: _phoneNumber,
-                  textLable: 'เบอร์มือถือ',
-                  hintText: 'กรุณากรอก',
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [TextInputFormatter.maskTextPhoneNumber],
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือ\n';
-                    } else if (!value.startsWith(RegExp(r'06|08|09'))) {
-                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือ เพื่อใช้รับรหัสยืนยันการสร้างบัญชี\n';
-                    } else if (value.length != 12) {
-                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก\n';
-                    }
+                rowForm(
+                  formField(
+                    controller: _phoneNumber,
+                    textLable: 'เบอร์มือถือ',
+                    hintText: 'กรุณากรอกเบอร์มือถือ',
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: [TextInputFormatter.maskTextPhoneNumber],
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือ\n';
+                      } else if (!value.startsWith(RegExp(r'06|08|09'))) {
+                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือ เพื่อใช้รับรหัสยืนยันการสร้างบัญชี\n';
+                      } else if (value.length != 12) {
+                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก\n';
+                      }
 
-                    return null;
-                  },
-                  onChanged: (v) => checkAllInput(),
+                      return null;
+                    },
+                    onChanged: (v) => checkAllInput(),
+                  ),
+                  formField(
+                    controller: _email,
+                    textLable: 'อีเมล',
+                    hintText: 'กรุณากรอกอีเมล',
+                    required: false,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isNotEmpty && !EmailValidator.validate(value)) {
+                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
-                formField(
-                  controller: _email,
-                  textLable: 'อีเมล',
-                  hintText: 'กรุณากรอก',
-                  required: false,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isNotEmpty && !EmailValidator.validate(value)) {
-                      return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
-                    }
-                    return null;
-                  },
-                ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [
-                    text('ตำแหน่งงาน', fontSize: 18),
-                    text('*', fontSize: 20, color: Colors.red),
-                  ]),
-                  Row(children: [
-                    dropdown(
-                      hint: 'กรุณาเลือกตำแหน่งงาน',
-                      items: itemsJobs,
-                      selectedValue: selectedJob,
-                      borderColor: borderJob,
-                      onChanged: (job) {
-                        setState(() {
-                          borderJob = Colors.grey;
-                          errorJob = false;
-                          selectedJob = job;
-                          checkAllInput();
-                        });
-                      },
-                    ),
-                  ]),
-                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
-                ]).paddingOnly(bottom: 10),
-                formField(
-                  controller: _branch,
-                  textLable: 'รหัสสาขาทรู',
-                  hintText: 'กรุณาค้นหาด้วยรหัสสาขาทรู',
-                  maxLength: 8,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [TextInputFormatter.filterInputNumber],
-                  textInputAction: TextInputAction.done,
-                  suffixIcon: const Icon(BootstrapIcons.search),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
-                    } else if (value.length != 8) {
-                      return 'รหัสสาขาทรูไม่ถูกต้อง\n';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) async {
-                    checkAllInput();
-                    if (value.length == 8) {
-                      _jobBranch.clear();
+                rowForm(
+                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Row(children: [
+                      text('ตำแหน่งงาน', fontSize: 18),
+                      text('*', fontSize: 20, color: Colors.red),
+                    ]),
+                    Row(children: [
+                      dropdown(
+                        hint: 'เลือกตำแหน่งงาน',
+                        items: itemsJobs,
+                        selectedValue: selectedJob,
+                        borderColor: borderJob,
+                        onChanged: (job) {
+                          setState(() {
+                            borderJob = Colors.grey;
+                            errorJob = false;
+                            selectedJob = job;
+                            checkAllInput();
+                          });
+                        },
+                      ),
+                    ]),
+                    if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
+                  ]).paddingOnly(bottom: 10),
+                  formField(
+                    controller: _branch,
+                    textLable: 'รหัสสาขาทรู',
+                    hintText: 'ค้นหาด้วยรหัสสาขาทรู',
+                    maxLength: 8,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [TextInputFormatter.filterInputNumber],
+                    textInputAction: TextInputAction.done,
+                    suffixIcon: const Icon(BootstrapIcons.search),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
+                      } else if (value.length != 8) {
+                        return 'รหัสสาขาทรูไม่ถูกต้อง\n';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) async {
+                      checkAllInput();
+                      if (value.length == 8) {
+                        _jobBranch.clear();
 
-                      CallBack data = await API.call(
-                        method: Method.get,
-                        url: '$hostTrue/content/v1/partners/${_branch.text}',
-                        headers: Authorization.none,
-                      );
+                        CallBack data = await API.call(
+                          method: Method.get,
+                          url: '$hostTrue/content/v1/partners/${_branch.text}',
+                          headers: Authorization.none,
+                        );
 
-                      if (data.success) {
-                        if (data.response['partner'] != null) {
-                          ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                          _branch.text = shopProfileList.partner[0].code;
-                          _jobBranch.text = shopProfileList.partner[0].name.th;
-                        } else {
-                          dialog(content: 'ไม่พบรหัสสาขาทรูในระบบ');
+                        if (data.success) {
+                          if (data.response['partner'] != null) {
+                            ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
+                            _branch.text = shopProfileList.partner[0].code;
+                            _jobBranch.text = shopProfileList.partner[0].name.th;
+                          } else {
+                            dialog(content: 'ไม่พบรหัสสาขาทรูในระบบ');
+                          }
                         }
                       }
-                    }
-                  },
+                    },
+                  ),
                 ),
                 formField(
                   controller: _jobBranch,
@@ -511,7 +552,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
-              ]).paddingSymmetric(horizontal: 40)
+              ]).paddingSymmetric(horizontal: 20)
             ]),
           ),
         ),

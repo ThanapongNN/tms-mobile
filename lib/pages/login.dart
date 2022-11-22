@@ -148,8 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      bool isSuccess = await callCreateAccount();
-                      if (isSuccess) navigatorTo(() => const CreateAccount());
+                      // bool isSuccess = await callCreateAccount();
+                      // if (isSuccess)
+                      navigatorTo(() => const CreateAccount());
                     },
                     child: text('สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
