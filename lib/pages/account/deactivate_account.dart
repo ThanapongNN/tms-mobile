@@ -31,6 +31,15 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   bool _hidePassword = true;
+  bool disable = true;
+
+  void checkAllInput() {
+    if (_saleID.text.isNotEmpty && _password.text.isNotEmpty) {
+      disable = false;
+    } else {
+      disable = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +68,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _password,
@@ -85,53 +95,57 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 const SizedBox(height: 20),
                 button(
                   text: 'ยืนยัน',
                   icon: BootstrapIcons.check2_circle,
-                  onPressed: () async {
-                    setState(() {
-                      _autovalidateMode = AutovalidateMode.onUserInteraction;
-                    });
+                  disable: disable,
+                  onPressed: disable
+                      ? () {}
+                      : () async {
+                          setState(() {
+                            _autovalidateMode = AutovalidateMode.onUserInteraction;
+                          });
 
-                    if (_formKey.currentState!.validate()) {
-                      if (Store.userAccountModel.value.account.createBy == _saleID.text) {
-                        CallBack data = await Call.raw(
-                          method: Method.post,
-                          url: '$hostTrue/user/v1/token/access',
-                          headers: Authorization.none,
-                          body: {
-                            "deviceId": Store.deviceSerial.value,
-                            "user": _saleID.text,
-                            "password": _password.text,
-                          },
-                          errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
-                        );
+                          if (_formKey.currentState!.validate()) {
+                            if (Store.userAccountModel.value.account.createBy == _saleID.text) {
+                              CallBack data = await Call.raw(
+                                method: Method.post,
+                                url: '$hostTrue/user/v1/token/access',
+                                headers: Authorization.none,
+                                body: {
+                                  "deviceId": Store.deviceSerial.value,
+                                  "user": _saleID.text,
+                                  "password": _password.text,
+                                },
+                                errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
+                              );
 
-                        if (data.success) {
-                          CallBack otpRefID = await Call.raw(
-                            method: Method.post,
-                            url: '$hostTrue/support/v1/otp/request',
-                            headers: Authorization.none,
-                            body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
-                          );
+                              if (data.success) {
+                                CallBack otpRefID = await Call.raw(
+                                  method: Method.post,
+                                  url: '$hostTrue/support/v1/otp/request',
+                                  headers: Authorization.none,
+                                  body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
+                                );
 
-                          Store.otpRefID.value = otpRefID.response['refId'];
+                                Store.otpRefID.value = otpRefID.response['refId'];
 
-                          navigatorTo(
-                            () => ConfirmOTP(
-                              otp: OTP.deactivateAccount,
-                              mobileNO: Store.userAccountModel.value.account.mobileNo,
-                            ),
-                            transition: Transition.rightToLeft,
-                          );
-                        }
-                      } else {
-                        dialog(content: 'รหัสพนักงานไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง');
-                      }
-                    }
-                  },
+                                navigatorTo(
+                                  () => ConfirmOTP(
+                                    otp: OTP.deactivateAccount,
+                                    mobileNO: Store.userAccountModel.value.account.mobileNo,
+                                  ),
+                                  transition: Transition.rightToLeft,
+                                );
+                              }
+                            } else {
+                              dialog(content: 'รหัสพนักงานไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง');
+                            }
+                          }
+                        },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),

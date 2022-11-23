@@ -32,6 +32,15 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _hideOldPassword = true;
   bool _hidePassword = true;
   bool _hideConfirmPassword = true;
+  bool disable = true;
+
+  void checkAllInput() {
+    if (_saleID.text.isNotEmpty && _oldPassword.text.isNotEmpty && _password.text.isNotEmpty && _confirmPassword.text.isNotEmpty) {
+      disable = false;
+    } else {
+      disable = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +69,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _oldPassword,
@@ -81,6 +91,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _password,
@@ -102,6 +113,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 formField(
                   controller: _confirmPassword,
@@ -123,21 +135,25 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
+                  onChanged: (v) => checkAllInput(),
                 ),
                 text('กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วย ตัวเลขและตัวอักษร', color: ThemeColor.primaryColor).paddingOnly(bottom: 10),
                 button(
                   text: 'ยืนยัน',
                   icon: BootstrapIcons.check2_circle,
-                  onPressed: () {
-                    setState(() {
-                      _autovalidateMode = AutovalidateMode.onUserInteraction;
-                    });
-                    // print(_formKey.currentState!.validate());
-                    navigatorOffAll(
-                      () => const AccountSuccess(otp: OTP.changePassword),
-                      transition: Transition.rightToLeft,
-                    );
-                  },
+                  disable: disable,
+                  onPressed: disable
+                      ? () {}
+                      : () {
+                          setState(() {
+                            _autovalidateMode = AutovalidateMode.onUserInteraction;
+                          });
+                          // print(_formKey.currentState!.validate());
+                          navigatorOffAll(
+                            () => const AccountSuccess(otp: OTP.changePassword),
+                            transition: Transition.rightToLeft,
+                          );
+                        },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
