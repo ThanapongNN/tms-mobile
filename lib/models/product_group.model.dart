@@ -42,14 +42,12 @@ class ProductGroup {
     required this.product,
     required this.salesTotal,
     required this.salesOrder,
-    required this.unit,
   });
 
   String code;
   String product;
   String salesTotal;
   List<SalesOrder> salesOrder;
-  String unit;
 
   factory ProductGroup.fromRawJson(String str) => ProductGroup.fromJson(json.decode(str));
 
@@ -60,7 +58,6 @@ class ProductGroup {
         product: json["product"],
         salesTotal: json["salesTotal"],
         salesOrder: List<SalesOrder>.from(json["salesOrder"].map((x) => SalesOrder.fromJson(x))),
-        unit: json["unit"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,7 +65,6 @@ class ProductGroup {
         "product": product,
         "salesTotal": salesTotal,
         "salesOrder": List<dynamic>.from(salesOrder.map((x) => x.toJson())),
-        "unit": unit,
       };
 }
 
@@ -76,11 +72,13 @@ class SalesOrder {
   SalesOrder({
     required this.order,
     required this.orderTotal,
+    required this.unit,
     required this.serviceCampaign,
   });
 
   String order;
   String orderTotal;
+  String unit;
   List<ServiceCampaign> serviceCampaign;
 
   factory SalesOrder.fromRawJson(String str) => SalesOrder.fromJson(json.decode(str));
@@ -90,12 +88,14 @@ class SalesOrder {
   factory SalesOrder.fromJson(Map<String, dynamic> json) => SalesOrder(
         order: json["order"],
         orderTotal: json["orderTotal"],
+        unit: json["unit"],
         serviceCampaign: List<ServiceCampaign>.from(json["serviceCampaign"].map((x) => ServiceCampaign.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "order": order,
         "orderTotal": orderTotal,
+        "unit": unit,
         "serviceCampaign": List<dynamic>.from(serviceCampaign.map((x) => x.toJson())),
       };
 }
@@ -104,10 +104,12 @@ class ServiceCampaign {
   ServiceCampaign({
     required this.name,
     required this.ea,
+    required this.unit,
   });
 
   String name;
   String ea;
+  String unit;
 
   factory ServiceCampaign.fromRawJson(String str) => ServiceCampaign.fromJson(json.decode(str));
 
@@ -116,10 +118,12 @@ class ServiceCampaign {
   factory ServiceCampaign.fromJson(Map<String, dynamic> json) => ServiceCampaign(
         name: json["name"],
         ea: json["ea"],
+        unit: json["unit"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "ea": ea,
+        "unit": unit,
       };
 }
