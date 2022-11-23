@@ -51,6 +51,119 @@ class Store {
   }.obs;
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
 
+  static RxMap<String, dynamic> productGroup = <String, dynamic>{
+    "code": "200",
+    "description": "SUCCESS",
+    "lastUpdate": "2022-11-23T09:19:55",
+    "productGroup": [
+      {
+        "code": "1",
+        "product": "ยอดขายมือถือ",
+        "salesTotle": "5",
+        "salesOrder": [
+          {
+            "order": "ยอดขายมือถือ",
+            "serviceCampaign": [
+              {"name": "OPPO A74", "ea": "2"},
+              {"name": "True A5G", "ea": "1"},
+              {"name": "OPPO A165", "ea": "1"},
+              {"name": "Wikko Y82", "ea": "1"}
+            ]
+          }
+        ],
+        "unit": "เครื่อง"
+      },
+      {
+        "code": "2",
+        "product": "ยอดขายเบอร์",
+        "salesTotle": "105",
+        "salesOrder": [
+          {
+            "order": "ซิม 7-11",
+            "serviceCampaign": [
+              {"name": "ซิมที่มีการเติมเงินเติมเน็ต", "ea": "20"},
+              {"name": "ซิมที่ไม่มีการเติมแพ็ค", "ea": "5"}
+            ]
+          },
+          {
+            "order": "ซิมเติมเงิน",
+            "serviceCampaign": [
+              {"name": "ซิมเติมเงินพร้อมเครื่อง", "ea": "12"},
+              {"name": "ซิมฟันธง", "ea": "3"},
+              {"name": "ซิมย้ายค่าย", "ea": "2"},
+              {"name": "ซิมเติมเงินอื่นๆ", "ea": "5"}
+            ]
+          },
+          {
+            "order": "ซิมรายเดือน",
+            "serviceCampaign": [
+              {"name": "ซิมรายเดือนพร้อมเครื่อง", "ea": "13"},
+              {"name": "ซิมฟันธง", "ea": "6"},
+              {"name": "ซิมสวยเลือกได้", "ea": "5"},
+              {"name": "ซิมย้ายค่าย", "ea": "3"},
+              {"name": "ซิมเบอร์มงคล", "ea": "1"}
+            ]
+          },
+          {
+            "order": "ย้ายค่ายเบอร์เดิม",
+            "serviceCampaign": [
+              {"name": "ย้ายค่ายเติมเงิน", "ea": "8"},
+              {"name": "ย้ายค่ายรายเดือน", "ea": "5"},
+              {"name": "ย้ายค่ายรายเดือนพร้อมเครื่อง", "ea": "2"}
+            ]
+          },
+          {
+            "order": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "serviceCampaign": [
+              {"name": "ซิม", "ea": "6"},
+              {"name": "ซิมพร้อมเครื่อง", "ea": "9"}
+            ]
+          }
+        ],
+        "unit": "เบอร์"
+      },
+      {
+        "code": "3",
+        "product": "ยอดสมัครเน็ตบ้านและทีวี",
+        "salesTotle": "19",
+        "salesOrder": [
+          {
+            "order": "ยอดสมัครเน็ตบ้าน/ทีวี",
+            "serviceCampaign": [
+              {"name": "การสมัครด้วยตัวเอง", "ea": "17"},
+              {"name": "การส่งรายชื่อลูกค้า", "ea": "2"}
+            ]
+          }
+        ],
+        "unit": "เบอร์"
+      },
+      {
+        "code": "4",
+        "product": "ยอดขายเติมเงินเติมเน็ต",
+        "salesTotle": "12",
+        "salesOrder": [
+          {
+            "order": "ยอดเติมเงิน",
+            "serviceCampaign": [
+              {"name": "แพ็ค XX", "ea": "2"},
+              {"name": "แพ็ค XXXX", "ea": "2"},
+              {"name": "แพ็คอื่นๆ", "ea": "2"}
+            ]
+          },
+          {
+            "order": "ยอดเติมเน็ต",
+            "serviceCampaign": [
+              {"name": "แพ็ค XX", "ea": "2"},
+              {"name": "แพ็ค XXXX", "ea": "2"},
+              {"name": "แพ็คอื่นๆ", "ea": "2"}
+            ]
+          }
+        ],
+        "unit": "เบอร์"
+      }
+    ]
+  }.obs;
+
   static RxString deviceSerial = ''.obs;
   static RxString saleID = ''.obs;
   static RxString otpRefID = ''.obs;
