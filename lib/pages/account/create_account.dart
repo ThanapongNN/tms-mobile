@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/partner_types.model.dart';
@@ -265,6 +266,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     items: itemsDays,
                     selectedValue: selectedDay,
                     borderColor: borderDay,
+                    onMenuStateChange: (isOpen) {
+                      setState(() {
+                        borderDay = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                      });
+                    },
                     onChanged: (day) {
                       setState(() {
                         borderDay = Colors.grey;
@@ -281,6 +287,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     items: itemsMonths,
                     selectedValue: selectedMonth,
                     borderColor: borderMonth,
+                    onMenuStateChange: (isOpen) {
+                      setState(() {
+                        borderMonth = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                      });
+                    },
                     onChanged: (month) {
                       int year = DateTime.now().year;
                       if (selectedYear != null) year = (int.parse(selectedYear!) - 543);
@@ -306,6 +317,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     items: itemsYears,
                     selectedValue: selectedYear,
                     borderColor: borderYear,
+                    onMenuStateChange: (isOpen) {
+                      setState(() {
+                        borderYear = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                      });
+                    },
                     onChanged: (year) {
                       if (selectedMonth != null) {
                         int mouth = (itemsMonths.indexOf(selectedMonth!) + 2);
@@ -393,6 +409,11 @@ class _CreateAccountState extends State<CreateAccount> {
                         items: itemsJobs,
                         selectedValue: selectedJob,
                         borderColor: borderJob,
+                        onMenuStateChange: (isOpen) {
+                          setState(() {
+                            borderJob = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                          });
+                        },
                         onChanged: (job) {
                           setState(() {
                             borderJob = Colors.grey;
@@ -408,28 +429,30 @@ class _CreateAccountState extends State<CreateAccount> {
                   formField(
                     controller: _branch,
                     textLable: 'รหัสสาขาทรู',
-                    hintText: 'ค้นหาด้วยรหัสสาขาทรู',
-                    maxLength: 8,
+                    hintText: ' ค้นหารหัสสาขาทรู',
+                    maxLength: 5,
                     keyboardType: TextInputType.number,
                     inputFormatters: [TextInputFormatter.filterInputNumber],
                     textInputAction: TextInputAction.done,
+                    prefixIcon: text('  711', fontSize: 18),
+                    prefixIconConstraints: const BoxConstraints(minHeight: 29),
                     suffixIcon: const Icon(BootstrapIcons.search),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
-                      } else if (value.length != 8) {
+                      } else if (value.length != 5) {
                         return 'รหัสสาขาทรูไม่ถูกต้อง\n';
                       }
                       return null;
                     },
                     onChanged: (value) async {
-                      checkAllInput();
-                      if (value.length == 8) {
+                      // _branch.selection = TextSelection.fromPosition(TextPosition(offset: _branch.text.length));
+                      if (_branch.text.length == 5) {
                         _jobBranch.clear();
 
                         CallBack data = await Call.raw(
                           method: Method.get,
-                          url: '$hostTrue/content/v1/partners/${_branch.text}',
+                          url: '$hostTrue/content/v1/partners/711${_branch.text}',
                           headers: Authorization.none,
                         );
 
@@ -443,6 +466,8 @@ class _CreateAccountState extends State<CreateAccount> {
                           }
                         }
                       }
+
+                      checkAllInput();
                     },
                   ),
                 ),
@@ -553,7 +578,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
-              ]).paddingSymmetric(horizontal: 20)
+              ]),
             ]),
           ),
         ),

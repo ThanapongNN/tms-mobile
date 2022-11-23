@@ -129,7 +129,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   textInputAction: TextInputAction.done,
-                  suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
@@ -149,6 +148,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     items: itemsDays,
                     selectedValue: selectedDay,
                     borderColor: borderDay,
+                    onMenuStateChange: (isOpen) {
+                      setState(() {
+                        borderDay = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                      });
+                    },
                     onChanged: (day) {
                       setState(() {
                         borderDay = Colors.grey;
@@ -165,6 +169,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     items: itemsMonths,
                     selectedValue: selectedMonth,
                     borderColor: borderMonth,
+                    onMenuStateChange: (isOpen) {
+                      setState(() {
+                        borderMonth = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                      });
+                    },
                     onChanged: (month) {
                       int year = DateTime.now().year;
                       if (selectedYear != null) year = (int.parse(selectedYear!) - 543);
@@ -190,6 +199,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     items: itemsYears,
                     selectedValue: selectedYear,
                     borderColor: borderYear,
+                    onMenuStateChange: (isOpen) {
+                      setState(() {
+                        borderYear = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                      });
+                    },
                     onChanged: (year) {
                       if (selectedMonth != null) {
                         int mouth = (itemsMonths.indexOf(selectedMonth!) + 2);

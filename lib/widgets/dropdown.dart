@@ -8,6 +8,7 @@ Widget dropdown({
   int? flex,
   String? selectedValue,
   String? hint,
+  void Function(bool)? onMenuStateChange,
 }) {
   return Expanded(
     flex: flex ?? 1,
@@ -22,6 +23,7 @@ Widget dropdown({
             .toList(),
         value: selectedValue,
         onChanged: onChanged,
+        onMenuStateChange: onMenuStateChange,
         isExpanded: true,
         itemHeight: 45,
         itemPadding: const EdgeInsets.symmetric(horizontal: 14),

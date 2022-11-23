@@ -17,6 +17,7 @@ Widget formField({
   List<TextInputFormatter>? inputFormatters,
   String hintText = '',
   String textLable = 'โปรดระบุชื่อ ถ้าไม่ได้ใช้โปรดระบุ showTextLable = false',
+  String? prefixText,
   String? Function(String?)? validator,
   TextInputAction textInputAction = TextInputAction.next,
   TextInputType? keyboardType,
@@ -24,6 +25,7 @@ Widget formField({
   void Function(String)? onChanged,
   bool radius = false,
   Widget? prefixIcon,
+  BoxConstraints? prefixIconConstraints,
 }) {
   return Column(children: [
     if (showTextLable)
@@ -38,6 +40,7 @@ Widget formField({
         fillColor: disable ? Colors.grey[200] : Colors.white,
         hintStyle: const TextStyle(fontSize: 18),
         prefixIcon: prefixIcon,
+        prefixIconConstraints: prefixIconConstraints,
         suffixIcon: suffixIcon,
         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
         errorStyle: TextStyle(color: errorTextColor, height: 0.6),
