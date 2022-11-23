@@ -59,10 +59,11 @@ class Store {
       {
         "code": "1",
         "product": "ยอดขายมือถือ",
-        "salesTotle": "5",
+        "salesTotal": "5",
         "salesOrder": [
           {
             "order": "ยอดขายมือถือ",
+            "orderTotal": "5",
             "serviceCampaign": [
               {"name": "OPPO A74", "ea": "2"},
               {"name": "True A5G", "ea": "1"},
@@ -76,10 +77,11 @@ class Store {
       {
         "code": "2",
         "product": "ยอดขายเบอร์",
-        "salesTotle": "105",
+        "salesTotal": "105",
         "salesOrder": [
           {
             "order": "ซิม 7-11",
+            "orderTotal": "25",
             "serviceCampaign": [
               {"name": "ซิมที่มีการเติมเงินเติมเน็ต", "ea": "20"},
               {"name": "ซิมที่ไม่มีการเติมแพ็ค", "ea": "5"}
@@ -87,6 +89,7 @@ class Store {
           },
           {
             "order": "ซิมเติมเงิน",
+            "orderTotal": "22",
             "serviceCampaign": [
               {"name": "ซิมเติมเงินพร้อมเครื่อง", "ea": "12"},
               {"name": "ซิมฟันธง", "ea": "3"},
@@ -96,6 +99,7 @@ class Store {
           },
           {
             "order": "ซิมรายเดือน",
+            "orderTotal": "28",
             "serviceCampaign": [
               {"name": "ซิมรายเดือนพร้อมเครื่อง", "ea": "13"},
               {"name": "ซิมฟันธง", "ea": "6"},
@@ -106,6 +110,7 @@ class Store {
           },
           {
             "order": "ย้ายค่ายเบอร์เดิม",
+            "orderTotal": "15",
             "serviceCampaign": [
               {"name": "ย้ายค่ายเติมเงิน", "ea": "8"},
               {"name": "ย้ายค่ายรายเดือน", "ea": "5"},
@@ -114,6 +119,7 @@ class Store {
           },
           {
             "order": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "orderTotal": "15",
             "serviceCampaign": [
               {"name": "ซิม", "ea": "6"},
               {"name": "ซิมพร้อมเครื่อง", "ea": "9"}
@@ -125,10 +131,11 @@ class Store {
       {
         "code": "3",
         "product": "ยอดสมัครเน็ตบ้านและทีวี",
-        "salesTotle": "19",
+        "salesTotal": "19",
         "salesOrder": [
           {
             "order": "ยอดสมัครเน็ตบ้าน/ทีวี",
+            "orderTotal": "19",
             "serviceCampaign": [
               {"name": "การสมัครด้วยตัวเอง", "ea": "17"},
               {"name": "การส่งรายชื่อลูกค้า", "ea": "2"}
@@ -140,10 +147,11 @@ class Store {
       {
         "code": "4",
         "product": "ยอดขายเติมเงินเติมเน็ต",
-        "salesTotle": "12",
+        "salesTotal": "12",
         "salesOrder": [
           {
             "order": "ยอดเติมเงิน",
+            "orderTotal": "6",
             "serviceCampaign": [
               {"name": "แพ็ค XX", "ea": "2"},
               {"name": "แพ็ค XXXX", "ea": "2"},
@@ -152,6 +160,7 @@ class Store {
           },
           {
             "order": "ยอดเติมเน็ต",
+            "orderTotal": "6",
             "serviceCampaign": [
               {"name": "แพ็ค XX", "ea": "2"},
               {"name": "แพ็ค XXXX", "ea": "2"},

@@ -40,14 +40,14 @@ class ProductGroup {
   ProductGroup({
     required this.code,
     required this.product,
-    required this.salesTotle,
+    required this.salesTotal,
     required this.salesOrder,
     required this.unit,
   });
 
   String code;
   String product;
-  String salesTotle;
+  String salesTotal;
   List<SalesOrder> salesOrder;
   String unit;
 
@@ -58,7 +58,7 @@ class ProductGroup {
   factory ProductGroup.fromJson(Map<String, dynamic> json) => ProductGroup(
         code: json["code"],
         product: json["product"],
-        salesTotle: json["salesTotle"],
+        salesTotal: json["salesTotal"],
         salesOrder: List<SalesOrder>.from(json["salesOrder"].map((x) => SalesOrder.fromJson(x))),
         unit: json["unit"],
       );
@@ -66,7 +66,7 @@ class ProductGroup {
   Map<String, dynamic> toJson() => {
         "code": code,
         "product": product,
-        "salesTotle": salesTotle,
+        "salesTotal": salesTotal,
         "salesOrder": List<dynamic>.from(salesOrder.map((x) => x.toJson())),
         "unit": unit,
       };
@@ -75,10 +75,12 @@ class ProductGroup {
 class SalesOrder {
   SalesOrder({
     required this.order,
+    required this.orderTotal,
     required this.serviceCampaign,
   });
 
   String order;
+  String orderTotal;
   List<ServiceCampaign> serviceCampaign;
 
   factory SalesOrder.fromRawJson(String str) => SalesOrder.fromJson(json.decode(str));
@@ -87,11 +89,13 @@ class SalesOrder {
 
   factory SalesOrder.fromJson(Map<String, dynamic> json) => SalesOrder(
         order: json["order"],
+        orderTotal: json["orderTotal"],
         serviceCampaign: List<ServiceCampaign>.from(json["serviceCampaign"].map((x) => ServiceCampaign.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "order": order,
+        "orderTotal": orderTotal,
         "serviceCampaign": List<dynamic>.from(serviceCampaign.map((x) => x.toJson())),
       };
 }
