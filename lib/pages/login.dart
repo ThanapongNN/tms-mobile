@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
+import 'package:tms/apis/request/create_account.request.dart';
 import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_token_access.model.dart';
 import 'package:tms/pages/account/create_account.dart';
@@ -147,9 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      // bool isSuccess = await callCreateAccount();
-                      // if (isSuccess)
-                      navigatorTo(() => const CreateAccount());
+                      bool isSuccess = await callCreateAccount();
+                      if (isSuccess) navigatorTo(() => const CreateAccount());
                     },
                     child: text('สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),
                   ),
