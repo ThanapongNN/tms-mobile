@@ -7,7 +7,7 @@ class Store {
   static RxBool drawer = false.obs;
 
   static RxInt currentIndex = 0.obs;
-  static RxInt selectProductGroup = 0.obs;
+  static RxInt indexProductGroup = 0.obs;
 
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> userAccount = <String, dynamic>{}.obs;
@@ -195,6 +195,7 @@ class Store {
 
   static RxString deviceSerial = ''.obs;
   static RxString saleID = ''.obs;
+  static RxString selectedProductGroup = ''.obs;
   static RxString otpRefID = ''.obs;
   static RxString token = ''.obs;
   static RxString userTextInput = ''.obs;

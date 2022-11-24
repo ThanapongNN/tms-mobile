@@ -12,7 +12,6 @@ import 'package:tms/widgets/box_head_status.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/drawer.dart';
 import 'package:tms/widgets/list_product_group.dart';
-
 import 'package:tms/widgets/text.dart';
 
 class Home extends StatefulWidget {
@@ -23,9 +22,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // ignore: unused_field
-  int _currentPage = 0;
-
   List<Widget> items = [];
   List iconHead = ["assets/images/phone.svg", "assets/images/sim2.svg", "assets/images/tv.svg", "assets/images/coin.svg"];
 
@@ -100,18 +96,16 @@ class _HomeState extends State<Home> {
                     ),
                     const SizedBox(height: 15),
                     GestureDetector(
-                      onTap: () {
-                        // print(_currentPage); // ค่าที่ได้จากการกดรูป
-                        Store.currentIndex.value = 1;
-                      },
+                      onTap: () => Store.currentIndex.value = 1,
                       child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 90,
-                            initialPage: 0,
-                            enableInfiniteScroll: false,
-                            onPageChanged: (index, reason) => setState(() => _currentPage = index),
-                          ),
-                          items: items),
+                        items: items,
+                        options: CarouselOptions(
+                          height: 90,
+                          initialPage: Store.indexProductGroup.value,
+                          enableInfiniteScroll: false,
+                          onPageChanged: (index, reason) => Store.indexProductGroup.value = index,
+                        ),
+                      ),
                     ),
                   ],
                 ).paddingSymmetric(vertical: 15),
