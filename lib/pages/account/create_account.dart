@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/partner_types.model.dart';
@@ -525,8 +524,9 @@ class _CreateAccountState extends State<CreateAccount> {
                   text: 'สร้างบัญชี',
                   icon: BootstrapIcons.plus,
                   disable: disable,
-                  onPressed: !disable
-                      ? () async {
+                  onPressed: disable
+                      ? () {}
+                      : () async {
                           if (_validateForm()) {
                             CallBack check = await Call.raw(
                               method: Method.get,
@@ -547,7 +547,7 @@ class _CreateAccountState extends State<CreateAccount> {
                                 Store.registerBody.value = {
                                   "otpRefId": '',
                                   "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                                  "partnerCode": _branch.text,
+                                  "partnerCode": '711${_branch.text}',
                                   "partnerName": _jobBranch.text,
                                   "employee": {
                                     "thaiId": _thaiID.text.replaceAll('-', ''),
@@ -573,8 +573,7 @@ class _CreateAccountState extends State<CreateAccount> {
                               }
                             }
                           }
-                        }
-                      : () {},
+                        },
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
