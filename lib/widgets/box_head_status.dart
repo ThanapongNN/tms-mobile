@@ -3,7 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tms/widgets/text.dart';
 
-Widget boxHeadStatus({required String image, required String content, required String quantity}) {
+Widget boxHeadStatus({
+  required String image,
+  double? sizeImage,
+  required String content,
+  required String quantity,
+}) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -17,7 +22,7 @@ Widget boxHeadStatus({required String image, required String content, required S
             child: Center(
                 child: SvgPicture.asset(
               image,
-              width: 70,
+              width: (sizeImage == null) ? 70 : sizeImage,
             ).paddingSymmetric())),
         Expanded(
           flex: 5,

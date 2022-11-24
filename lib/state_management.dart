@@ -7,6 +7,7 @@ class Store {
   static RxBool drawer = false.obs;
 
   static RxInt currentIndex = 0.obs;
+  static RxInt selectProductGroup = 0.obs;
 
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{
     "code": "200",
@@ -175,6 +176,58 @@ class Store {
           }
         ],
       }
+    ]
+  }.obs;
+
+  static RxMap<String, dynamic> allProductGroup = <String, dynamic>{
+    "allProductGroup": [
+      {
+        "icon": "assets/images/phone_with_sim.svg",
+        "order": "ยอดขายมือถือ",
+        "orderTotal": "5",
+        "unit": "เครื่อง",
+        "serviceCampaign": [
+          {"name": "OPPO A74", "ea": "2", "unit": "เครื่อง"},
+          {"name": "True A5G", "ea": "1", "unit": "เครื่อง"},
+          {"name": "OPPO A165", "ea": "1", "unit": "เครื่อง"},
+          {"name": "Wikko Y82", "ea": "1", "unit": "เครื่อง"}
+        ]
+      },
+      {
+        "icon": "assets/images/sim.svg",
+        "order": "ซิม 7-11",
+        "orderTotal": "25",
+        "unit": "เบอร์",
+        "serviceCampaign": [
+          {"name": "ซิมที่มีการเติมเงินเติมเน็ต", "ea": "20", "unit": "เบอร์"},
+          {"name": "ซิมที่ไม่มีการเติมแพ็ค", "ea": "5", "unit": "เบอร์"}
+        ]
+      },
+      {
+        "icon": "assets/images/sim.svg",
+        "order": "ซิมเติมเงิน",
+        "orderTotal": "22",
+        "unit": "เบอร์",
+        "serviceCampaign": [
+          {"name": "ซิมเติมเงินพร้อมเครื่อง", "ea": "12", "unit": "เบอร์"},
+          {"name": "ซิมฟันธง", "ea": "3", "unit": "เบอร์"},
+          {"name": "ซิมย้ายค่าย", "ea": "2", "unit": "เบอร์"},
+          {"name": "ซิมเติมเงินอื่นๆ", "ea": "5", "unit": "เบอร์"}
+        ]
+      },
+      {
+        "icon": "assets/images/sim.svg",
+        "order": "ซิมรายเดือน",
+        "orderTotal": "28",
+        "unit": "เบอร์",
+        "serviceCampaign": [
+          {"name": "ซิมรายเดือนพร้อมเครื่อง", "ea": "13", "unit": "เบอร์"},
+          {"name": "ซิมฟันธง", "ea": "6", "unit": "เบอร์"},
+          {"name": "ซิมสวยเลือกได้", "ea": "5", "unit": "เบอร์"},
+          {"name": "ซิมย้ายค่าย", "ea": "3", "unit": "เบอร์"},
+          {"name": "ซิมเบอร์มงคล", "ea": "1", "unit": "เบอร์"}
+        ]
+      },
     ]
   }.obs;
 

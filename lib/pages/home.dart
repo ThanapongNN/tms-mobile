@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tms/models/all_product_group.model.dart';
+import 'package:tms/models/product_group.model.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_status.dart';
 import 'package:tms/widgets/box_news.dart';
-import 'package:tms/widgets/box_sales.dart';
 import 'package:tms/widgets/drawer.dart';
+import 'package:tms/widgets/list_product_group.dart';
 
 import 'package:tms/widgets/text.dart';
 
@@ -21,6 +23,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // ignore: unused_field
+  int _currentPage = 0;
+
+  List<Widget> items = [];
+  List iconHead = ["assets/images/phone.svg", "assets/images/sim2.svg", "assets/images/tv.svg", "assets/images/coin.svg"];
+
+  ProductGroupModel productGroupModel = ProductGroupModel.fromJson(Store.productGroup);
+  AllProductGroupModel allProductGroupModel = AllProductGroupModel.fromJson(Store.allProductGroup);
+
+  @override
+  void initState() {
+    super.initState();
+
+    int sum = 0;
+    for (var e in productGroupModel.productGroup) {
+      sum += int.parse(e.salesTotal);
+    }
+
+    items.add(boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '$sum'));
+
+    items.addAll(productGroupModel.productGroup.map((e) {
+      return boxHeadStatus(image: iconHead[productGroupModel.productGroup.indexOf(e)], content: e.product, quantity: e.salesTotal);
+    }).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -68,22 +95,23 @@ class _HomeState extends State<Home> {
                     text('สรุปยอดขายของคุณ', color: Colors.white),
                     const SizedBox(height: 5),
                     text(
-                      DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
+                      DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543} hh:mm', 'th').format(DateTime.now().toLocal()),
                       color: Colors.white,
                     ),
                     const SizedBox(height: 15),
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        height: 90,
-                        initialPage: 0,
-                        enableInfiniteScroll: false,
-                      ),
-                      items: [
-                        boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '18'),
-                        boxHeadStatus(image: 'assets/images/phone_sim.svg', content: 'ยอดขายเบอร์และมือถือ', quantity: '22'),
-                        boxHeadStatus(image: 'assets/images/tv.svg', content: 'ยอดสมัครเน็ตบ้านและทีวี', quantity: '10'),
-                        boxHeadStatus(image: 'assets/images/coin.svg', content: 'ยอดขายเติมเงินเติมเน็ต', quantity: '9'),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        // print(_currentPage); // ค่าที่ได้จากการกดรูป
+                        Store.currentIndex.value = 1;
+                      },
+                      child: CarouselSlider(
+                          options: CarouselOptions(
+                            height: 90,
+                            initialPage: 0,
+                            enableInfiniteScroll: false,
+                            onPageChanged: (index, reason) => setState(() => _currentPage = index),
+                          ),
+                          items: items),
                     ),
                   ],
                 ).paddingSymmetric(vertical: 15),
@@ -92,10 +120,20 @@ class _HomeState extends State<Home> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    boxSales(phone: false, title: 'ซิมเติมเงิน', quantity: '5', unit: 'ซิม'),
-                    boxSales(phone: false, title: 'ซิม 7-11', quantity: '5', unit: 'ซิม'),
-                    boxSales(phone: false, title: 'ซิมรายเดือน', quantity: '5', unit: 'ซิม'),
-                    boxSales(phone: true, title: 'ยอดมือถือ', quantity: '5', unit: 'เครื่อง'),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: allProductGroupModel.allProductGroup.length,
+                      itemBuilder: (context, index) {
+                        return listProductGroup(
+                            icon: allProductGroupModel.allProductGroup[index].icon,
+                            title: allProductGroupModel.allProductGroup[index].order,
+                            quantity: allProductGroupModel.allProductGroup[index].orderTotal,
+                            unit: allProductGroupModel.allProductGroup[index].unit,
+                            detail: allProductGroupModel.allProductGroup[index].serviceCampaign,
+                            seeDetail: (allProductGroupModel.allProductGroup[index].orderTotal == '0') ? false : true);
+                      },
+                    ),
                     const SizedBox(height: 15),
                     GestureDetector(
                       onTap: () => Store.currentIndex.value = 1,
