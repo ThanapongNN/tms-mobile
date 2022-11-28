@@ -61,7 +61,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 ),
                 const SizedBox(height: 10),
                 text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}'),
-                text(Store.userAccountModel.value.account.createBy),
+                text(Store.userAccountModel.value.account.employee.empId),
                 const SizedBox(height: 10),
                 listTile(
                   svgicon: 'assets/icons/pinlocation.svg',
@@ -104,7 +104,6 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 CallBack userAccount = await Call.raw(
                   method: Method.get,
                   url: '$hostTrue/user/v1/accounts/${Store.userTextInput.value}',
-                  headers: Authorization.none,
                 );
 
                 if (userAccount.success) {

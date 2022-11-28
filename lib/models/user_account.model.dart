@@ -54,10 +54,11 @@ class Account {
     required this.createBy,
     required this.createDate,
     required this.createTransactionId,
-    this.updateBy,
-    this.updateDate,
-    this.deleteBy,
-    this.deleteDate,
+    required this.updateBy,
+    required this.updateDate,
+    required this.deleteBy,
+    required this.status,
+    required this.deleteDate,
     required this.employee,
   });
 
@@ -80,6 +81,7 @@ class Account {
   dynamic updateBy;
   dynamic updateDate;
   dynamic deleteBy;
+  String status;
   dynamic deleteDate;
   Employee employee;
 
@@ -107,6 +109,7 @@ class Account {
         updateBy: json["update_by"],
         updateDate: json["update_date"],
         deleteBy: json["delete_by"],
+        status: json["status"],
         deleteDate: json["delete_date"],
         employee: Employee.fromJson(json["employee"]),
       );
@@ -132,6 +135,7 @@ class Account {
         "update_by": updateBy,
         "update_date": updateDate,
         "delete_by": deleteBy,
+        "status": status,
         "delete_date": deleteDate,
         "employee": employee.toJson(),
       };
@@ -140,6 +144,7 @@ class Account {
 class Employee {
   Employee({
     required this.id,
+    required this.empId,
     required this.name,
     required this.surname,
     required this.birthdate,
@@ -149,6 +154,7 @@ class Employee {
   });
 
   String id;
+  String empId;
   String name;
   String surname;
   DateTime birthdate;
@@ -162,6 +168,7 @@ class Employee {
 
   factory Employee.fromJson(Map<String, dynamic> json) => Employee(
         id: json["id"],
+        empId: json["emp_id"],
         name: json["name"],
         surname: json["surname"],
         birthdate: DateTime.parse(json["birthdate"]),
@@ -172,6 +179,7 @@ class Employee {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "emp_id": empId,
         "name": name,
         "surname": surname,
         "birthdate":

@@ -6,7 +6,10 @@ Future<bool> callCreateAccount() async {
   List<bool> isSuccess = [];
 
   if (Store.partnerTypes.isEmpty) {
-    CallBack data = await Call.raw(method: Method.get, url: '$hostTrue/content/v1/partner-types', headers: Authorization.none);
+    CallBack data = await Call.raw(
+      method: Method.get,
+      url: '$hostTrue/content/v1/partner-types',
+    );
     if (data.success) {
       isSuccess.add(true);
       Store.partnerTypes.value = data.response;
@@ -16,7 +19,10 @@ Future<bool> callCreateAccount() async {
   }
 
   if (Store.userRoles.isEmpty) {
-    CallBack data = await Call.raw(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none);
+    CallBack data = await Call.raw(
+      method: Method.get,
+      url: '$hostTrue/content/v1/user-roles',
+    );
     if (data.success) {
       isSuccess.add(true);
       Store.userRoles.value = data.response;

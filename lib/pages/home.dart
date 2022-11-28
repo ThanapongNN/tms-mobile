@@ -28,6 +28,8 @@ class _HomeState extends State<Home> {
   ProductGroupModel productGroupModel = ProductGroupModel.fromJson(Store.productGroup);
   AllProductGroupModel allProductGroupModel = AllProductGroupModel.fromJson(Store.allProductGroup);
 
+  int indexProductGroup = 0;
+
   @override
   void initState() {
     super.initState();
@@ -91,19 +93,22 @@ class _HomeState extends State<Home> {
                     text('สรุปยอดขายของคุณ', color: Colors.white),
                     const SizedBox(height: 5),
                     text(
-                      DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543} hh:mm', 'th').format(DateTime.now().toLocal()),
+                      DateFormat('ข้อมูลถึงวันที่ dd/MM/${DateTime.now().year + 543} HH:mm', 'th').format(DateTime.now().toLocal()),
                       color: Colors.white,
                     ),
                     const SizedBox(height: 15),
                     GestureDetector(
-                      onTap: () => Store.currentIndex.value = 1,
+                      onTap: () {
+                        Store.currentIndex.value = 1;
+                        Store.indexProductGroup.value = indexProductGroup;
+                      },
                       child: CarouselSlider(
                         items: items,
                         options: CarouselOptions(
                           height: 90,
                           initialPage: Store.indexProductGroup.value,
                           enableInfiniteScroll: false,
-                          onPageChanged: (index, reason) => Store.indexProductGroup.value = index,
+                          onPageChanged: (index, reason) => indexProductGroup = index,
                         ),
                       ),
                     ),

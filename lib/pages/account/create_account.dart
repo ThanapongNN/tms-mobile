@@ -86,15 +86,15 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty &&
+    if ((_saleID.text.length > 6) &&
         _firstName.text.isNotEmpty &&
         _lastName.text.isNotEmpty &&
         (selectedDay != null) &&
         (selectedMonth != null) &&
         (selectedYear != null) &&
-        _phoneNumber.text.isNotEmpty &&
+        (_phoneNumber.text.length == 12) &&
         (selectedJob != null) &&
-        _branch.text.isNotEmpty &&
+        (_branch.text.length == 5) &&
         _jobBranch.text.isNotEmpty &&
         accept) {
       disable = false;
@@ -208,7 +208,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       }
                       return null;
                     },
-                    onChanged: (v) => checkAllInput(),
+                    onChanged: (v) => setState(() => checkAllInput()),
                   ),
                   formField(
                     controller: _thaiID,
@@ -225,7 +225,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       }
                       return null;
                     },
-                    onChanged: (v) => checkAllInput(),
+                    onChanged: (v) => setState(() => checkAllInput()),
                   ),
                 ),
                 rowForm(
@@ -239,7 +239,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       }
                       return null;
                     },
-                    onChanged: (v) => checkAllInput(),
+                    onChanged: (v) => setState(() => checkAllInput()),
                   ),
                   formField(
                     controller: _lastName,
@@ -251,7 +251,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       }
                       return null;
                     },
-                    onChanged: (v) => checkAllInput(),
+                    onChanged: (v) => setState(() => checkAllInput()),
                   ),
                 ),
                 Row(children: [
@@ -380,7 +380,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                       return null;
                     },
-                    onChanged: (v) => checkAllInput(),
+                    onChanged: (v) => setState(() => checkAllInput()),
                   ),
                   formField(
                     controller: _email,
@@ -452,7 +452,6 @@ class _CreateAccountState extends State<CreateAccount> {
                         CallBack data = await Call.raw(
                           method: Method.get,
                           url: '$hostTrue/content/v1/partners/711${_branch.text}',
-                          headers: Authorization.none,
                         );
 
                         if (data.success) {
@@ -481,7 +480,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   Checkbox(
@@ -531,14 +530,12 @@ class _CreateAccountState extends State<CreateAccount> {
                             CallBack check = await Call.raw(
                               method: Method.get,
                               url: '$hostTrue/user/v1/check/${_saleID.text}',
-                              headers: Authorization.none,
                             );
 
                             if (check.success) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
                                 url: '$hostTrue/support/v1/otp/request',
-                                headers: Authorization.none,
                                 body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
                               );
 

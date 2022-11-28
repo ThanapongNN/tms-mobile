@@ -1,4 +1,3 @@
-import 'package:aes_crypt/aes_crypt.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -12,6 +11,7 @@ import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forgot_password.dart';
 import 'package:tms/pages/menu.dart';
 import 'package:tms/state_management.dart';
+import 'package:tms/utils/encrypt.dart';
 import 'package:tms/utils/text_input_formatter.dart';
 import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
@@ -108,7 +108,6 @@ class _LoginPageState extends State<LoginPage> {
                       Call.raw(
                         method: Method.post,
                         url: '$hostTrue/user/v1/token/access',
-                        headers: Authorization.none,
                         body: {
                           "deviceId": Store.deviceSerial.value,
                           "user": _user.text,
@@ -119,14 +118,19 @@ class _LoginPageState extends State<LoginPage> {
                           UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(login.response);
                           Store.token.value = userTokenAccess.token;
 
+                          String encryptedEmployeeId = encrypt(_user.text);
+
                           Call.raw(
                             method: Method.get,
-                            url: '$hostTrue/user/v1/accounts/UPrH5q929R6IKWL2fK/Mcw==',
+                            url: '$hostTrue/user/v1/accounts/$encryptedEmployeeId',
                             headers: Authorization.token,
                           ).then((userAccount) {
                             if (userAccount.success) {
                               if (Store.userRoles.isEmpty) {
-                                Call.raw(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none).then((userRoles) {
+                                Call.raw(
+                                  method: Method.get,
+                                  url: '$hostTrue/content/v1/user-roles',
+                                ).then((userRoles) {
                                   if (userRoles.success) Store.userRoles.value = userRoles.response;
                                 });
                               }
@@ -145,7 +149,10 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   GestureDetector(
-                    onTap: () => navigatorTo(() => const ForgotPassword()),
+                    onTap: () async {
+                      bool isSuccess = await callCreateAccount();
+                      if (isSuccess) navigatorTo(() => const ForgotPassword());
+                    },
                     child: text('ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(

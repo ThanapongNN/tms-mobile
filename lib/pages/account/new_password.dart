@@ -56,7 +56,7 @@ class _NewPasswordState extends State<NewPassword> {
   }
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty && _password.text.isNotEmpty && _confirmPassword.text.isNotEmpty) {
+    if ((_saleID.text.length > 6) && (_password.text.length == 8) && (_confirmPassword.text.length == 8)) {
       disable = false;
     } else {
       disable = true;
@@ -107,7 +107,7 @@ class _NewPasswordState extends State<NewPassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 formField(
                   controller: _confirmPassword,
@@ -130,7 +130,7 @@ class _NewPasswordState extends State<NewPassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 text('กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วย ตัวเลขและตัวอักษร', color: ThemeColor.primaryColor).paddingOnly(bottom: 10),
                 button(
@@ -153,7 +153,6 @@ class _NewPasswordState extends State<NewPassword> {
                                   Call.raw(
                                     method: Method.post,
                                     url: '$hostTrue/user/v1/accounts/register',
-                                    headers: Authorization.none,
                                     body: Store.registerBody,
                                     compareError: [
                                       ErrorMessage(
@@ -176,8 +175,8 @@ class _NewPasswordState extends State<NewPassword> {
                                   Call.raw(
                                     method: Method.patch,
                                     url: '$hostTrue/user/v1/accounts/${Store.forgotPasswordModel.value.employeeId}',
-                                    headers: Authorization.none,
-                                    body: {"password": _password.text},
+                                    headers: Authorization.textPlain,
+                                    body: {"password": _password.text, "status": "A"},
                                   ).then((forgotPassword) {
                                     if (forgotPassword.success) {
                                       navigatorOffAll(

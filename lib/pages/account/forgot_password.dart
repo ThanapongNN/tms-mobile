@@ -85,7 +85,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty && (selectedDay != null) && (selectedMonth != null) && (selectedYear != null) && _branch.text.isNotEmpty) {
+    if ((_saleID.text.length > 6) && (_branch.text.length == 8) && (selectedDay != null) && (selectedMonth != null) && (selectedYear != null)) {
       disable = false;
     } else {
       disable = true;
@@ -119,12 +119,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 formField(
                   controller: _branch,
                   textLable: 'รหัสสาขาทรู',
-                  hintText: 'ค้นหาด้วยรหัสสาขาทรู',
+                  hintText: 'กรุณากรอกรหัสสาขาทรู',
                   maxLength: 8,
                   keyboardType: TextInputType.number,
                   inputFormatters: [TextInputFormatter.filterInputNumber],
@@ -132,10 +132,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
+                    } else if (value.length != 8) {
+                      return 'รหัสสาขาทรูไม่ถูกต้อง\n';
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 Row(children: [
                   text('วันเดือนปีเกิด', fontSize: 18),
@@ -259,7 +261,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             Call.raw(
                               method: Method.post,
                               url: '$hostTrue/user/v1/accounts/${_saleID.text}',
-                              headers: Authorization.none,
                               body: {
                                 "partnerCode": _branch.text,
                                 "birthdate":
@@ -272,7 +273,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 Call.raw(
                                   method: Method.post,
                                   url: '$hostTrue/support/v1/otp/request',
-                                  headers: Authorization.none,
                                   body: {"msisdn": Store.forgotPasswordModel.value.mobile},
                                 ).then((otp) {
                                   if (otp.success) {

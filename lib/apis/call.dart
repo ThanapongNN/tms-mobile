@@ -16,7 +16,7 @@ class Call {
   static Future<CallBack> raw({
     required Method method,
     required String url,
-    required Authorization headers,
+    Authorization headers = Authorization.none,
     Object? body,
     bool showDialog = true,
     bool showLoading = true,
@@ -46,7 +46,6 @@ class Call {
         default:
           return CallBack(success: false, response: errorNotFound);
       }
-
       if (showLoading) EasyLoading.dismiss();
 
       logger(response, body: body);

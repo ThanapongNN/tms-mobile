@@ -34,7 +34,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
   bool disable = true;
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty && _password.text.isNotEmpty) {
+    if ((_saleID.text.length > 6) && (_password.text.length == 8)) {
       disable = false;
     } else {
       disable = true;
@@ -68,7 +68,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 formField(
                   controller: _password,
@@ -95,7 +95,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 const SizedBox(height: 20),
                 button(
@@ -110,24 +110,23 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                           });
 
                           if (_formKey.currentState!.validate()) {
-                            if (Store.userAccountModel.value.account.createBy == _saleID.text) {
+                            if (Store.userAccountModel.value.account.employee.empId == _saleID.text) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
                                 url: '$hostTrue/user/v1/token/access',
-                                headers: Authorization.none,
+                                headers: Authorization.token,
                                 body: {
                                   "deviceId": Store.deviceSerial.value,
                                   "user": _saleID.text,
                                   "password": _password.text,
                                 },
-                                errorMessage: 'รหัสผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบ และ ทำรายการใหม่อีกครั้ง',
+                                errorMessage: 'รหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง',
                               );
 
                               if (data.success) {
                                 CallBack otpRefID = await Call.raw(
                                   method: Method.post,
                                   url: '$hostTrue/support/v1/otp/request',
-                                  headers: Authorization.none,
                                   body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
                                 );
 

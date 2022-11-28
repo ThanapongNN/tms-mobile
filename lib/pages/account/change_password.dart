@@ -35,7 +35,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool disable = true;
 
   void checkAllInput() {
-    if (_saleID.text.isNotEmpty && _oldPassword.text.isNotEmpty && _password.text.isNotEmpty && _confirmPassword.text.isNotEmpty) {
+    if ((_saleID.text.length > 6) && (_oldPassword.text.length == 8) && (_password.text.length == 8) && (_confirmPassword.text.length == 8)) {
       disable = false;
     } else {
       disable = true;
@@ -69,7 +69,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 formField(
                   controller: _oldPassword,
@@ -91,7 +91,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 formField(
                   controller: _password,
@@ -113,7 +113,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 formField(
                   controller: _confirmPassword,
@@ -135,7 +135,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     }
                     return null;
                   },
-                  onChanged: (v) => checkAllInput(),
+                  onChanged: (v) => setState(() => checkAllInput()),
                 ),
                 text('กรุณาตั้งรหัสผ่านกำหนด 8 หลัก ประกอบด้วย ตัวเลขและตัวอักษร', color: ThemeColor.primaryColor).paddingOnly(bottom: 10),
                 button(
