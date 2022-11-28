@@ -458,7 +458,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         if (data.success) {
                           if (data.response['partner'] != null) {
                             ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                            _branch.text = shopProfileList.partner[0].code;
+                            // _branch.text = shopProfileList.partner[0].code;
                             _jobBranch.text = shopProfileList.partner[0].name.th;
                           } else {
                             dialog(content: 'ไม่พบรหัสสาขาทรูในระบบ');
@@ -564,10 +564,7 @@ class _CreateAccountState extends State<CreateAccount> {
                                 };
 
                                 navigatorTo(
-                                  () => ConfirmOTP(
-                                    otp: OTP.createAccount,
-                                    mobileNO: Store.registerBody['employee']['mobile'],
-                                  ),
+                                  () => ConfirmOTP(otp: OTP.createAccount, mobileNO: Store.registerBody['employee']['mobile']),
                                   transition: Transition.rightToLeft,
                                 );
                               }

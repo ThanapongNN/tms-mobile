@@ -1,3 +1,4 @@
+import 'package:aes_crypt/aes_crypt.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     if (_formKey.currentState!.validate()) {
                       Store.userTextInput.value = _user.text;
-                      CallBack data = await Call.raw(
+                      Call.raw(
                         method: Method.post,
                         url: '$hostTrue/user/v1/token/access',
                         headers: Authorization.none,
@@ -113,29 +114,30 @@ class _LoginPageState extends State<LoginPage> {
                           "user": _user.text,
                           "password": _password.text,
                         },
-                      );
+                      ).then((login) {
+                        if (login.success) {
+                          UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(login.response);
+                          Store.token.value = userTokenAccess.token;
 
-                      if (data.success) {
-                        UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(data.response);
-                        Store.token.value = userTokenAccess.token;
+                          Call.raw(
+                            method: Method.get,
+                            url: '$hostTrue/user/v1/accounts/UPrH5q929R6IKWL2fK/Mcw==',
+                            headers: Authorization.token,
+                          ).then((userAccount) {
+                            if (userAccount.success) {
+                              if (Store.userRoles.isEmpty) {
+                                Call.raw(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none).then((userRoles) {
+                                  if (userRoles.success) Store.userRoles.value = userRoles.response;
+                                });
+                              }
 
-                        CallBack userAccount = await Call.raw(
-                          method: Method.get,
-                          url: '$hostTrue/user/v1/accounts/${_user.text}',
-                          headers: Authorization.none,
-                        );
-                        if (userAccount.success) {
-                          Store.userAccount.value = userAccount.response;
-                          Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
+                              Store.userAccount.value = userAccount.response;
+                              Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
+                              navigatorOffAll(() => const Menu());
+                            }
+                          });
                         }
-
-                        if (Store.userRoles.isEmpty) {
-                          CallBack data = await Call.raw(method: Method.get, url: '$hostTrue/content/v1/user-roles', headers: Authorization.none);
-                          if (data.success) Store.userRoles.value = data.response;
-                        }
-
-                        navigatorOffAll(() => const Menu());
-                      }
+                      });
                     }
                   },
                   child: text('เข้าสู่ระบบ', color: Colors.white, fontSize: 24),
