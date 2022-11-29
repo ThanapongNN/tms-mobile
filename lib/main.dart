@@ -117,7 +117,8 @@ class ScrollBehaviorModified extends ScrollBehavior {
       case TargetPlatform.iOS:
       case TargetPlatform.macOS:
       case TargetPlatform.android:
-        return const BouncingScrollPhysics();
+        return const ClampingScrollPhysics();
+      // return const BouncingScrollPhysics();
       case TargetPlatform.fuchsia:
       case TargetPlatform.linux:
       case TargetPlatform.windows:

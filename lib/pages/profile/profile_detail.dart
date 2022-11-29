@@ -36,9 +36,9 @@ class _ProfileDetailState extends State<ProfileDetail> {
   }
 
   getUserRolesName() {
-    if (Store.userAccount.isNotEmpty) {
+    if (Store.userAccountModel != null) {
       for (var userRole in userRoles.userRoles) {
-        if (Store.userAccountModel.value.account.roleCode == userRole.code) {
+        if (Store.userAccountModel!.value.account.roleCode == userRole.code) {
           userRolesName = userRole.name.th;
         }
       }
@@ -49,7 +49,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('ข้อมูลของคุณ')),
-      body: (Store.userAccount.isNotEmpty)
+      body: (Store.userAccountModel != null)
           ? SizedBox(
               width: double.infinity,
               child: Column(children: [
@@ -60,27 +60,27 @@ class _ProfileDetailState extends State<ProfileDetail> {
                   backgroundImage: AssetImage('assets/images/no_avatar.png'),
                 ),
                 const SizedBox(height: 10),
-                text('คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}'),
-                text(Store.userAccountModel.value.account.employee.empId),
+                text('คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}'),
+                text(Store.userAccountModel!.value.account.employee.empId),
                 const SizedBox(height: 10),
                 listTile(
                   svgicon: 'assets/icons/pinlocation.svg',
                   title: 'สถานที่ทำงาน',
-                  content: Store.userAccountModel.value.account.partnerName,
-                  trailing: Column(children: [text(Store.userAccountModel.value.account.partnerCode)]),
+                  content: Store.userAccountModel!.value.account.partnerName,
+                  trailing: Column(children: [text(Store.userAccountModel!.value.account.partnerCode)]),
                 ),
                 listTile(svgicon: 'assets/icons/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
                 listTile(
                     svgicon: 'assets/icons/cake.svg',
                     title: 'วันเดือนปีเกิด',
-                    content: DateFormat('dd MMMM ${Store.userAccountModel.value.account.birthdate.year + 543}')
-                        .format(Store.userAccountModel.value.account.birthdate)),
+                    content: DateFormat('dd MMMM ${Store.userAccountModel!.value.account.birthdate.year + 543}')
+                        .format(Store.userAccountModel!.value.account.birthdate)),
                 listTile(
                   svgicon: 'assets/icons/phone.svg',
                   title: 'เบอร์มือถือ',
-                  content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel.value.account.mobileNo),
+                  content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel!.value.account.mobileNo),
                 ),
-                listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel.value.account.email),
+                listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.email),
                 const Spacer(),
                 button(
                   text: 'แก้ไขข้อมูล',
@@ -107,7 +107,6 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 );
 
                 if (userAccount.success) {
-                  Store.userAccount.value = userAccount.response;
                   Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
                   setState(() {
                     getUserRolesName();

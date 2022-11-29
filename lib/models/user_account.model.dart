@@ -12,10 +12,10 @@ class UserAccountModel {
     required this.account,
   });
 
-  int code;
-  String description;
-  String transactionId;
-  Account account;
+  final int code;
+  final String description;
+  final String transactionId;
+  final Account account;
 
   factory UserAccountModel.fromRawJson(String str) => UserAccountModel.fromJson(json.decode(str));
 
@@ -62,28 +62,28 @@ class Account {
     required this.employee,
   });
 
-  String id;
-  String partnerTypeCode;
-  String employeeId;
-  String password;
-  String name;
-  String surname;
-  DateTime birthdate;
-  String mobileNo;
-  String email;
-  dynamic image;
-  String roleCode;
-  String partnerCode;
-  String partnerName;
-  String createBy;
-  DateTime createDate;
-  String createTransactionId;
-  dynamic updateBy;
-  dynamic updateDate;
-  dynamic deleteBy;
-  String status;
-  dynamic deleteDate;
-  Employee employee;
+  final String id;
+  final String partnerTypeCode;
+  final String employeeId;
+  final String password;
+  final String name;
+  final String surname;
+  final DateTime birthdate;
+  final String mobileNo;
+  final String email;
+  final dynamic image;
+  final String roleCode;
+  final String partnerCode;
+  final String partnerName;
+  final String createBy;
+  final DateTime createDate;
+  final String createTransactionId;
+  final dynamic updateBy;
+  final dynamic updateDate;
+  final dynamic deleteBy;
+  final String status;
+  final dynamic deleteDate;
+  final Employee employee;
 
   factory Account.fromRawJson(String str) => Account.fromJson(json.decode(str));
 
@@ -153,14 +153,14 @@ class Employee {
     required this.roleCode,
   });
 
-  String id;
-  String empId;
-  String name;
-  String surname;
-  DateTime birthdate;
-  String mobile;
-  String email;
-  String roleCode;
+  final String id;
+  final String empId;
+  final String name;
+  final String surname;
+  final DateTime birthdate;
+  final String mobile;
+  final String email;
+  final String roleCode;
 
   factory Employee.fromRawJson(String str) => Employee.fromJson(json.decode(str));
 

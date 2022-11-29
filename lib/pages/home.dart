@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:tms/models/all_product_group.model.dart';
 import 'package:tms/models/product_group.model.dart';
 import 'package:tms/pages/news/new_detail.dart';
+import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_head_status.dart';
@@ -25,25 +26,24 @@ class _HomeState extends State<Home> {
   List<Widget> items = [];
   List iconHead = ["assets/images/phone.svg", "assets/images/sim2.svg", "assets/images/tv.svg", "assets/images/coin.svg"];
 
-  ProductGroupModel productGroupModel = ProductGroupModel.fromJson(Store.productGroup);
-  AllProductGroupModel allProductGroupModel = AllProductGroupModel.fromJson(Store.allProductGroup);
-
   int indexProductGroup = 0;
 
   @override
   void initState() {
     super.initState();
 
-    int sum = 0;
-    for (var e in productGroupModel.productGroup) {
-      sum += int.parse(e.salesTotal);
+    if (Store.productGroupModel != null) {
+      int sum = 0;
+      for (var e in Store.productGroupModel!.value.productGroup) {
+        sum += int.parse(e.salesTotal);
+      }
+
+      items.add(boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '$sum'));
+
+      items.addAll(Store.productGroupModel!.value.productGroup.map((e) {
+        return boxHeadStatus(image: iconHead[Store.productGroupModel!.value.productGroup.indexOf(e)], content: e.product, quantity: e.salesTotal);
+      }).toList());
     }
-
-    items.add(boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '$sum'));
-
-    items.addAll(productGroupModel.productGroup.map((e) {
-      return boxHeadStatus(image: iconHead[productGroupModel.productGroup.indexOf(e)], content: e.product, quantity: e.salesTotal);
-    }).toList());
   }
 
   @override
@@ -54,10 +54,10 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
           centerTitle: true,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
-            child: (Store.userAccount.isNotEmpty)
-                ? Container(
+          bottom: (Store.userAccountModel != null)
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(50),
+                  child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: ThemeColor.primaryColor,
                     child: Row(children: [
@@ -68,16 +68,15 @@ class _HomeState extends State<Home> {
                       const SizedBox(width: 5),
                       Expanded(
                         child: text(
-                          'คุณ${Store.userAccountModel.value.account.name} ${Store.userAccountModel.value.account.surname}',
+                          'คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}',
                           color: Colors.white,
                         ),
                       ),
                       SvgPicture.asset('assets/icons/pinlocation.svg', color: Colors.white).paddingOnly(right: 5),
-                      FittedBox(child: text(Store.userAccountModel.value.account.partnerName, color: Colors.white))
+                      FittedBox(child: text(Store.userAccountModel!.value.account.partnerName, color: Colors.white))
                     ]),
-                  )
-                : const SizedBox(),
-          ),
+                  ))
+              : null,
         ),
         onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
         drawer: drawer(),
@@ -85,63 +84,64 @@ class _HomeState extends State<Home> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Column(children: [
-              Container(
-                width: double.infinity,
-                color: const Color(0xFF414F5C),
-                child: Column(
-                  children: [
-                    text('สรุปยอดขายของคุณ', color: Colors.white),
-                    const SizedBox(height: 5),
-                    text(
-                      DateFormat('ข้อมูลถึงวันที่ dd/MM/${DateTime.now().year + 543} HH:mm', 'th').format(DateTime.now().toLocal()),
-                      color: Colors.white,
-                    ),
-                    const SizedBox(height: 15),
-                    GestureDetector(
-                      onTap: () {
-                        Store.currentIndex.value = 1;
-                        Store.indexProductGroup.value = indexProductGroup;
-                      },
-                      child: CarouselSlider(
-                        items: items,
-                        options: CarouselOptions(
-                          height: 90,
-                          initialPage: Store.indexProductGroup.value,
-                          enableInfiniteScroll: false,
-                          onPageChanged: (index, reason) => indexProductGroup = index,
+              (Store.productGroupModel != null && Store.userAccountModel != null)
+                  ? Column(children: [
+                      Container(
+                        width: double.infinity,
+                        color: const Color(0xFF414F5C),
+                        child: Column(children: [
+                          text('สรุปยอดขายของคุณ', color: Colors.white),
+                          const SizedBox(height: 5),
+                          text(
+                            DateFormat('ข้อมูลถึงวันที่ dd/MM/${DateTime.now().year + 543} HH:mm', 'th').format(DateTime.now().toLocal()),
+                            color: Colors.white,
+                          ),
+                          const SizedBox(height: 15),
+                          GestureDetector(
+                            onTap: () {
+                              Store.currentIndex.value = 1;
+                              Store.indexProductGroup.value = indexProductGroup;
+                            },
+                            child: CarouselSlider(
+                              items: items,
+                              options: CarouselOptions(
+                                height: 90,
+                                initialPage: Store.indexProductGroup.value,
+                                enableInfiniteScroll: false,
+                                onPageChanged: (index, reason) => indexProductGroup = index,
+                              ),
+                            ),
+                          ),
+                        ]).paddingSymmetric(vertical: 15),
+                      ),
+                      Container(
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: Store.allProductGroupModel!.value.allProductGroup.length,
+                              itemBuilder: (context, index) {
+                                return listProductGroup(
+                                  icon: Store.allProductGroupModel!.value.allProductGroup[index].icon,
+                                  title: Store.allProductGroupModel!.value.allProductGroup[index].order,
+                                  quantity: Store.allProductGroupModel!.value.allProductGroup[index].orderTotal,
+                                  unit: Store.allProductGroupModel!.value.allProductGroup[index].unit,
+                                  detail: Store.allProductGroupModel!.value.allProductGroup[index].serviceCampaign,
+                                  seeDetail: (Store.allProductGroupModel!.value.allProductGroup[index].orderTotal == '0') ? false : true,
+                                );
+                              },
+                            ),
+                            GestureDetector(
+                              onTap: () => Store.currentIndex.value = 1,
+                              child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
+                            ).paddingSymmetric(vertical: 15),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ).paddingSymmetric(vertical: 15),
-              ),
-              Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: allProductGroupModel.allProductGroup.length,
-                      itemBuilder: (context, index) {
-                        return listProductGroup(
-                            icon: allProductGroupModel.allProductGroup[index].icon,
-                            title: allProductGroupModel.allProductGroup[index].order,
-                            quantity: allProductGroupModel.allProductGroup[index].orderTotal,
-                            unit: allProductGroupModel.allProductGroup[index].unit,
-                            detail: allProductGroupModel.allProductGroup[index].serviceCampaign,
-                            seeDetail: (allProductGroupModel.allProductGroup[index].orderTotal == '0') ? false : true);
-                      },
-                    ),
-                    const SizedBox(height: 15),
-                    GestureDetector(
-                      onTap: () => Store.currentIndex.value = 1,
-                      child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
-                    ),
-                    const SizedBox(height: 15),
-                  ],
-                ),
-              ),
+                    ])
+                  : NoDataPage(onPressed: () {}),
               const SizedBox(height: 15),
               SizedBox(
                 width: double.infinity,

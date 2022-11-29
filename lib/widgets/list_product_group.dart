@@ -51,6 +51,7 @@ Widget listProductGroup({
             if (seeDetail)
               ListView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 itemCount: detail?.length,
                 itemBuilder: (context, index) {

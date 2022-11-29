@@ -110,7 +110,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                           });
 
                           if (_formKey.currentState!.validate()) {
-                            if (Store.userAccountModel.value.account.employee.empId == _saleID.text) {
+                            if (Store.userAccountModel?.value.account.employee.empId == _saleID.text) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
                                 url: '$hostTrue/user/v1/token/access',
@@ -127,7 +127,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                                 CallBack otpRefID = await Call.raw(
                                   method: Method.post,
                                   url: '$hostTrue/support/v1/otp/request',
-                                  body: {"msisdn": Store.userAccountModel.value.account.mobileNo},
+                                  body: {"msisdn": Store.userAccountModel?.value.account.mobileNo},
                                 );
 
                                 Store.otpRefID.value = otpRefID.response['refId'];
@@ -135,7 +135,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                                 navigatorTo(
                                   () => ConfirmOTP(
                                     otp: OTP.deactivateAccount,
-                                    mobileNO: Store.userAccountModel.value.account.mobileNo,
+                                    mobileNO: Store.userAccountModel!.value.account.mobileNo,
                                   ),
                                   transition: Transition.rightToLeft,
                                 );

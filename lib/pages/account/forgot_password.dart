@@ -273,14 +273,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 Call.raw(
                                   method: Method.post,
                                   url: '$hostTrue/support/v1/otp/request',
-                                  body: {"msisdn": Store.forgotPasswordModel.value.mobile},
+                                  body: {"msisdn": Store.forgotPasswordModel!.value.mobile},
                                 ).then((otp) {
                                   if (otp.success) {
                                     Store.otpRefID.value = otp.response['refId'];
                                     navigatorTo(
                                       () => ConfirmOTP(
                                         otp: OTP.forgotPassword,
-                                        mobileNO: Store.forgotPasswordModel.value.mobile,
+                                        mobileNO: Store.forgotPasswordModel!.value.mobile,
                                       ),
                                       transition: Transition.rightToLeft,
                                     );

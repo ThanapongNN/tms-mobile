@@ -23,7 +23,7 @@ dialog({
       actions: [
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           MaterialButton(
-            color: ThemeColor.cancleColor,
+            color: ThemeColor.greyColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             onPressed: onPressedCancle ?? () => Get.back(),
             child: text(textCancle, color: Colors.white),

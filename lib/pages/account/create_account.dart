@@ -571,7 +571,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 const SizedBox(height: 10),
                 button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),
-              ]),
+              ]).paddingSymmetric(horizontal: 20),
             ]),
           ),
         ),
