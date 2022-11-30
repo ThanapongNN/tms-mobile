@@ -8,14 +8,12 @@ class ProductGroupModel {
   ProductGroupModel({
     required this.code,
     required this.description,
-    required this.lastUpdate,
-    required this.productGroup,
+    required this.data,
   });
 
-  String code;
-  String description;
-  DateTime lastUpdate;
-  List<ProductGroup> productGroup;
+  final String code;
+  final String description;
+  final List<Datum> data;
 
   factory ProductGroupModel.fromRawJson(String str) => ProductGroupModel.fromJson(json.decode(str));
 
@@ -24,14 +22,44 @@ class ProductGroupModel {
   factory ProductGroupModel.fromJson(Map<String, dynamic> json) => ProductGroupModel(
         code: json["code"],
         description: json["description"],
-        lastUpdate: DateTime.parse(json["lastUpdate"]),
-        productGroup: List<ProductGroup>.from(json["productGroup"].map((x) => ProductGroup.fromJson(x))),
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "code": code,
         "description": description,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
+}
+
+class Datum {
+  Datum({
+    required this.lastUpdate,
+    required this.totalCount,
+    required this.strDate,
+    required this.productGroup,
+  });
+
+  final DateTime lastUpdate;
+  final int totalCount;
+  final String strDate;
+  final List<ProductGroup> productGroup;
+
+  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        lastUpdate: DateTime.parse(json["lastUpdate"]),
+        totalCount: json["totalCount"],
+        strDate: json["strDate"],
+        productGroup: List<ProductGroup>.from(json["productGroup"].map((x) => ProductGroup.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
         "lastUpdate": lastUpdate.toIso8601String(),
+        "totalCount": totalCount,
+        "strDate": strDate,
         "productGroup": List<dynamic>.from(productGroup.map((x) => x.toJson())),
       };
 }
@@ -44,10 +72,10 @@ class ProductGroup {
     required this.salesOrder,
   });
 
-  String code;
-  String product;
-  String salesTotal;
-  List<SalesOrder> salesOrder;
+  final String code;
+  final String product;
+  final int salesTotal;
+  final List<SalesOrder> salesOrder;
 
   factory ProductGroup.fromRawJson(String str) => ProductGroup.fromJson(json.decode(str));
 
@@ -76,10 +104,10 @@ class SalesOrder {
     required this.serviceCampaign,
   });
 
-  String order;
-  String orderTotal;
-  String unit;
-  List<ServiceCampaign> serviceCampaign;
+  final String order;
+  final int orderTotal;
+  final String unit;
+  final List<ServiceCampaign> serviceCampaign;
 
   factory SalesOrder.fromRawJson(String str) => SalesOrder.fromJson(json.decode(str));
 
@@ -107,9 +135,9 @@ class ServiceCampaign {
     required this.unit,
   });
 
-  String name;
-  String ea;
-  String unit;
+  final String name;
+  final int ea;
+  final String unit;
 
   factory ServiceCampaign.fromRawJson(String str) => ServiceCampaign.fromJson(json.decode(str));
 

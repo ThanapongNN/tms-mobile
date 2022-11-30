@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/models/all_product_group.model.dart';
-import 'package:tms/models/product_group.model.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
@@ -24,7 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Widget> items = [];
-  List iconHead = ["assets/images/phone.svg", "assets/images/sim2.svg", "assets/images/tv.svg", "assets/images/coin.svg"];
+  List iconHead = ["assets/images/phone.svg", "assets/images/tv.svg", "assets/images/coin.svg", "assets/images/sim2.svg"];
 
   int indexProductGroup = 0;
 
@@ -33,15 +31,12 @@ class _HomeState extends State<Home> {
     super.initState();
 
     if (Store.productGroupModel != null) {
-      int sum = 0;
-      for (var e in Store.productGroupModel!.value.productGroup) {
-        sum += int.parse(e.salesTotal);
-      }
+      items.add(boxHeadStatus(
+          image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
 
-      items.add(boxHeadStatus(image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '$sum'));
-
-      items.addAll(Store.productGroupModel!.value.productGroup.map((e) {
-        return boxHeadStatus(image: iconHead[Store.productGroupModel!.value.productGroup.indexOf(e)], content: e.product, quantity: e.salesTotal);
+      items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
+        return boxHeadStatus(
+            image: iconHead[Store.productGroupModel!.value.data[0].productGroup.indexOf(e)], content: e.product, quantity: '${e.salesTotal}');
       }).toList());
     }
   }
@@ -121,15 +116,19 @@ class _HomeState extends State<Home> {
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: Store.allProductGroupModel!.value.allProductGroup.length,
+                              itemCount: 4,
                               itemBuilder: (context, index) {
+                                String icon = 'assets/images/phone_with_sim.svg';
+                                if (index == 0) icon = 'assets/images/sim.svg';
+
                                 return listProductGroup(
-                                  icon: Store.allProductGroupModel!.value.allProductGroup[index].icon,
-                                  title: Store.allProductGroupModel!.value.allProductGroup[index].order,
-                                  quantity: Store.allProductGroupModel!.value.allProductGroup[index].orderTotal,
-                                  unit: Store.allProductGroupModel!.value.allProductGroup[index].unit,
-                                  detail: Store.allProductGroupModel!.value.allProductGroup[index].serviceCampaign,
-                                  seeDetail: (Store.allProductGroupModel!.value.allProductGroup[index].orderTotal == '0') ? false : true,
+                                  icon: icon,
+                                  title: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].order,
+                                  quantity: '${Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].orderTotal}',
+                                  unit: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].unit,
+                                  detail: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].serviceCampaign,
+                                  seeDetail:
+                                      (Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].orderTotal == 0) ? false : true,
                                 );
                               },
                             ),

@@ -38,7 +38,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
     super.initState();
 
     if (Store.productGroupModel != null) {
-      for (var e in Store.productGroupModel!.value.productGroup) {
+      for (var e in Store.productGroupModel!.value.data[0].productGroup) {
         select.add(e.product);
       }
 
@@ -141,19 +141,20 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                 (Store.indexProductGroup.value == 0)
                     ? SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: Store.productGroupModel!.value.productGroup.length,
+                          childCount: Store.productGroupModel!.value.data[0].productGroup.length,
                           (BuildContext context, int index) {
                             return Column(
-                              children: Store.productGroupModel!.value.productGroup[index].salesOrder.map((e) {
-                                int indexOrder = Store.productGroupModel!.value.productGroup[index].salesOrder.indexOf(e);
+                              children: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder.map((e) {
+                                int indexOrder = Store.productGroupModel!.value.data[0].productGroup[index].salesOrder.indexOf(e);
                                 return listProductGroup(
                                   icon: 'assets/images/sim.svg',
-                                  title: Store.productGroupModel!.value.productGroup[index].salesOrder[indexOrder].order,
-                                  quantity: Store.productGroupModel!.value.productGroup[index].salesOrder[indexOrder].orderTotal,
-                                  unit: Store.productGroupModel!.value.productGroup[index].salesOrder[indexOrder].unit,
-                                  seeDetail:
-                                      (Store.productGroupModel!.value.productGroup[index].salesOrder[indexOrder].orderTotal == '0') ? false : true,
-                                  detail: Store.productGroupModel!.value.productGroup[index].salesOrder[indexOrder].serviceCampaign,
+                                  title: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].order,
+                                  quantity: '${Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].orderTotal}',
+                                  unit: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].unit,
+                                  seeDetail: (Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].orderTotal == 0)
+                                      ? false
+                                      : true,
+                                  detail: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].serviceCampaign,
                                 );
                               }).toList(),
                             );
@@ -162,19 +163,21 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                       )
                     : SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: Store.productGroupModel!.value.productGroup[Store.indexProductGroup.value - 1].salesOrder.length,
+                          childCount: Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder.length,
                           (BuildContext context, int index) {
                             return listProductGroup(
                               icon: 'assets/images/sim.svg',
-                              title: Store.productGroupModel!.value.productGroup[Store.indexProductGroup.value - 1].salesOrder[index].order,
-                              quantity: Store.productGroupModel!.value.productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal,
-                              unit: Store.productGroupModel!.value.productGroup[Store.indexProductGroup.value - 1].salesOrder[index].unit,
-                              seeDetail:
-                                  (Store.productGroupModel!.value.productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal == '0')
-                                      ? false
-                                      : true,
-                              detail:
-                                  Store.productGroupModel!.value.productGroup[Store.indexProductGroup.value - 1].salesOrder[index].serviceCampaign,
+                              title: Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].order,
+                              quantity:
+                                  '${Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal}',
+                              unit: Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].unit,
+                              seeDetail: (Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index]
+                                          .orderTotal ==
+                                      0)
+                                  ? false
+                                  : true,
+                              detail: Store
+                                  .productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].serviceCampaign,
                             );
                           },
                         ),

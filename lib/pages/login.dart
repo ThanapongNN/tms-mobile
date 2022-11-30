@@ -5,7 +5,6 @@ import 'package:get/state_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/create_account.request.dart';
-import 'package:tms/models/all_product_group.model.dart';
 import 'package:tms/models/product_group.model.dart';
 import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_token_access.model.dart';
@@ -115,35 +114,44 @@ class _LoginPageState extends State<LoginPage> {
                           "user": _user.text,
                           "password": _password.text,
                         },
-                      ).then((login) {
+                      ).then((login) async {
                         if (login.success) {
+                          //เก็บ TOKEN
                           UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(login.response);
                           Store.token.value = userTokenAccess.token;
 
                           String encryptedEmployeeId = encrypt(_user.text);
 
-                          Call.raw(
-                            method: Method.get,
-                            url: '$hostTrue/user/v1/accounts/$encryptedEmployeeId',
-                            headers: Authorization.token,
-                          ).then((userAccount) {
-                            if (userAccount.success) {
-                              if (Store.userRoles.isEmpty) {
-                                Call.raw(
-                                  method: Method.get,
-                                  url: '$hostTrue/content/v1/user-roles',
-                                ).then((userRoles) {
-                                  if (userRoles.success) Store.userRoles.value = userRoles.response;
-                                });
-                              }
+                          //เรียกข้อมูลตำแหน่งงานกรณียังไม่ถูกเรียก
+                          if (Store.userRoles.isEmpty) {
+                            Call.raw(
+                              method: Method.get,
+                              url: '$hostTrue/content/v1/user-roles',
+                            ).then((userRoles) {
+                              if (userRoles.success) Store.userRoles.value = userRoles.response;
+                            });
+                          }
 
-                              Store.allProductGroupModel = AllProductGroupModel.fromJson(Store.allProductGroup).obs;
-                              Store.productGroupModel = ProductGroupModel.fromJson(Store.productGroup).obs;
-                              Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
+                          //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
+                          await Future.wait([
+                            Call.raw(
+                              method: Method.get,
+                              url: '$hostTrue/user/v1/accounts/$encryptedEmployeeId',
+                              headers: Authorization.token,
+                            ).then((userAccount) {
+                              if (userAccount.success) Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
+                            }),
+                            Call.raw(
+                              method: Method.get,
+                              url: '$hostTrue/product-group/v1/productGroup/$encryptedEmployeeId',
+                              headers: Authorization.token,
+                            ).then((productGroup) {
+                              if (productGroup.success) Store.productGroupModel = ProductGroupModel.fromJson(productGroup.response).obs;
+                            })
+                          ]);
 
-                              navigatorOffAll(() => const Menu());
-                            }
-                          });
+                          //เข้าหน้าเมนู
+                          navigatorOffAll(() => const Menu());
                         }
                       });
                     }

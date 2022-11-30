@@ -1,7 +1,7 @@
 import 'package:tms/state_management.dart';
 
 // String hostDev = "http://139.59.119.249:4500";
-String hostTrue = "https://52e4-2001-fb1-8c-69e5-5571-528d-7a95-44a7.ap.ngrok.io";
+String hostTrue = "https://1646-171-96-155-82.ap.ngrok.io";
 
 String errorTimeout = 'หมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
 String messageOffline = 'ขาดการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';

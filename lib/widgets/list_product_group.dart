@@ -55,7 +55,7 @@ Widget listProductGroup({
                 padding: EdgeInsets.zero,
                 itemCount: detail?.length,
                 itemBuilder: (context, index) {
-                  return listSalesDetail(title: detail?[index].name, quantity: detail?[index].ea, unit: detail?[index].unit);
+                  return listSalesDetail(title: detail?[index].name, quantity: '${detail?[index].ea}', unit: detail?[index].unit);
                 },
               ),
           ],
