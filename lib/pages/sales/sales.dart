@@ -19,28 +19,28 @@ class SalesPage extends StatefulWidget {
 }
 
 class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMixin {
-  // late TabController _tabBar;
-  bool currentMonthFocus = true;
-  List select = ["ยอดขายทั้งหมด"];
   bool turn = true;
 
-  List mockData1 = [
-    {"icon": 'assets/images/sim.svg', "title": 'ซิม  7-11', "quantity": '0', "unit": 'ซิม'},
-    {"icon": 'assets/images/sim.svg', "title": 'ซิมเติมเงิน', "quantity": '0', "unit": 'ซิม'},
-    {"icon": 'assets/images/sim.svg', "title": 'ซิมรายเดือน', "quantity": '0', "unit": 'ซิม'},
-    {"icon": 'assets/images/phone_with_sim.svg', "title": 'ยอดมือถือ', "quantity": '0', "unit": 'ซิม'},
-    {"icon": 'assets/images/mnp.svg', "title": 'ย้ายค่ายเบอร์เดิม', "quantity": '0', "unit": 'ซิม'},
-    {"icon": 'assets/images/pretopost.svg', "title": 'เติมเงินเป็นรายเดือน', "quantity": '0', "unit": 'ซิม'},
-  ];
+  int indexMonth = 0;
+
+  List<bool> currentMonthFocus = [];
+  List select = ["ยอดขายทั้งหมด"];
 
   @override
   void initState() {
     super.initState();
 
     if (Store.productGroupModel != null) {
-      for (var e in Store.productGroupModel!.value.data[0].productGroup) {
+      for (var e in Store.productGroupModel!.value.data[indexMonth].productGroup) {
         select.add(e.product);
       }
+
+      //เซ็ตสีเลือกเดือน
+      currentMonthFocus = Store.productGroupModel!.value.data
+          .map((e) => Store.productGroupModel!.value.data.length == (Store.productGroupModel!.value.data.indexOf(e) + 1))
+          .toList()
+          .reversed
+          .toList();
 
       Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
     }
@@ -65,33 +65,41 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                       color: const Color(0xFF414F5C),
                       margin: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
                       child: Column(children: [
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                          GestureDetector(
-                            onTap: () => setState(() => currentMonthFocus = !currentMonthFocus),
-                            child: text(
-                              DateFormat('MMMM ${DateTime.now().year + 543}', 'th').format(
-                                DateTime.parse('${DateTime.now().year}-${DateTime.now().month - 1}-01').toLocal(),
-                              ),
-                              color: !currentMonthFocus ? Colors.yellow : Colors.white,
-                              decoration: !currentMonthFocus ? null : TextDecoration.underline,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => setState(() => currentMonthFocus = !currentMonthFocus),
-                            child: text(
-                              DateFormat('MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
-                              color: currentMonthFocus ? Colors.yellow : Colors.white,
-                              decoration: currentMonthFocus ? null : TextDecoration.underline,
-                            ),
-                          ),
-                        ]).paddingOnly(bottom: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: Store.productGroupModel!.value.data
+                              .map((e) {
+                                int index = Store.productGroupModel!.value.data.indexOf(e);
+                                return GestureDetector(
+                                  onTap: () => setState(() {
+                                    currentMonthFocus = Store.productGroupModel!.value.data.map((e) => false).toList();
+                                    currentMonthFocus[index] = true;
+                                    indexMonth = currentMonthFocus.indexOf(true);
+                                  }),
+                                  child: text(
+                                    DateFormat(
+                                      'MMMM ${DateTime.parse('${Store.productGroupModel!.value.data[index].strDate}-01').year + 543}',
+                                      'th',
+                                    ).format(DateTime.parse('${Store.productGroupModel!.value.data[index].strDate}-01').toLocal()),
+                                    color: currentMonthFocus[index] ? Colors.yellow : Colors.white,
+                                    decoration: currentMonthFocus[index] ? TextDecoration.underline : null,
+                                  ),
+                                );
+                              })
+                              .toList() //แปลงเป็น Array
+                              .reversed //เรียงจากหลังไปหน้า
+                              .toList(), //แปลงกลับเป็น Array
+                        ).paddingOnly(bottom: 10),
                         text(
-                          DateFormat('ข้อมูลถึงวันที่ dd MMMM ${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
+                          DateFormat(
+                            'ข้อมูลถึงวันที่ dd MMMM ${Store.productGroupModel!.value.data[indexMonth].lastUpdate.year + 543}',
+                            'th',
+                          ).format(Store.productGroupModel!.value.data[indexMonth].lastUpdate.toLocal()),
                           color: Colors.white,
                         ).paddingOnly(bottom: 5),
                         boxHeadUser(
                           name: 'คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}',
-                          quantity: '141',
+                          quantity: '${Store.productGroupModel!.value.data[indexMonth].totalCount}',
                         ).paddingOnly(bottom: 15)
                       ]).paddingSymmetric(vertical: 15),
                     ),
@@ -141,20 +149,22 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                 (Store.indexProductGroup.value == 0)
                     ? SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: Store.productGroupModel!.value.data[0].productGroup.length,
+                          childCount: Store.productGroupModel!.value.data[indexMonth].productGroup.length,
                           (BuildContext context, int index) {
                             return Column(
-                              children: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder.map((e) {
-                                int indexOrder = Store.productGroupModel!.value.data[0].productGroup[index].salesOrder.indexOf(e);
+                              children: Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder.map((e) {
+                                int indexOrder = Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder.indexOf(e);
                                 return listProductGroup(
                                   icon: 'assets/images/sim.svg',
-                                  title: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].order,
-                                  quantity: '${Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].orderTotal}',
-                                  unit: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].unit,
-                                  seeDetail: (Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].orderTotal == 0)
-                                      ? false
-                                      : true,
-                                  detail: Store.productGroupModel!.value.data[0].productGroup[index].salesOrder[indexOrder].serviceCampaign,
+                                  title: Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].order,
+                                  quantity:
+                                      '${Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].orderTotal}',
+                                  unit: Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].unit,
+                                  seeDetail:
+                                      (Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].orderTotal == 0)
+                                          ? false
+                                          : true,
+                                  detail: Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].serviceCampaign,
                                 );
                               }).toList(),
                             );
@@ -163,21 +173,24 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                       )
                     : SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder.length,
+                          childCount:
+                              Store.productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder.length,
                           (BuildContext context, int index) {
                             return listProductGroup(
                               icon: 'assets/images/sim.svg',
-                              title: Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].order,
+                              title: Store
+                                  .productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].order,
                               quantity:
-                                  '${Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal}',
-                              unit: Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].unit,
-                              seeDetail: (Store.productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index]
-                                          .orderTotal ==
+                                  '${Store.productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal}',
+                              unit: Store
+                                  .productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].unit,
+                              seeDetail: (Store.productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1]
+                                          .salesOrder[index].orderTotal ==
                                       0)
                                   ? false
                                   : true,
-                              detail: Store
-                                  .productGroupModel!.value.data[0].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].serviceCampaign,
+                              detail: Store.productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1]
+                                  .salesOrder[index].serviceCampaign,
                             );
                           },
                         ),

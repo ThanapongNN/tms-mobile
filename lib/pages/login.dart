@@ -33,6 +33,13 @@ class _LoginPageState extends State<LoginPage> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   bool _hideText = true;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _user.text = '1234567';
+  //   _password.text = 'oooo0000';
+  // }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

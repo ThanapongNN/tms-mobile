@@ -88,7 +88,10 @@ class _HomeState extends State<Home> {
                           text('สรุปยอดขายของคุณ', color: Colors.white),
                           const SizedBox(height: 5),
                           text(
-                            DateFormat('ข้อมูลถึงวันที่ dd/MM/${DateTime.now().year + 543} HH:mm', 'th').format(DateTime.now().toLocal()),
+                            DateFormat(
+                              'ข้อมูลถึงวันที่ dd/MM/${Store.productGroupModel!.value.data[0].lastUpdate.year + 543} HH:mm',
+                              'th',
+                            ).format(Store.productGroupModel!.value.data[0].lastUpdate.toLocal()),
                             color: Colors.white,
                           ),
                           const SizedBox(height: 15),
