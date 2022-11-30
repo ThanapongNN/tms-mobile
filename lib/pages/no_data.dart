@@ -11,7 +11,7 @@ class NoDataPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      text('การาเข้าถึงข้อมูลมีปัญหา\nกรุณากดรีโหลดเพื่อดำเนินการต่อ', color: Colors.black54, fontSize: 24, textAlign: TextAlign.center),
+      text('การเข้าถึงข้อมูลมีปัญหา\nกรุณากดรีโหลดเพื่อดำเนินการต่อ', color: Colors.black54, fontSize: 24, textAlign: TextAlign.center),
       const SizedBox(height: 10),
       MaterialButton(
         height: 50,

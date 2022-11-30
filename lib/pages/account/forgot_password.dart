@@ -115,7 +115,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงาน\n';
+                      return 'กรุณาระบุรหัสพนักงาน';
                     }
                     return null;
                   },
@@ -131,9 +131,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   textInputAction: TextInputAction.done,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
+                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน';
                     } else if (value.length != 8) {
-                      return 'รหัสสาขาทรูไม่ถูกต้อง\n';
+                      return 'รหัสสาขาทรูไม่ถูกต้อง';
                     }
                     return null;
                   },

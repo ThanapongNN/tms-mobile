@@ -81,7 +81,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   suffixIcon: const Icon(BootstrapIcons.search),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
+                      return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน';
                     }
                     return null;
                   },
@@ -188,9 +188,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                   inputFormatters: [TextInputFormatter.maskTextPhoneNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือ\n';
+                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือ';
                     } else if (value.length != 12) {
-                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก\n';
+                      return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก';
                     }
 
                     return null;
@@ -209,7 +209,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   validator: (value) {
                     if (value!.isNotEmpty) {
                       if (!EmailValidator.validate(value)) {
-                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
+                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง';
                       }
                     }
                     return null;

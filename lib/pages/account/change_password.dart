@@ -65,7 +65,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงาน\n';
+                      return 'กรุณาระบุรหัสพนักงาน';
                     }
                     return null;
                   },
@@ -87,7 +87,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   validator: (value) {
                     if (!validatePassword(value!)) {
-                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
+                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด';
                     }
                     return null;
                   },
@@ -108,8 +108,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                   ),
                   validator: (value) {
-                    if (!validatePassword(value!)) {
-                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
+                    if (value == _oldPassword.text) {
+                      return 'ไม่สามารถกำหนดรหัสผ่านใหม่ตรงกับรหัสผ่านปัจจุบันได้';
+                    } else if (!validatePassword(value!)) {
+                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด';
                     }
                     return null;
                   },
@@ -131,7 +133,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   validator: (value) {
                     if (value! != _password.text) {
-                      return 'รหัสผ่านใหม่ของท่านไม่ตรงกัน\n';
+                      return 'รหัสผ่านใหม่ของท่านไม่ตรงกัน';
                     }
                     return null;
                   },

@@ -64,7 +64,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                   inputFormatters: [TextInputFormatter.filterInputNumber],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสพนักงาน\n';
+                      return 'กรุณาระบุรหัสพนักงาน';
                     }
                     return null;
                   },
@@ -87,11 +87,11 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสผ่าน\n';
+                      return 'กรุณาระบุรหัสผ่าน';
                     } else if (value.length != 8) {
-                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก\n';
+                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก';
                     } else if (!validatePassword(value)) {
-                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
+                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด';
                     }
                     return null;
                   },

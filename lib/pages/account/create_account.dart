@@ -143,7 +143,7 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   Widget rowForm(Widget inputLeft, Widget inputRight) {
-    return Row(children: [
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(child: inputLeft),
       const SizedBox(width: 10),
       Expanded(child: inputRight),
@@ -202,9 +202,9 @@ class _CreateAccountState extends State<CreateAccount> {
                     inputFormatters: [TextInputFormatter.filterInputNumber],
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'กรุณาระบุรหัสพนักงาน\n';
+                        return 'กรุณาระบุรหัสพนักงาน';
                       } else if (value.length != 7) {
-                        return 'รหัสพนักงานไม่ถูกต้อง\n';
+                        return 'รหัสพนักงานไม่ถูกต้อง';
                       }
                       return null;
                     },
@@ -219,9 +219,9 @@ class _CreateAccountState extends State<CreateAccount> {
                     inputFormatters: [TextInputFormatter.maskTextIDCardTH],
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'กรุณาระบุเลขบัตรประชาชน\n';
+                        return 'กรุณาระบุเลขบัตรประชาชน';
                       } else if ((value.length != 17) || !validateThaiNationalID(value.replaceAll('-', ''))) {
-                        return 'เลขบัตรประชาชนไม่ถูกต้อง\n';
+                        return 'เลขบัตรประชาชนไม่ถูกต้อง';
                       }
                       return null;
                     },
@@ -235,7 +235,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     hintText: 'กรุณากรอกชื่อ',
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'กรุณาระบุชื่อ\n';
+                        return 'กรุณาระบุชื่อ';
                       }
                       return null;
                     },
@@ -247,7 +247,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     hintText: 'กรุณากรอกนามสกุล',
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'กรุณาระบุนามสกุล\n';
+                        return 'กรุณาระบุนามสกุล';
                       }
                       return null;
                     },
@@ -371,11 +371,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     inputFormatters: [TextInputFormatter.maskTextPhoneNumber],
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือ\n';
+                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือทรูมูฟเอชเท่านั้น';
                       } else if (!value.startsWith(RegExp(r'06|08|09'))) {
-                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือ เพื่อใช้รับรหัสยืนยันการสร้างบัญชี\n';
+                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือทรูมูฟเอชเท่านั้น เพื่อใช้รับรหัสยืนยันการสร้างบัญชี';
                       } else if (value.length != 12) {
-                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือจำนวน 10 หลัก\n';
+                        return 'กรุณาระบุเบอร์โทรศัพท์มือถือทรูมูฟเอชเท่านั้น จำนวน 10 หลัก';
                       }
 
                       return null;
@@ -390,7 +390,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value!.isNotEmpty && !EmailValidator.validate(value)) {
-                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง\n';
+                        return 'กรุณาระบุอีเมลตามรูปแบบที่ถูกต้อง';
                       }
                       return null;
                     },
@@ -438,9 +438,9 @@ class _CreateAccountState extends State<CreateAccount> {
                     suffixIcon: const Icon(BootstrapIcons.search),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน\n';
+                        return 'กรุณาระบุรหัสสาขาทรูปฏิบัติงาน';
                       } else if (value.length != 5) {
-                        return 'รหัสสาขาทรูไม่ถูกต้อง\n';
+                        return 'รหัสสาขาทรูไม่ถูกต้อง';
                       }
                       return null;
                     },
@@ -476,7 +476,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   disable: true,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสสาขาทรูให้ถูกต้อง\n';
+                      return 'กรุณาระบุรหัสสาขาทรูให้ถูกต้อง';
                     }
                     return null;
                   },

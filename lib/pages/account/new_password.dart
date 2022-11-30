@@ -99,11 +99,11 @@ class _NewPasswordState extends State<NewPassword> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'กรุณาระบุรหัสผ่าน\n';
+                      return 'กรุณาระบุรหัสผ่าน';
                     } else if (value.length != 8) {
-                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก\n';
+                      return 'กรุณาระบุรหัสผ่านจำนวน 8 หลัก';
                     } else if (!validatePassword(value)) {
-                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด\n';
+                      return 'รหัสผ่านของท่านไม่ตรงตามข้อกำหนด';
                     }
                     return null;
                   },
@@ -126,7 +126,7 @@ class _NewPasswordState extends State<NewPassword> {
                   ),
                   validator: (value) {
                     if (value! != _password.text) {
-                      return 'รหัสผ่านไม่ตรงกัน\n';
+                      return 'รหัสผ่านไม่ตรงกัน';
                     }
                     return null;
                   },

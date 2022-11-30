@@ -16,7 +16,7 @@ Widget formField({
   int maxLength = 50,
   List<TextInputFormatter>? inputFormatters,
   String hintText = '',
-  String textLable = 'โปรดระบุชื่อ ถ้าไม่ได้ใช้โปรดระบุ showTextLable = false',
+  String textLable = '',
   String? prefixText,
   String? Function(String?)? validator,
   TextInputAction textInputAction = TextInputAction.next,
@@ -31,11 +31,12 @@ Widget formField({
     if (showTextLable)
       Row(children: [
         text(textLable, fontSize: 18),
-        if (required) text('*', fontSize: 20, color: Colors.red),
+        text('*', fontSize: 20, color: required ? Colors.red : Colors.white),
       ]),
     TextFormField(
       controller: controller,
       decoration: InputDecoration(
+        errorMaxLines: 3,
         hintText: hintText,
         fillColor: disable ? Colors.grey[200] : Colors.white,
         hintStyle: const TextStyle(fontSize: 18),
@@ -43,7 +44,7 @@ Widget formField({
         prefixIconConstraints: prefixIconConstraints,
         suffixIcon: suffixIcon,
         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
-        errorStyle: TextStyle(color: errorTextColor, height: 0.6),
+        errorStyle: TextStyle(color: errorTextColor),
         border: radius
             ? const OutlineInputBorder(
                 borderRadius: BorderRadius.all((Radius.circular(50))),
