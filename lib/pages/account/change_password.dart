@@ -47,7 +47,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('เปลี่ยนรหัสผ่าน')),
+        appBar: AppBar(title: const Text('เปลี่ยนรหัสผ่าน (mock)')),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,

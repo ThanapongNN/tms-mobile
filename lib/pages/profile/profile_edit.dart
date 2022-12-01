@@ -54,7 +54,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('แก้ไขข้อมูล (MOCK)')),
+      appBar: AppBar(title: const Text('แก้ไขข้อมูล (mock)')),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(

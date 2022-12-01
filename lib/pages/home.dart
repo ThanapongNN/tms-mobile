@@ -137,7 +137,10 @@ class _HomeState extends State<Home> {
                               },
                             ),
                             GestureDetector(
-                              onTap: () => Store.currentIndex.value = 1,
+                              onTap: () {
+                                Store.currentIndex.value = 1;
+                                Store.indexProductGroup.value = 0;
+                              },
                               child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
                             ).paddingSymmetric(vertical: 15),
                           ],
@@ -168,7 +171,7 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
+                    text('ข่าวสารและแคมเปญเด่น (mock)', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
                     SizedBox(
                       height: 300,
                       child: ListView.builder(

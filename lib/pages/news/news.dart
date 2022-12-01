@@ -38,7 +38,7 @@ class _NewsPageState extends State<NewsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
-              const Text('  (MOCK)'),
+              const Text('  (mock)'),
             ],
           ),
           centerTitle: true,
