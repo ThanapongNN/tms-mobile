@@ -110,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     });
 
                     if (_formKey.currentState!.validate()) {
+                      Store.currentIndex.value = 0;
                       Store.userTextInput.value = _user.text;
                       Call.raw(
                         method: Method.post,
