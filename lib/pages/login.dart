@@ -145,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                               method: Method.get,
                               url: '$hostTrue/user/v1/accounts/$encryptedEmployeeId',
                               headers: Authorization.token,
+                              showDialog: false,
                             ).then((userAccount) {
                               if (userAccount.success) Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
                             }),
@@ -152,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                               method: Method.get,
                               url: '$hostTrue/product-group/v1/productGroup/$encryptedEmployeeId',
                               headers: Authorization.token,
+                              showDialog: false,
                             ).then((productGroup) {
                               if (productGroup.success) Store.productGroupModel = ProductGroupModel.fromJson(productGroup.response).obs;
                             })
@@ -169,14 +171,14 @@ class _LoginPageState extends State<LoginPage> {
                 Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                   GestureDetector(
                     onTap: () async {
-                      bool isSuccess = await callCreateAccount();
+                      bool isSuccess = await createAccountRequest();
                       if (isSuccess) navigatorTo(() => const ForgotPassword());
                     },
                     child: text('ลืมรหัสผ่าน', color: Colors.white, decoration: TextDecoration.underline),
                   ),
                   GestureDetector(
                     onTap: () async {
-                      bool isSuccess = await callCreateAccount();
+                      bool isSuccess = await createAccountRequest();
                       if (isSuccess) navigatorTo(() => const CreateAccount());
                     },
                     child: text('สร้างบัญชีใหม่', color: Colors.white, decoration: TextDecoration.underline),

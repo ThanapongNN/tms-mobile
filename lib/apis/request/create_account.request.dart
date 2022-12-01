@@ -2,7 +2,7 @@ import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/state_management.dart';
 
-Future<bool> callCreateAccount() async {
+Future<bool> createAccountRequest() async {
   List<bool> isSuccess = [];
 
   if (Store.partnerTypes.isEmpty) {
@@ -10,12 +10,9 @@ Future<bool> callCreateAccount() async {
       method: Method.get,
       url: '$hostTrue/content/v1/partner-types',
     );
-    if (data.success) {
-      isSuccess.add(true);
-      Store.partnerTypes.value = data.response;
-    } else {
-      isSuccess.add(false);
-    }
+
+    isSuccess.add(data.success);
+    if (data.success) Store.partnerTypes.value = data.response;
   }
 
   if (Store.userRoles.isEmpty) {
@@ -23,12 +20,9 @@ Future<bool> callCreateAccount() async {
       method: Method.get,
       url: '$hostTrue/content/v1/user-roles',
     );
-    if (data.success) {
-      isSuccess.add(true);
-      Store.userRoles.value = data.response;
-    } else {
-      isSuccess.add(false);
-    }
+
+    isSuccess.add(data.success);
+    if (data.success) Store.userRoles.value = data.response;
   }
 
   return isSuccess.every((element) => element);

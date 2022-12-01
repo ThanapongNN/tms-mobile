@@ -6,6 +6,7 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
+import 'package:tms/apis/request/validate_account.request.dart';
 import 'package:tms/models/partner_types.model.dart';
 import 'package:tms/models/shop_profile_list.model.dart';
 import 'package:tms/models/user_roles.model.dart';
@@ -527,12 +528,9 @@ class _CreateAccountState extends State<CreateAccount> {
                       ? () {}
                       : () async {
                           if (_validateForm()) {
-                            CallBack check = await Call.raw(
-                              method: Method.get,
-                              url: '$hostTrue/user/v1/check/${_saleID.text}',
-                            );
+                            bool isSuccess = await validateAccountRequest(saleID: _saleID.text, msisdn: _phoneNumber.text.replaceAll('-', ''));
 
-                            if (check.success) {
+                            if (isSuccess) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
                                 url: '$hostTrue/support/v1/otp/request',
