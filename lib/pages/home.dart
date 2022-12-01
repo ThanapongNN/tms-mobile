@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
                         color: const Color(0xFF414F5C),
                         child: Column(children: [
                           text(
-                              'สรุปยอดขายของคุณ ${DateFormat('MMMM ${Store.productGroupModel!.value.data[0].lastUpdate.year + 543}').format(Store.productGroupModel!.value.data[0].lastUpdate)}',
+                              'ยอดขายเดือน ${DateFormat('MMMM ${Store.productGroupModel!.value.data[0].lastUpdate.year + 543}').format(Store.productGroupModel!.value.data[0].lastUpdate)}',
                               color: Colors.white),
                           const SizedBox(height: 5),
                           text(
