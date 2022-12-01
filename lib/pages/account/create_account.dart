@@ -528,7 +528,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       ? () {}
                       : () async {
                           if (_validateForm()) {
-                            bool isSuccess = await validateAccountRequest(saleID: _saleID.text, msisdn: _phoneNumber.text.replaceAll('-', ''));
+                            bool isSuccess = await validateAccountRequest(
+                                saleID: _saleID.text, msisdn: _phoneNumber.text.replaceAll('-', ''), thaiID: _thaiID.text.replaceAll('-', ''));
 
                             if (isSuccess) {
                               CallBack data = await Call.raw(
