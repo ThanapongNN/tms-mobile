@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tms/apis/request/product_group.request.dart';
 import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
@@ -63,7 +64,7 @@ class _HomeState extends State<Home> {
                       const SizedBox(width: 5),
                       Expanded(
                         child: text(
-                          'คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}',
+                          'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
                           color: Colors.white,
                         ),
                       ),
@@ -143,7 +144,24 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ])
-                  : NoDataPage(onPressed: () {}),
+                  : NoDataPage(onPressed: () async {
+                      await callAccountProductGroup(Store.encryptedEmployeeId.value);
+                      setState(() {
+                        if (Store.productGroupModel != null) {
+                          items.add(boxHeadStatus(
+                              image: 'assets/images/true.svg',
+                              content: 'ยอดขายรวมทุกสินค้า',
+                              quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
+
+                          items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
+                            return boxHeadStatus(
+                                image: iconHead[Store.productGroupModel!.value.data[0].productGroup.indexOf(e)],
+                                content: e.product,
+                                quantity: '${e.salesTotal}');
+                          }).toList());
+                        }
+                      });
+                    }),
               const SizedBox(height: 15),
               SizedBox(
                 width: double.infinity,

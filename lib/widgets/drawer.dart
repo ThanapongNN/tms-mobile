@@ -30,7 +30,10 @@ Widget drawer() {
                     backgroundImage: AssetImage('assets/images/no_avatar.png'),
                   ),
                   const SizedBox(height: 15),
-                  text('คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}', color: Colors.white),
+                  text(
+                    'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
+                    color: Colors.white,
+                  ),
                   text(Store.userAccountModel!.value.account.partnerName, color: Colors.white, fontSize: 16),
                 ])
               : const SizedBox(),

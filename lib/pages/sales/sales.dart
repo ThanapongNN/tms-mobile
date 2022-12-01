@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:tms/apis/request/product_group.request.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/widgets/box_head_user.dart';
@@ -98,7 +99,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                           color: Colors.white,
                         ).paddingOnly(bottom: 5),
                         boxHeadUser(
-                          name: 'คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}',
+                          name: 'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
                           quantity: '${Store.productGroupModel!.value.data[indexMonth].totalCount}',
                         ).paddingOnly(bottom: 15)
                       ]).paddingSymmetric(vertical: 15),
@@ -199,7 +200,25 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
             })
           : Column(children: [
               AppBar(title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100)),
-              NoDataPage(onPressed: () {}),
+              NoDataPage(onPressed: () async {
+                await callAccountProductGroup(Store.encryptedEmployeeId.value);
+                setState(() {
+                  if (Store.productGroupModel != null) {
+                    for (var e in Store.productGroupModel!.value.data[indexMonth].productGroup) {
+                      select.add(e.product);
+                    }
+
+                    //เซ็ตสีเลือกเดือน
+                    currentMonthFocus = Store.productGroupModel!.value.data
+                        .map((e) => Store.productGroupModel!.value.data.length == (Store.productGroupModel!.value.data.indexOf(e) + 1))
+                        .toList()
+                        .reversed
+                        .toList();
+
+                    Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
+                  }
+                });
+              }),
             ]),
     );
   }

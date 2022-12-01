@@ -158,7 +158,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                         {
                           Call.raw(
                             method: Method.delete,
-                            url: '$hostTrue/user/v1/accounts/${Store.userAccountModel?.value.account.employeeId}',
+                            url: '$hostTrue/user/v1/accounts/${Store.userAccountModel?.value.account.employee.id}',
                             headers: Authorization.token,
                           ).then((deactivateAccount) {
                             if (deactivateAccount.success) {

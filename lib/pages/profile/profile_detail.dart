@@ -38,7 +38,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
   getUserRolesName() {
     if (Store.userAccountModel != null) {
       for (var userRole in userRoles.userRoles) {
-        if (Store.userAccountModel!.value.account.roleCode == userRole.code) {
+        if (Store.userAccountModel!.value.account.employee.roleCode == userRole.code) {
           userRolesName = userRole.name.th;
         }
       }
@@ -60,7 +60,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                   backgroundImage: AssetImage('assets/images/no_avatar.png'),
                 ),
                 const SizedBox(height: 10),
-                text('คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}'),
+                text('คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}'),
                 text(Store.userAccountModel!.value.account.employee.empId),
                 const SizedBox(height: 10),
                 listTile(
@@ -73,14 +73,14 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 listTile(
                     svgicon: 'assets/icons/cake.svg',
                     title: 'วันเดือนปีเกิด',
-                    content: DateFormat('dd MMMM ${Store.userAccountModel!.value.account.birthdate.year + 543}')
-                        .format(Store.userAccountModel!.value.account.birthdate)),
+                    content: DateFormat('dd MMMM ${Store.userAccountModel!.value.account.employee.birthdate.year + 543}')
+                        .format(Store.userAccountModel!.value.account.employee.birthdate)),
                 listTile(
                   svgicon: 'assets/icons/phone.svg',
                   title: 'เบอร์มือถือ',
-                  content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel!.value.account.mobileNo),
+                  content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel!.value.account.employee.mobile),
                 ),
-                listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.email),
+                listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.employee.email),
                 const Spacer(),
                 button(
                   text: 'แก้ไขข้อมูล',

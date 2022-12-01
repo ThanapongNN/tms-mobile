@@ -14,6 +14,7 @@ class Store {
   static RxMap<String, dynamic> userRoles = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
 
+  static RxString encryptedEmployeeId = ''.obs;
   static RxString deviceSerial = ''.obs;
   static RxString saleID = ''.obs;
   static RxString selectedProductGroup = ''.obs;

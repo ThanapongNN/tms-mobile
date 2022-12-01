@@ -68,7 +68,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 backgroundImage: AssetImage('assets/images/no_avatar.png'),
               ),
               const SizedBox(height: 10),
-              text('คุณ${Store.userAccountModel!.value.account.name} ${Store.userAccountModel!.value.account.surname}'),
+              text('คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}'),
               text(Store.userAccountModel!.value.account.partnerName),
               const SizedBox(height: 10),
               listTile(
