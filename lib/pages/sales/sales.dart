@@ -69,7 +69,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                       // margin: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
                       child: Column(children: [
                         AppBar(
-                          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 10),
+                          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 110).paddingOnly(bottom: 10),
                           elevation: 0,
                         ),
                         const SizedBox(height: 10),
@@ -187,7 +187,11 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                               Store.productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder.length,
                           (BuildContext context, int index) {
                             return listProductGroup(
-                              icon: 'assets/images/sim.svg',
+                              icon: (Store.productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder[index]
+                                          .unit ==
+                                      'เบอร์')
+                                  ? 'assets/images/sim.svg'
+                                  : 'assets/images/phone_with_sim.svg',
                               title: Store
                                   .productGroupModel!.value.data[indexMonth].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].order,
                               quantity:
