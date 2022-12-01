@@ -56,7 +56,9 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
           ? Obx(() {
               return CustomScrollView(slivers: [
                 SliverAppBar(
-                  title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
+                  leading: const SizedBox(),
+                  // title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
+                  actions: null,
                   centerTitle: true,
                   elevation: 0,
                   pinned: true,
@@ -64,8 +66,13 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       color: const Color(0xFF414F5C),
-                      margin: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
+                      // margin: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
                       child: Column(children: [
+                        AppBar(
+                          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 10),
+                          elevation: 0,
+                        ),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: Store.productGroupModel!.value.data
@@ -156,7 +163,9 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                               children: Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder.map((e) {
                                 int indexOrder = Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder.indexOf(e);
                                 return listProductGroup(
-                                  icon: 'assets/images/sim.svg',
+                                  icon: (Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].unit == 'เบอร์')
+                                      ? 'assets/images/sim.svg'
+                                      : 'assets/images/phone_with_sim.svg',
                                   title: Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].order,
                                   quantity:
                                       '${Store.productGroupModel!.value.data[indexMonth].productGroup[index].salesOrder[indexOrder].orderTotal}',
