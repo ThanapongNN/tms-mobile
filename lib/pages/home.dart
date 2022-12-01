@@ -37,7 +37,18 @@ class _HomeState extends State<Home> {
 
       items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
         return boxHeadStatus(
-            image: iconHead[Store.productGroupModel!.value.data[0].productGroup.indexOf(e)], content: e.product, quantity: '${e.salesTotal}');
+            image: (e.product == 'ยอดเบอร์' || e.product == 'ยอดขายเบอร์')
+                ? "assets/images/sim2.svg"
+                : (e.product == 'ยอดมือถือ' || e.product == "ยอดขายมือถือ")
+                    ? "assets/images/phone.svg"
+                    : (e.product == 'เติมเงินเติมเน็ต' || e.product == "ยอดขายเติมเงินเติมเน็ต")
+                        ? "assets/images/coin.svg"
+                        : (e.product == 'เน็ตบ้านและทีวี' || e.product == "ยอดสมัครเน็ตบ้านและทีวี")
+                            ? "assets/images/tv.svg"
+                            : "assets/images/true.svg",
+            content: e.product,
+            quantity: '${e.salesTotal}');
+        // image: iconHead[Store.productGroupModel!.value.data[0].productGroup.indexOf(e)], content: e.product, quantity: '${e.salesTotal}');
       }).toList());
     }
   }
@@ -86,7 +97,9 @@ class _HomeState extends State<Home> {
                         width: double.infinity,
                         color: const Color(0xFF414F5C),
                         child: Column(children: [
-                          text('สรุปยอดขายของคุณ', color: Colors.white),
+                          text(
+                              'สรุปยอดขายของคุณ ${DateFormat('MMMM ${Store.productGroupModel!.value.data[0].lastUpdate.year + 543}').format(Store.productGroupModel!.value.data[0].lastUpdate)}',
+                              color: Colors.white),
                           const SizedBox(height: 5),
                           text(
                             DateFormat(
@@ -123,7 +136,8 @@ class _HomeState extends State<Home> {
                               itemCount: 4,
                               itemBuilder: (context, index) {
                                 String icon = 'assets/images/phone_with_sim.svg';
-                                if (index == 0) icon = 'assets/images/sim.svg';
+                                if (index == 0) {}
+                                icon = 'assets/images/sim.svg';
 
                                 return listProductGroup(
                                   icon: icon,
