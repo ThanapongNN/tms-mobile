@@ -68,16 +68,18 @@ Widget listProductGroup({
 
 Widget listSalesDetail({required String title, required String quantity, required String unit}) {
   return Container(
-    margin: const EdgeInsets.only(left: 10, right: 20),
-    child: ListTile(
-      leading: text(title),
-      trailing: Wrap(
+      margin: const EdgeInsets.only(left: 25, right: 37),
+      child: Row(
         children: [
-          text(quantity, color: ThemeColor.primaryColor),
-          const SizedBox(width: 5),
-          text(unit),
+          Expanded(child: text(title)),
+          FittedBox(
+              child: Row(
+            children: [
+              text(quantity, color: ThemeColor.primaryColor),
+              const SizedBox(width: 5),
+              text(unit),
+            ],
+          )),
         ],
-      ),
-    ),
-  );
+      ).paddingSymmetric(vertical: 10));
 }
