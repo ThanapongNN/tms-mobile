@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -31,26 +31,25 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    if (Store.productGroupModel != null) {
-      items.add(boxHeadStatus(
-          image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
+    // if (Store.productGroupModel != null) {
+    //   items.add(boxHeadStatus(
+    //       image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
 
-      items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
-        return boxHeadStatus(
-            image: (e.product == 'ยอดเบอร์' || e.product == 'ยอดขายเบอร์')
-                ? "assets/images/sim2.svg"
-                : (e.product == 'ยอดมือถือ' || e.product == "ยอดขายมือถือ")
-                    ? "assets/images/phone.svg"
-                    : (e.product == 'เติมเงินเติมเน็ต' || e.product == "ยอดขายเติมเงินเติมเน็ต")
-                        ? "assets/images/coin.svg"
-                        : (e.product == 'เน็ตบ้านและทีวี' || e.product == "ยอดสมัครเน็ตบ้านและทีวี")
-                            ? "assets/images/tv.svg"
-                            : "assets/images/true.svg",
-            content: e.product,
-            quantity: '${e.salesTotal}');
-        // image: iconHead[Store.productGroupModel!.value.data[0].productGroup.indexOf(e)], content: e.product, quantity: '${e.salesTotal}');
-      }).toList());
-    }
+    //   items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
+    //     return boxHeadStatus(
+    //         image: (e.product == 'ยอดเบอร์' || e.product == 'ยอดขายเบอร์')
+    //             ? "assets/images/sim2.svg"
+    //             : (e.product == 'ยอดมือถือ' || e.product == "ยอดขายมือถือ")
+    //                 ? "assets/images/phone.svg"
+    //                 : (e.product == 'เติมเงินเติมเน็ต' || e.product == "ยอดขายเติมเงินเติมเน็ต")
+    //                     ? "assets/images/coin.svg"
+    //                     : (e.product == 'เน็ตบ้านและทีวี' || e.product == "ยอดสมัครเน็ตบ้านและทีวี")
+    //                         ? "assets/images/tv.svg"
+    //                         : "assets/images/true.svg",
+    //         content: e.product,
+    //         quantity: '${e.salesTotal}');
+    //   }).toList());
+    // }
   }
 
   @override
@@ -109,21 +108,29 @@ class _HomeState extends State<Home> {
                             color: Colors.white,
                           ),
                           const SizedBox(height: 15),
-                          GestureDetector(
-                            onTap: () {
-                              Store.currentIndex.value = 1;
-                              Store.indexProductGroup.value = indexProductGroup;
-                            },
-                            child: CarouselSlider(
-                              items: items,
-                              options: CarouselOptions(
-                                height: 90,
-                                initialPage: Store.indexProductGroup.value,
-                                enableInfiniteScroll: false,
-                                onPageChanged: (index, reason) => indexProductGroup = index,
-                              ),
-                            ),
-                          ),
+                          SizedBox(
+                            height: 90,
+                            child: boxHeadStatus(
+                                image: 'assets/images/true.svg',
+                                content: 'ยอดขายรวมทุกสินค้า',
+                                quantity: '${Store.productGroupModel!.value.data[0].totalCount}'),
+                          )
+                          // GestureDetector(
+                          //     onTap: () {
+                          //       Store.currentIndex.value = 1;
+                          //       Store.indexProductGroup.value = indexProductGroup;
+                          //     },
+                          //     child:
+                          //     CarouselSlider(
+                          //       items: items,
+                          //       options: CarouselOptions(
+                          //         height: 90,
+                          //         initialPage: Store.indexProductGroup.value,
+                          //         enableInfiniteScroll: false,
+                          //         onPageChanged: (index, reason) => indexProductGroup = index,
+                          //       ),
+                          //     ),
+                          //     ),
                         ]).paddingSymmetric(vertical: 15),
                       ),
                       Container(
