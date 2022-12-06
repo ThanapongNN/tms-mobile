@@ -9,6 +9,7 @@ class Store {
 
   static RxInt currentIndex = 0.obs;
   static RxInt indexProductGroup = 0.obs;
+  static RxInt indexMonth = 0.obs;
 
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> userRoles = <String, dynamic>{}.obs;

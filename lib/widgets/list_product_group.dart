@@ -38,26 +38,31 @@ Widget listProductGroup({
         expanded: Column(
           children: [
             if (seeDetail)
-              Container(
-                color: ThemeColor.primaryColor,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 20),
-                  child: ListTile(
-                    leading: text('เครื่องและรุ่น', color: Colors.white),
-                    trailing: text('ยอดขาย', color: Colors.white),
-                  ),
+              // Container(
+              //   color: ThemeColor.primaryColor,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 10, right: 20),
+              //     child: ListTile(
+              //       leading: text('เครื่องและรุ่น', color: Colors.white),
+              //       trailing: text('ยอดขาย', color: Colors.white),
+              //     ),
+              //   ),
+              // ),
+              if (seeDetail)
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: detail?.length,
+                  itemBuilder: (context, index) {
+                    return listSalesDetail(
+                        title: detail?[index].name,
+                        quantity: '${detail?[index].ea}',
+                        unit: detail?[index].unit,
+                        index: index,
+                        maxIndex: detail?.length ?? 0);
+                  },
                 ),
-              ),
-            if (seeDetail)
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: detail?.length,
-                itemBuilder: (context, index) {
-                  return listSalesDetail(title: detail?[index].name, quantity: '${detail?[index].ea}', unit: detail?[index].unit);
-                },
-              ),
           ],
         ),
         collapsed: const SizedBox(),
@@ -66,20 +71,24 @@ Widget listProductGroup({
   ).paddingSymmetric(horizontal: 15, vertical: 10);
 }
 
-Widget listSalesDetail({required String title, required String quantity, required String unit}) {
+Widget listSalesDetail({required String title, required String quantity, required String unit, required int index, required int maxIndex}) {
   return Container(
-      margin: const EdgeInsets.only(left: 25, right: 37),
-      child: Row(
-        children: [
-          Expanded(child: text(title)),
-          FittedBox(
-              child: Row(
-            children: [
-              text(quantity, color: ThemeColor.primaryColor),
-              const SizedBox(width: 5),
-              text(unit),
-            ],
-          )),
-        ],
-      ).paddingSymmetric(vertical: 10));
+    padding: const EdgeInsets.only(left: 25, right: 37),
+    decoration: BoxDecoration(
+        color: (index % 2 == 0) ? Colors.grey[100] : Colors.white,
+        borderRadius: (maxIndex - 1 == index) ? const BorderRadius.only(bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9)) : null),
+    child: Row(
+      children: [
+        Expanded(child: text(title)),
+        FittedBox(
+            child: Row(
+          children: [
+            text(quantity, color: ThemeColor.primaryColor),
+            const SizedBox(width: 5),
+            text(unit),
+          ],
+        )),
+      ],
+    ).paddingSymmetric(vertical: 10),
+  );
 }

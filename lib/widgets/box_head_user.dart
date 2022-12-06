@@ -6,6 +6,7 @@ import 'package:tms/widgets/text.dart';
 Widget boxHeadUser({
   // required String image,
   required String name,
+  required String title,
   required String quantity,
 }) {
   return Container(
@@ -40,7 +41,7 @@ Widget boxHeadUser({
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              text('ยอดขายรวม', fontSize: 20),
+              text(title, fontSize: 20),
               text(' $quantity ', fontSize: 22, fontBold: true, color: ThemeColor.primaryColor),
               text('รายการ', fontSize: 20),
             ],
