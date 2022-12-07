@@ -7,12 +7,12 @@ Future<bool> validateAccountRequest({required String saleID, required String msi
 
   CallBack checkSaleID = await Call.raw(
     method: Method.get,
-    url: '$hostTrue/user/v1/check/$saleID',
+    url: '$host/user/v1/check/$saleID',
   );
 
   CallBack checkTrueMove = await Call.raw(
     method: Method.post,
-    url: '$hostTrue/support/v1/truemobile/validation',
+    url: '$host/support/v1/truemobile/validation',
     body: {"msisdn": msisdn},
   );
 
@@ -20,7 +20,7 @@ Future<bool> validateAccountRequest({required String saleID, required String msi
 
   CallBack checkThaiID = await Call.raw(
     method: Method.get,
-    url: '$hostTrue/user/v1/check/thai_id/$thaiID',
+    url: '$host/user/v1/check/thai_id/$thaiID',
   );
 
   if (!checkThaiID.response['result']) dialog(content: checkThaiID.response["description"]);

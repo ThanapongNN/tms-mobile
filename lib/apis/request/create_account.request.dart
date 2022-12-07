@@ -8,7 +8,7 @@ Future<bool> createAccountRequest() async {
   if (Store.partnerTypes.isEmpty) {
     CallBack data = await Call.raw(
       method: Method.get,
-      url: '$hostTrue/content/v1/partner-types',
+      url: '$host/content/v1/partner-types',
     );
 
     isSuccess.add(data.success);
@@ -18,7 +18,7 @@ Future<bool> createAccountRequest() async {
   if (Store.userRoles.isEmpty) {
     CallBack data = await Call.raw(
       method: Method.get,
-      url: '$hostTrue/content/v1/user-roles',
+      url: '$host/content/v1/user-roles',
     );
 
     isSuccess.add(data.success);

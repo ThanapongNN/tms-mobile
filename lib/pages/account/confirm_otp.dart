@@ -139,7 +139,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               onCompleted: (value) {
                 Call.raw(
                   method: Method.post,
-                  url: '$hostTrue/support/v1/otp/validation',
+                  url: '$host/support/v1/otp/validation',
                   body: {"msisdn": widget.mobileNO, "refId": Store.otpRefID.value, "otp": _otp.text},
                   errorMessage: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบ และทำรายการใหม่',
                 ).then((otp) {
@@ -158,7 +158,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                         {
                           Call.raw(
                             method: Method.delete,
-                            url: '$hostTrue/user/v1/accounts/${Store.userAccountModel?.value.account.employee.id}',
+                            url: '$host/user/v1/accounts/${Store.userAccountModel?.value.account.employee.id}',
                             headers: Authorization.token,
                           ).then((deactivateAccount) {
                             if (deactivateAccount.success) {
@@ -190,7 +190,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               onTap: () {
                 Call.raw(
                   method: Method.post,
-                  url: '$hostTrue/support/v1/otp/request',
+                  url: '$host/support/v1/otp/request',
                   body: {"msisdn": widget.mobileNO},
                 ).then((otp) {
                   if (otp.success) {

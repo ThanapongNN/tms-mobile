@@ -113,7 +113,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                             if (Store.userAccountModel?.value.account.employee.empId == _saleID.text) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
-                                url: '$hostTrue/user/v1/token/access',
+                                url: '$host/user/v1/token/access',
                                 headers: Authorization.token,
                                 body: {
                                   "deviceId": Store.deviceSerial.value,
@@ -126,7 +126,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                               if (data.success) {
                                 CallBack otpRefID = await Call.raw(
                                   method: Method.post,
-                                  url: '$hostTrue/support/v1/otp/request',
+                                  url: '$host/support/v1/otp/request',
                                   body: {"msisdn": Store.userAccountModel?.value.account.employee.mobile},
                                 );
 

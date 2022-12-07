@@ -103,7 +103,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
               onPressed: () async {
                 CallBack userAccount = await Call.raw(
                   method: Method.get,
-                  url: '$hostTrue/user/v1/accounts/${Store.userTextInput.value}',
+                  url: '$host/user/v1/accounts/${Store.userTextInput.value}',
                 );
 
                 if (userAccount.success) {

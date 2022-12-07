@@ -260,7 +260,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
                             Call.raw(
                               method: Method.post,
-                              url: '$hostTrue/user/v1/accounts/${_saleID.text}',
+                              url: '$host/user/v1/accounts/${_saleID.text}',
                               body: {
                                 "partnerCode": _branch.text,
                                 "birthdate":
@@ -272,7 +272,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
                                 Call.raw(
                                   method: Method.post,
-                                  url: '$hostTrue/support/v1/otp/request',
+                                  url: '$host/support/v1/otp/request',
                                   body: {"msisdn": Store.forgotPasswordModel!.value.mobile},
                                 ).then((otp) {
                                   if (otp.success) {

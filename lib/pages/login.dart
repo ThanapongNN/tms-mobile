@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       Store.userTextInput.value = _user.text;
                       Call.raw(
                         method: Method.post,
-                        url: '$hostTrue/user/v1/token/access',
+                        url: '$host/user/v1/token/access',
                         body: {
                           "deviceId": Store.deviceSerial.value,
                           "user": _user.text,
@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (Store.userRoles.isEmpty) {
                             Call.raw(
                               method: Method.get,
-                              url: '$hostTrue/content/v1/user-roles',
+                              url: '$host/content/v1/user-roles',
                             ).then((userRoles) {
                               if (userRoles.success) Store.userRoles.value = userRoles.response;
                             });

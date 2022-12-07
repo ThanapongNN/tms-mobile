@@ -452,7 +452,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                         CallBack data = await Call.raw(
                           method: Method.get,
-                          url: '$hostTrue/content/v1/partners/711${_branch.text}',
+                          url: '$host/content/v1/partners/711${_branch.text}',
                         );
 
                         if (data.success) {
@@ -534,7 +534,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             if (isSuccess) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
-                                url: '$hostTrue/support/v1/otp/request',
+                                url: '$host/support/v1/otp/request',
                                 body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
                               );
 

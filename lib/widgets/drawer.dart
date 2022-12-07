@@ -70,7 +70,7 @@ Widget drawer() {
           dialog(
             content: 'คุณต้องการออกจากระบบ',
             onPressedConfirm: () async {
-              CallBack data = await Call.raw(method: Method.post, url: '$hostTrue/user/v1/token/terminated', headers: Authorization.token, body: {
+              CallBack data = await Call.raw(method: Method.post, url: '$host/user/v1/token/terminated', headers: Authorization.token, body: {
                 "deviceId": Store.deviceSerial.value,
                 "token": Store.token.value,
               });

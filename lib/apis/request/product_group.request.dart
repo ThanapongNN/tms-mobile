@@ -9,7 +9,7 @@ Future callAccountProductGroup(String employeeId) async {
   await Future.wait([
     Call.raw(
       method: Method.get,
-      url: '$hostTrue/user/v1/accounts/$employeeId',
+      url: '$host/user/v1/accounts/$employeeId',
       headers: Authorization.token,
       showDialog: false,
     ).then((userAccount) {
@@ -17,7 +17,7 @@ Future callAccountProductGroup(String employeeId) async {
     }),
     Call.raw(
       method: Method.get,
-      url: '$hostTrue/product-group/v1/productGroup/$employeeId',
+      url: '$host/product-group/v1/productGroup/$employeeId',
       headers: Authorization.token,
       showDialog: false,
     ).then((productGroup) {

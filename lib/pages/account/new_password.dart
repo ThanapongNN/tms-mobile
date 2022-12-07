@@ -152,7 +152,7 @@ class _NewPasswordState extends State<NewPassword> {
 
                                   Call.raw(
                                     method: Method.post,
-                                    url: '$hostTrue/user/v1/accounts/register',
+                                    url: '$host/user/v1/accounts/register',
                                     body: Store.registerBody,
                                     compareError: [
                                       ErrorMessage(
@@ -174,7 +174,7 @@ class _NewPasswordState extends State<NewPassword> {
                                 {
                                   Call.raw(
                                     method: Method.patch,
-                                    url: '$hostTrue/user/v1/accounts/${Store.forgotPasswordModel!.value.employeeId}',
+                                    url: '$host/user/v1/accounts/${Store.forgotPasswordModel!.value.employeeId}',
                                     headers: Authorization.textPlain,
                                     body: {"password": _password.text, "status": "A"},
                                   ).then((forgotPassword) {
