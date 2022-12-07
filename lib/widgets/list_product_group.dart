@@ -12,8 +12,11 @@ Widget listProductGroup({
   required String quantity,
   required String unit,
   required bool seeDetail,
+  bool compensation = false,
   List? detail,
+  String? sum,
 }) {
+  int checklist = detail?.length ?? 0;
   return Container(
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey)),
     child: ExpandableTheme(
@@ -38,31 +41,41 @@ Widget listProductGroup({
         expanded: Column(
           children: [
             if (seeDetail)
-              // Container(
-              //   color: ThemeColor.primaryColor,
-              //   child: Padding(
-              //     padding: const EdgeInsets.only(left: 10, right: 20),
-              //     child: ListTile(
-              //       leading: text('เครื่องและรุ่น', color: Colors.white),
-              //       trailing: text('ยอดขาย', color: Colors.white),
-              //     ),
-              //   ),
-              // ),
-              if (seeDetail)
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: detail?.length,
-                  itemBuilder: (context, index) {
-                    return listSalesDetail(
-                        title: detail?[index].name,
-                        quantity: '${detail?[index].ea}',
-                        unit: detail?[index].unit,
-                        index: index,
-                        maxIndex: detail?.length ?? 0);
-                  },
-                ),
+              (!compensation)
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: checklist,
+                      itemBuilder: (context, index) {
+                        return listSalesDetail(
+                          title: detail?[index].name,
+                          quantity: '${detail?[index].ea}',
+                          unit: detail?[index].unit,
+                          index: index,
+                          maxIndex: checklist,
+                        );
+                      })
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: checklist + 1,
+                      itemBuilder: (context, index) {
+                        if (index < checklist) {
+                          return listSalesDetail(
+                            title: detail?[index].name,
+                            quantity: '${detail?[index].ea}',
+                            unit: detail?[index].unit,
+                            index: index,
+                            maxIndex: checklist,
+                            total: '${detail?[index].total}',
+                          );
+                        } else {
+                          return listSalesDetail(title: 'รวม', total: '$sum', index: index, maxIndex: checklist);
+                        }
+                      },
+                    ),
           ],
         ),
         collapsed: const SizedBox(),
@@ -71,23 +84,52 @@ Widget listProductGroup({
   ).paddingSymmetric(horizontal: 15, vertical: 10);
 }
 
-Widget listSalesDetail({required String title, required String quantity, required String unit, required int index, required int maxIndex}) {
+Widget listSalesDetail({
+  required String title,
+  String? quantity,
+  String? total,
+  String? unit,
+  required int index,
+  required int maxIndex,
+}) {
   return Container(
     padding: const EdgeInsets.only(left: 25, right: 37),
     decoration: BoxDecoration(
-        color: (index % 2 == 0) ? Colors.grey[100] : Colors.white,
-        borderRadius: (maxIndex - 1 == index) ? const BorderRadius.only(bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9)) : null),
+      color: (index % 2 == 0) ? Colors.grey[100] : Colors.white,
+      borderRadius: (total == null)
+          ? (maxIndex - 1 == index)
+              ? const BorderRadius.only(bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9))
+              : null
+          : (maxIndex == index)
+              ? const BorderRadius.only(bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9))
+              : null,
+    ),
     child: Row(
       children: [
-        Expanded(child: text(title)),
-        FittedBox(
+        Expanded(flex: 6, child: text(title)),
+        if (quantity != null && unit != null)
+          Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  text(quantity, color: ThemeColor.primaryColor),
+                  const SizedBox(width: 5),
+                  text(unit),
+                ],
+              )),
+        if (total != null)
+          Expanded(
+            flex: 2,
             child: Row(
-          children: [
-            text(quantity, color: ThemeColor.primaryColor),
-            const SizedBox(width: 5),
-            text(unit),
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                text(total, color: ThemeColor.primaryColor),
+                const SizedBox(width: 5),
+                text('บาท'),
+              ],
+            ),
+          ),
       ],
     ).paddingSymmetric(vertical: 10),
   );

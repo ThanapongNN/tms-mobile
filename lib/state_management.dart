@@ -24,6 +24,36 @@ class Store {
   static RxString userTextInput = ''.obs;
   static RxString version = ''.obs;
 
+  static RxMap<String, dynamic> compersationData = <String, dynamic>{
+    "data": [
+      {
+        "code": "p001",
+        "product": "ยอดมือถือ",
+        "salesTotal": 3,
+        "unit": "เครื่อง",
+        "iconName": "sim",
+        "salesOrder": [
+          {"name": "VIVO Y15S", "ea": 1, "unit": "เครื่อง", "total": "100"},
+          {"name": "ATV SKY", "ea": 1, "unit": "เครื่อง", "total": "20"},
+          {"name": "HUAWEI NOVA Y70", "ea": 1, "unit": "เครื่อง", "total": "20"},
+          {"name": "HUAWEI NOVA Y70", "ea": 1, "unit": "เครื่อง", "total": "20"},
+        ],
+        "sum": 360,
+      },
+      {
+        "code": "p002",
+        "product": "ซิมเติมเงิน",
+        "salesTotal": 1,
+        "unit": "ซิม",
+        "iconName": "sim",
+        "salesOrder": [
+          {"name": "ซิมเบอร์ใหม่แบบเติมเงิน ฟันธง", "ea": 1, "unit": "เครื่อง", "total": "50"},
+        ],
+        "sum": 360,
+      }
+    ]
+  }.obs;
+
   //STORE MODEL
   static Rx<ForgotPasswordModel>? forgotPasswordModel;
   static Rx<ProductGroupModel>? productGroupModel;
