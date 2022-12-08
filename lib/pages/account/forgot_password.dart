@@ -2,6 +2,10 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
+import 'package:tms/apis/call.dart';
+import 'package:tms/apis/config.dart';
+import 'package:tms/models/forgot_password.model.dart';
 import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
@@ -107,43 +111,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           if (_validateForm()) {
                             Store.saleID.value = _saleID.text;
 
-                            navigatorTo(
-                              () => const ConfirmOTP(
-                                otp: OTP.forgotPassword,
-                                mobileNO: '0852611732',
-                              ),
-                              transition: Transition.rightToLeft,
-                            );
-                            // Call.raw(
-                            //   method: Method.post,
-                            //   url: '$host/user/v1/accounts/${_saleID.text}',
-                            //   body: {
-                            //     "partnerCode": _thaiID.text,
-                            //     "birthdate":
-                            //         '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
-                            //   },
-                            // ).then((forgotPassword) {
-                            //   if (forgotPassword.success) {
-                            //     Store.forgotPasswordModel = ForgotPasswordModel.fromJson(forgotPassword.response).obs;
+                            Call.raw(
+                              method: Method.post,
+                              url: '$host/user/v1/accounts/${_saleID.text}',
+                              body: {"thai_id": _thaiID.text.replaceAll('-', '')},
+                            ).then((forgotPassword) {
+                              if (forgotPassword.success) {
+                                Store.forgotPasswordModel = ForgotPasswordModel.fromJson(forgotPassword.response).obs;
 
-                            //     Call.raw(
-                            //       method: Method.post,
-                            //       url: '$host/support/v1/otp/request',
-                            //       body: {"msisdn": Store.forgotPasswordModel!.value.mobile},
-                            //     ).then((otp) {
-                            //       if (otp.success) {
-                            //         Store.otpRefID.value = otp.response['refId'];
-                            // navigatorTo(
-                            //   () => ConfirmOTP(
-                            //     otp: OTP.forgotPassword,
-                            //     mobileNO: Store.forgotPasswordModel!.value.mobile,
-                            //   ),
-                            //   transition: Transition.rightToLeft,
-                            // );
-                            //       }
-                            //     });
-                            //   }
-                            // });
+                                Call.raw(
+                                  method: Method.post,
+                                  url: '$host/support/v1/otp/request',
+                                  body: {"msisdn": Store.forgotPasswordModel!.value.mobile},
+                                ).then((otp) {
+                                  if (otp.success) {
+                                    Store.otpRefID.value = otp.response['refId'];
+                                    navigatorTo(
+                                      () => ConfirmOTP(
+                                        otp: OTP.forgotPassword,
+                                        mobileNO: Store.forgotPasswordModel!.value.mobile,
+                                      ),
+                                      transition: Transition.rightToLeft,
+                                    );
+                                  }
+                                });
+                              }
+                            });
                           }
                         },
                 ),

@@ -1,6 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
@@ -11,7 +10,6 @@ import 'package:tms/models/partner_types.model.dart';
 import 'package:tms/models/shop_profile_list.model.dart';
 import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/accept_terms.dart';
-import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/constructor.dart';
@@ -492,43 +490,27 @@ class _CreateAccountState extends State<CreateAccount> {
                               thaiID: _thaiID.text.replaceAll('-', ''),
                             );
 
-                            if (!isSuccess) {
-                              navigatorTo(
-                                () => const AcceptTerms(),
-                                transition: Transition.rightToLeft,
-                              );
-                              // CallBack data = await Call.raw(
-                              //   method: Method.post,
-                              //   url: '$host/support/v1/otp/request',
-                              //   body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
-                              // );
+                            if (isSuccess) {
+                              Store.registerBody.value = {
+                                "otpRefId": '',
+                                "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
+                                "partnerCode": '711${_branch.text}',
+                                "partnerName": _jobBranch.text,
+                                "employee": {
+                                  "thaiId": _thaiID.text.replaceAll('-', ''),
+                                  "id": _saleID.text,
+                                  "password": '',
+                                  "name": _firstName.text,
+                                  "surname": _lastName.text,
+                                  "birthdate":
+                                      '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                                  "mobile": _phoneNumber.text.replaceAll('-', ''),
+                                  "email": _email.text,
+                                  "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                                }
+                              };
 
-                              // if (data.success) {
-                              //   Store.otpRefID.value = data.response['refId'];
-                              //   Store.registerBody.value = {
-                              //     "otpRefId": '',
-                              //     "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                              //     "partnerCode": '711${_branch.text}',
-                              //     "partnerName": _jobBranch.text,
-                              //     "employee": {
-                              //       "thaiId": _thaiID.text.replaceAll('-', ''),
-                              //       "id": _saleID.text,
-                              //       "password": '',
-                              //       "name": _firstName.text,
-                              //       "surname": _lastName.text,
-                              //       "birthdate":
-                              //           '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
-                              //       "mobile": _phoneNumber.text.replaceAll('-', ''),
-                              //       "email": _email.text,
-                              //       "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
-                              //     }
-                              //   };
-
-                              //   navigatorTo(
-                              //     () => ConfirmOTP(otp: OTP.createAccount, mobileNO: Store.registerBody['employee']['mobile']),
-                              //     transition: Transition.rightToLeft,
-                              //   );
-                              // }
+                              navigatorTo(() => const AcceptTerms(), transition: Transition.rightToLeft);
                             }
                           }
                         },
