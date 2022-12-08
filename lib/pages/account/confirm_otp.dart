@@ -88,9 +88,11 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: 'รหัสยืนยันการใช้งาน จะหมดอายุใน ',
+                        text:
+                            'รหัส$titleBody ส่งไปที่เบอร์ XXX-XXX-${widget.mobileNO.substring(widget.mobileNO.length - 4, widget.mobileNO.length)}\n',
                         style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
                         children: [
+                          const TextSpan(text: 'จะหมดอายุใน '),
                           TextSpan(
                             text: '0${time.min} : ${time.sec.toString().padLeft(2, '0')}',
                             style: const TextStyle(color: ThemeColor.primaryColor, fontWeight: FontWeight.bold),
@@ -199,11 +201,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                   }
                 });
               },
-              child: text(
-                'ขอรหัสอีกครั้ง',
-                color: ThemeColor.primaryColor,
-                decoration: TextDecoration.underline,
-              ).paddingAll(20),
+              child: text('ขอรหัสอีกครั้ง', color: ThemeColor.primaryColor).paddingAll(20),
             ),
           ]),
         ),

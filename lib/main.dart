@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
-import 'package:tms/pages/login.dart';
+import 'package:tms/pages/landing.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/device_serial.dart';
 import 'package:tms/utils/package_version.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  await GetStorage.init();
 
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     configLoading();
     runApp(const MyApp());
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'TMS ช่วยขาย true',
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: const LandingPage(),
       builder: EasyLoading.init(builder: (context, widget) {
         return ScrollConfiguration(
           behavior: const ScrollBehaviorModified(),

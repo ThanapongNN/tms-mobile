@@ -47,7 +47,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
-  bool accept = false;
   bool disable = true;
   bool errorAccept = false;
   bool errorDay = false;
@@ -90,14 +89,14 @@ class _CreateAccountState extends State<CreateAccount> {
     if ((_saleID.text.length > 6) &&
         _firstName.text.isNotEmpty &&
         _lastName.text.isNotEmpty &&
+        (_thaiID.text.length == 17) &&
         (selectedDay != null) &&
         (selectedMonth != null) &&
         (selectedYear != null) &&
         (_phoneNumber.text.length == 12) &&
         (selectedJob != null) &&
         (_branch.text.length == 5) &&
-        _jobBranch.text.isNotEmpty &&
-        accept) {
+        _jobBranch.text.isNotEmpty) {
       disable = false;
     } else {
       disable = true;
@@ -131,11 +130,6 @@ class _CreateAccountState extends State<CreateAccount> {
       if (selectedJob == null) {
         borderJob = Colors.red;
         errorJob = true;
-        isValid = false;
-      }
-
-      if (!accept) {
-        errorAccept = true;
         isValid = false;
       }
     });
@@ -483,87 +477,58 @@ class _CreateAccountState extends State<CreateAccount> {
                   },
                   onChanged: (v) => setState(() => checkAllInput()),
                 ),
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                  Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: ThemeColor.primaryColor,
-                    side: const BorderSide(width: 2, color: Colors.grey),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    value: accept,
-                    onChanged: (bool? v) => setState(() {
-                      accept = v!;
-                      errorAccept = !v;
-                      checkAllInput();
-                    }),
-                    tristate: false,
-                  ),
-                  Flexible(
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'ยอมรับเงื่อนไข ',
-                        style: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Kanit'),
-                        children: [
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap = () => navigatorTo(() => const AcceptTerms()),
-                            text: 'ข้อตกลงร่วมใช้และเข้าถึงข้อมูลของผู้ใช้บริการผ่านแอฟพลิเคชั้นนี้',
-                            style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ]),
-                if (errorAccept)
-                  text(
-                    'กรุณากดยอมรับเงื่อนไข ก่อนยืนยันสร้างบัญชี',
-                    color: ThemeColor.primaryColor,
-                    fontSize: 12,
-                  ).paddingOnly(left: 10),
                 const SizedBox(height: 20),
                 button(
-                  text: 'สร้างบัญชี',
-                  icon: BootstrapIcons.plus,
+                  text: 'ต่อไป',
+                  icon: BootstrapIcons.arrow_right,
                   disable: disable,
                   onPressed: disable
                       ? () {}
                       : () async {
                           if (_validateForm()) {
                             bool isSuccess = await validateAccountRequest(
-                                saleID: _saleID.text, msisdn: _phoneNumber.text.replaceAll('-', ''), thaiID: _thaiID.text.replaceAll('-', ''));
+                              saleID: _saleID.text,
+                              msisdn: _phoneNumber.text.replaceAll('-', ''),
+                              thaiID: _thaiID.text.replaceAll('-', ''),
+                            );
 
-                            if (isSuccess) {
-                              CallBack data = await Call.raw(
-                                method: Method.post,
-                                url: '$host/support/v1/otp/request',
-                                body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
+                            if (!isSuccess) {
+                              navigatorTo(
+                                () => const AcceptTerms(),
+                                transition: Transition.rightToLeft,
                               );
+                              // CallBack data = await Call.raw(
+                              //   method: Method.post,
+                              //   url: '$host/support/v1/otp/request',
+                              //   body: {"msisdn": _phoneNumber.text.replaceAll('-', '')},
+                              // );
 
-                              if (data.success) {
-                                Store.otpRefID.value = data.response['refId'];
-                                Store.registerBody.value = {
-                                  "otpRefId": '',
-                                  "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                                  "partnerCode": '711${_branch.text}',
-                                  "partnerName": _jobBranch.text,
-                                  "employee": {
-                                    "thaiId": _thaiID.text.replaceAll('-', ''),
-                                    "id": _saleID.text,
-                                    "password": '',
-                                    "name": _firstName.text,
-                                    "surname": _lastName.text,
-                                    "birthdate":
-                                        '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
-                                    "mobile": _phoneNumber.text.replaceAll('-', ''),
-                                    "email": _email.text,
-                                    "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
-                                  }
-                                };
+                              // if (data.success) {
+                              //   Store.otpRefID.value = data.response['refId'];
+                              //   Store.registerBody.value = {
+                              //     "otpRefId": '',
+                              //     "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
+                              //     "partnerCode": '711${_branch.text}',
+                              //     "partnerName": _jobBranch.text,
+                              //     "employee": {
+                              //       "thaiId": _thaiID.text.replaceAll('-', ''),
+                              //       "id": _saleID.text,
+                              //       "password": '',
+                              //       "name": _firstName.text,
+                              //       "surname": _lastName.text,
+                              //       "birthdate":
+                              //           '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
+                              //       "mobile": _phoneNumber.text.replaceAll('-', ''),
+                              //       "email": _email.text,
+                              //       "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                              //     }
+                              //   };
 
-                                navigatorTo(
-                                  () => ConfirmOTP(otp: OTP.createAccount, mobileNO: Store.registerBody['employee']['mobile']),
-                                  transition: Transition.rightToLeft,
-                                );
-                              }
+                              //   navigatorTo(
+                              //     () => ConfirmOTP(otp: OTP.createAccount, mobileNO: Store.registerBody['employee']['mobile']),
+                              //     transition: Transition.rightToLeft,
+                              //   );
+                              // }
                             }
                           }
                         },
