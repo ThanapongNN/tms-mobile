@@ -4,12 +4,15 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:tms/pages/news/new_detail.dart';
+import 'package:tms/models/news.model.dart';
+import 'package:tms/pages/news/news_detail.dart';
+import 'package:tms/pages/news/news_more.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/drawer.dart';
 import 'package:tms/widgets/form_field.dart';
+import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
 class NewsPage extends StatefulWidget {
@@ -26,6 +29,162 @@ class _NewsPageState extends State<NewsPage> {
 
   bool checkSearch = true;
   bool information = true;
+
+  final NewsModel _newsModel = NewsModel.fromJson({
+    "code": "200",
+    "description": "SUCCESS",
+    "transactionId": "transactionId",
+    "data": [
+      {
+        "group_name": "new",
+        "name_th": "ข่าวสารใหม่ๆ",
+        "name_en": "new!!!",
+        "icon": "speaker",
+        "lists": [
+          {
+            "name_th": "รับซิมทรูเซเว่นฟรี",
+            "name_en": "get_sim_7-11_free",
+            "source_type": "VDO",
+            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/uc?export=download&id=1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib",
+            "start_date": "2022-02-24T17:17:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "name_en": "change prepaid sim to monthly sim",
+            "source_type": "PDF",
+            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/uc?export=download&id=1Ph02aoThudstesV2DlNerNKVqnV14xty",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "รับซิมทรูเซเว่นฟรี",
+            "name_en": "get_sim_7-11_free",
+            "source_type": "VDO",
+            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "name_en": "change prepaid sim to monthly sim",
+            "source_type": "PDF",
+            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "รับซิมทรูเซเว่นฟรี",
+            "name_en": "get_sim_7-11_free",
+            "source_type": "VDO",
+            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "name_en": "change prepaid sim to monthly sim",
+            "source_type": "PDF",
+            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          }
+        ]
+      },
+      {
+        "group_name": "promotion_and_sim",
+        "name_th": "โปรโมชั่นและซิมต่างๆ",
+        "name_en": "Promotion and sim",
+        "icon": "sim",
+        "lists": [
+          {
+            "name_th": "รับซิมทรูเซเว่นฟรี",
+            "name_en": "get_sim_7-11_free",
+            "source_type": "VDO",
+            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "name_en": "change prepaid sim to monthly sim",
+            "source_type": "PDF",
+            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "รับซิมทรูเซเว่นฟรี",
+            "name_en": "get_sim_7-11_free",
+            "source_type": "VDO",
+            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "name_en": "change prepaid sim to monthly sim",
+            "source_type": "PDF",
+            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "รับซิมทรูเซเว่นฟรี",
+            "name_en": "get_sim_7-11_free",
+            "source_type": "VDO",
+            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          },
+          {
+            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+            "name_en": "change prepaid sim to monthly sim",
+            "source_type": "PDF",
+            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
+            "start_date": "2022-02-24T07:00:00+07:00",
+            "end_date": "2022-12-31T07:00:00+07:00"
+          }
+        ]
+      }
+    ]
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,101 +240,44 @@ class _NewsPageState extends State<NewsPage> {
         drawer: drawer(),
         body: (checkSearch)
             ? SingleChildScrollView(
-                child: Column(children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 4,
-                            itemBuilder: (BuildContext context, int index) {
-                              return boxNews(
-                                  image: 'assets/images/promotion.png',
-                                  content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                                  onTap: () => Get.to(() => const NewDetail()));
-                            },
+                child: Column(
+                  children: _newsModel.data.map((e) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            SvgPicture.asset('assets/images/${e.icon}.svg'),
+                            text(e.nameTh, fontBold: true, fontSize: 24).paddingOnly(left: 10),
+                          ]).paddingSymmetric(vertical: 10, horizontal: 20),
+                          SizedBox(
+                            height: 300,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: e.lists.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return boxNews(
+                                  image: e.lists[index].thumbnailUrl,
+                                  content: e.lists[index].subHeadline,
+                                  onTap: () => Get.to(() => NewsDetail(e.lists[index])),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          child: Center(
-                              child: GestureDetector(
-                            onTap: () {},
-                            child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
-                          )),
-                        ).marginSymmetric(vertical: 10),
-                        Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        text('สินค้าทรูมูฟเอช', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 4,
-                            itemBuilder: (BuildContext context, int index) {
-                              return boxNews(
-                                  image: 'assets/images/promotion.png',
-                                  content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                                  onTap: () => Get.to(() => const NewDetail()));
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          child: Center(
-                              child: GestureDetector(
-                            onTap: () {},
-                            child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
-                          )),
-                        ).marginSymmetric(vertical: 10),
-                        Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        text('สินค้าทรูออนไลน์และคอนเวอเจ้นท์', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 4,
-                            itemBuilder: (BuildContext context, int index) {
-                              return boxNews(
-                                  image: 'assets/images/promotion.png',
-                                  content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                                  onTap: () => Get.to(() => const NewDetail()));
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          child: Center(
-                              child: GestureDetector(
-                            onTap: () {},
-                            child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
-                          )),
-                        ).marginSymmetric(vertical: 10),
-                        Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
-                      ],
-                    ),
-                  ),
-                ]),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () => navigatorTo(() => NewsMore(e)),
+                              child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
+                            ),
+                          ).paddingOnly(bottom: 10),
+                          Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
               )
             : (information)
                 ? Column(
@@ -199,7 +301,7 @@ class _NewsPageState extends State<NewsPage> {
                               return boxNews(
                                   image: 'assets/images/promotion.png',
                                   content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                                  onTap: () => Get.to(() => const NewDetail()));
+                                  onTap: () {});
                             }),
                       ),
                     ],

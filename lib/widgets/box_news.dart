@@ -12,17 +12,18 @@ Widget boxNews({
     child: Container(
       width: 180,
       height: 230,
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            color: Colors.amber,
-            height: 180,
-            child: Image.asset(image),
-          ),
-          Expanded(child: text(content).paddingAll(5))
-        ],
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [BoxShadow(offset: Offset(2, 2), color: Colors.black12, blurRadius: 2)],
       ),
+      child: Column(children: [
+        Container(
+          height: 180,
+          decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
+        ),
+        Expanded(child: text(content).paddingAll(5))
+      ]),
     ).marginOnly(right: 10),
   );
 }

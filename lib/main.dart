@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
-import 'package:tms/pages/landing.dart';
+import 'package:tms/pages/news/news.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/utils/device_serial.dart';
 import 'package:tms/utils/package_version.dart';
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'TMS ช่วยขาย true',
       debugShowCheckedModeBanner: false,
-      home: const LandingPage(),
+      home: const NewsPage(),
       builder: EasyLoading.init(builder: (context, widget) {
         return ScrollConfiguration(
           behavior: const ScrollBehaviorModified(),

@@ -48,7 +48,7 @@ Widget drawer() {
       const Divider(),
       ListTile(
         horizontalTitleGap: 0,
-        leading: const Icon(CustomIcons.change_pass, color: Colors.black, size: 28),
+        leading: const Icon(CustomIcons.changePass, color: Colors.black, size: 28),
         title: text('เปลี่ยนรหัสผ่าน'),
         onTap: () => navigatorTo(() => const ChangePassword(), transition: Transition.leftToRight),
       ),

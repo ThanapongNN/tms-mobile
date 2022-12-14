@@ -13,7 +13,7 @@ Widget formField({
   bool showTextLable = true,
   Color errorTextColor = ThemeColor.primaryColor,
   double height = 10,
-  int maxLength = 50,
+  int maxLength = 100,
   List<TextInputFormatter>? inputFormatters,
   String hintText = '',
   String textLable = '',

@@ -17,7 +17,12 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  List<Widget> taps = [const Home(), const SalesPage(), const NewsPage()];
+  List<Widget> taps = [
+    const Home(),
+    const SalesPage(),
+    const NewsPage(),
+    const NewsPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,8 @@ class _MenuState extends State<Menu> {
                 customBottomBarItems: [
                   CustomBottomBarItems(label: 'หน้าหลัก', icon: BootstrapIcons.house),
                   CustomBottomBarItems(label: 'ยอดขาย', icon: BootstrapIcons.graph_up_arrow),
-                  CustomBottomBarItems(label: 'ข่าวสาร', icon: CustomIcons.megaphone),
+                  CustomBottomBarItems(label: 'ข่าวและแคมเปญ', icon: CustomIcons.megaphone),
+                  CustomBottomBarItems(label: 'การเรียนรู้', icon: CustomIcons.education),
                 ],
               )
             : null,

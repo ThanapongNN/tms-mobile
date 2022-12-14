@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tms/apis/request/product_group.request.dart';
-import 'package:tms/pages/news/new_detail.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -192,7 +191,7 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    text('ข่าวสารและแคมเปญเด่น (mock)', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
+                    text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
                     SizedBox(
                       height: 300,
                       child: ListView.builder(
@@ -203,7 +202,7 @@ class _HomeState extends State<Home> {
                           return boxNews(
                               image: 'assets/images/promotion.png',
                               content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                              onTap: () => Get.to(() => const NewDetail()));
+                              onTap: () {});
                         },
                       ),
                     ),
