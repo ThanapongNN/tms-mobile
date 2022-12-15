@@ -1,5 +1,6 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:tms/models/forgot_password.model.dart';
+import 'package:tms/models/learning.model.dart';
 import 'package:tms/models/news.model.dart';
 import 'package:tms/models/product_group.model.dart';
 import 'package:tms/models/user_account.model.dart';
@@ -57,6 +58,7 @@ class Store {
 
   //STORE MODEL
   static Rx<ForgotPasswordModel>? forgotPasswordModel;
+  static Rx<LearningModel>? learningModel;
   static Rx<NewsModel>? newsModel;
   static Rx<ProductGroupModel>? productGroupModel;
   static Rx<UserAccountModel>? userAccountModel;

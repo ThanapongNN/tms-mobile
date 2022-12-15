@@ -4,7 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/create_account.request.dart';
-import 'package:tms/apis/request/product_group.request.dart';
+import 'package:tms/apis/request/first_login.request.dart';
 import 'package:tms/models/user_token_access.model.dart';
 import 'package:tms/pages/account/create_account.dart';
 import 'package:tms/pages/account/forgot_password.dart';
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
 
                           //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
-                          await callFirstLogin(Store.encryptedEmployeeId.value);
+                          await firstLoginRequest(Store.encryptedEmployeeId.value);
 
                           //เข้าหน้าเมนู
                           navigatorOffAll(() => const Menu());

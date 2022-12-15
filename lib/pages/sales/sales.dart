@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:tms/apis/request/product_group.request.dart';
+import 'package:tms/apis/request/first_login.request.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/widgets/box_head_user.dart';
@@ -219,7 +219,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
           : Column(children: [
               AppBar(title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100)),
               NoDataPage(onPressed: () async {
-                await callFirstLogin(Store.encryptedEmployeeId.value);
+                await firstLoginRequest(Store.encryptedEmployeeId.value);
                 setState(() {
                   if (Store.productGroupModel != null) {
                     for (var e in Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup) {

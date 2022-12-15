@@ -16,14 +16,18 @@ class NewsDetail extends StatefulWidget {
 
 class _NewsDetailState extends State<NewsDetail> {
   VideoPlayerController? _controller;
+  String sourceType = '';
 
   @override
   void initState() {
     super.initState();
+    sourceType = widget.data.sourceUrl.toString().split('/d/')[1];
+    sourceType = sourceType.replaceAll('/view', '');
+    sourceType = 'https://drive.google.com/uc?export=download&id=$sourceType';
 
     switch (widget.data.sourceType) {
       case 'VDO':
-        _controller = VideoPlayerController.network(widget.data.sourceUrl)
+        _controller = VideoPlayerController.network(sourceType)
           ..initialize().then((_) {
             setState(() {});
           });
@@ -51,7 +55,7 @@ class _NewsDetailState extends State<NewsDetail> {
           imageProvider: NetworkImage(widget.data.sourceUrl),
         );
       case 'PDF':
-        return SfPdfViewer.network(widget.data.sourceUrl);
+        return SfPdfViewer.network(sourceType);
       case 'VDO':
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           text(widget.data.headline, fontSize: 24),
