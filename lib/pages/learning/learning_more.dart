@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:tms/widgets/text.dart';
@@ -16,13 +17,21 @@ class LearningMore extends StatelessWidget {
         itemCount: data.lists.length,
         itemBuilder: (context, index) {
           return Row(children: [
-            Container(
+            SizedBox(
               height: 90,
               width: 90,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(data.lists[index].thumbnailUrl),
-                  fit: BoxFit.cover,
+              child: CachedNetworkImage(
+                imageUrl: data.lists[index].thumbnailUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  height: 90,
+                  width: 90,
+                  decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.cover)),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  color: Colors.grey[300],
+                  height: 90,
+                  width: 90,
+                  child: const Icon(Icons.image, size: 30, color: Colors.grey),
                 ),
               ),
             ),

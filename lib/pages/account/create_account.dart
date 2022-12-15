@@ -94,7 +94,8 @@ class _CreateAccountState extends State<CreateAccount> {
         (_phoneNumber.text.length == 12) &&
         (selectedJob != null) &&
         (_branch.text.length == 5) &&
-        _jobBranch.text.isNotEmpty) {
+        _jobBranch.text.isNotEmpty &&
+        _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;

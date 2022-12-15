@@ -56,7 +56,7 @@ class _NewPasswordState extends State<NewPassword> {
   }
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_password.text.length == 8) && (_confirmPassword.text.length == 8)) {
+    if ((_saleID.text.length > 6) && (_password.text.length == 8) && (_confirmPassword.text.length == 8) && _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;

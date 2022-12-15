@@ -66,10 +66,10 @@ class _LearningPageState extends State<LearningPage> {
                               _timer?.cancel();
 
                               if (v.isNotEmpty) {
-                                Call.raw(method: Method.get, url: '$host/learning-course/v1/learning-course/$v').then((news) {
-                                  if (news.success) {
+                                Call.raw(method: Method.get, url: '$host/learning-course/v1/learning-course/$v').then((learning) {
+                                  if (learning.success) {
                                     setState(() {
-                                      _searchLearningModel = SearchLearningModel.fromJson(news.response);
+                                      _searchLearningModel = SearchLearningModel.fromJson(learning.response);
                                       showSearch = true;
                                     });
                                   }
@@ -98,7 +98,7 @@ class _LearningPageState extends State<LearningPage> {
             : (!showSearch)
                 ? SingleChildScrollView(
                     child: Column(
-                      children: Store.newsModel!.value.data.map((e) {
+                      children: Store.learningModel!.value.data.map((e) {
                         return SizedBox(
                           width: double.infinity,
                           child: Column(

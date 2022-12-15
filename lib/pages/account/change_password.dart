@@ -35,7 +35,11 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool disable = true;
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_oldPassword.text.length == 8) && (_password.text.length == 8) && (_confirmPassword.text.length == 8)) {
+    if ((_saleID.text.length > 6) &&
+        (_oldPassword.text.length == 8) &&
+        (_password.text.length == 8) &&
+        (_confirmPassword.text.length == 8) &&
+        _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;

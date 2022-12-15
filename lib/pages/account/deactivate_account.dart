@@ -34,7 +34,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
   bool disable = true;
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_password.text.length == 8)) {
+    if ((_saleID.text.length > 6) && (_password.text.length == 8) && _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;

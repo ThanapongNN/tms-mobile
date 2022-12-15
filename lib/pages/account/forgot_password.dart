@@ -47,7 +47,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_thaiID.text.length == 17)) {
+    if ((_saleID.text.length > 6) && (_thaiID.text.length == 17) && _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;
