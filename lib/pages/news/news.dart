@@ -4,7 +4,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:tms/models/news.model.dart';
+import 'package:tms/models/search_news.model.dart';
 import 'package:tms/pages/news/news_detail.dart';
 import 'package:tms/pages/news/news_more.dart';
 import 'package:tms/state_management.dart';
@@ -30,158 +30,32 @@ class _NewsPageState extends State<NewsPage> {
   bool checkSearch = true;
   bool information = true;
 
-  final NewsModel _newsModel = NewsModel.fromJson({
+  final SearchNewsModel _searchNewsModel = SearchNewsModel.fromJson({
     "code": "200",
     "description": "SUCCESS",
     "transactionId": "transactionId",
     "data": [
       {
-        "group_name": "new",
-        "name_th": "ข่าวสารใหม่ๆ",
-        "name_en": "new!!!",
-        "icon": "speaker",
-        "lists": [
-          {
-            "name_th": "รับซิมทรูเซเว่นฟรี",
-            "name_en": "get_sim_7-11_free",
-            "source_type": "VDO",
-            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/uc?export=download&id=1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib",
-            "start_date": "2022-02-24T17:17:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
-            "name_en": "change prepaid sim to monthly sim",
-            "source_type": "PDF",
-            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/uc?export=download&id=1Ph02aoThudstesV2DlNerNKVqnV14xty",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "รับซิมทรูเซเว่นฟรี",
-            "name_en": "get_sim_7-11_free",
-            "source_type": "VDO",
-            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
-            "name_en": "change prepaid sim to monthly sim",
-            "source_type": "PDF",
-            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "รับซิมทรูเซเว่นฟรี",
-            "name_en": "get_sim_7-11_free",
-            "source_type": "VDO",
-            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
-            "name_en": "change prepaid sim to monthly sim",
-            "source_type": "PDF",
-            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          }
-        ]
+        "name_th": "รับซิมทรูเซเว่นฟรี",
+        "name_en": "get_sim_7-11_free",
+        "source_type": "VDO",
+        "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
+        "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+        "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+        "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
+        "start_date": "2022-02-24T07:00:00+07:00",
+        "end_date": "2022-12-31T07:00:00+07:00"
       },
       {
-        "group_name": "promotion_and_sim",
-        "name_th": "โปรโมชั่นและซิมต่างๆ",
-        "name_en": "Promotion and sim",
-        "icon": "sim",
-        "lists": [
-          {
-            "name_th": "รับซิมทรูเซเว่นฟรี",
-            "name_en": "get_sim_7-11_free",
-            "source_type": "VDO",
-            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
-            "name_en": "change prepaid sim to monthly sim",
-            "source_type": "PDF",
-            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "รับซิมทรูเซเว่นฟรี",
-            "name_en": "get_sim_7-11_free",
-            "source_type": "VDO",
-            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
-            "name_en": "change prepaid sim to monthly sim",
-            "source_type": "PDF",
-            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "รับซิมทรูเซเว่นฟรี",
-            "name_en": "get_sim_7-11_free",
-            "source_type": "VDO",
-            "thumbnail_url": "https://cf.shopee.co.th/file/0ae43670de1b7344fcf559566d8e6cfa",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1A088jRcGJQjuP6zmZ5ogsOEFWZAzM3ib/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          },
-          {
-            "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
-            "name_en": "change prepaid sim to monthly sim",
-            "source_type": "PDF",
-            "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
-            "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
-            "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
-            "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
-            "start_date": "2022-02-24T07:00:00+07:00",
-            "end_date": "2022-12-31T07:00:00+07:00"
-          }
-        ]
+        "name_th": "เปลี่ยนเติมเงินเป็นรายเดือน",
+        "name_en": "change prepaid sim to monthly sim",
+        "source_type": "PDF",
+        "thumbnail_url": "https://admin.adaddictth.com/storage/img/thumbnail/1638460620_thumpnail.jpg",
+        "headline": "รับซิมทรูเซเว่นฟรี วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65",
+        "sub_headline": "รับซิมทรูเซเว่นฟรี ที่ทรูช็อป หรือ 7-11 ได้แล้วตั้งแต่วันที่ 24 ก.พ. 65 - 31 ธ.ค. 65 เพียงพกบัตรประชาชนเพื่อรับฟรี",
+        "source_url": "https://drive.google.com/file/d/1Ph02aoThudstesV2DlNerNKVqnV14xty/view",
+        "start_date": "2022-02-24T07:00:00+07:00",
+        "end_date": "2022-12-31T07:00:00+07:00"
       }
     ]
   });
@@ -193,13 +67,7 @@ class _NewsPageState extends State<NewsPage> {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
-              const Text('  (mock)'),
-            ],
-          ),
+          title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
           centerTitle: true,
           elevation: 0,
           bottom: PreferredSize(
@@ -208,31 +76,26 @@ class _NewsPageState extends State<NewsPage> {
               width: double.infinity,
               color: const Color(0xFF414F5C),
               child: Form(
-                  child: formField(
-                onChanged: (v) async {
-                  _timer?.cancel();
-                  _timer = Timer(
-                    const Duration(seconds: 1),
-                    () async {
-                      _timer?.cancel();
-                      if (v == '') {
+                child: formField(
+                  hintText: 'ค้นหาข่าวสารและแคมเปญ',
+                  prefixIcon: const Icon(BootstrapIcons.search),
+                  showTextLable: false,
+                  controller: search,
+                  radius: true,
+                  onChanged: (v) async {
+                    _timer?.cancel();
+                    _timer = Timer(
+                      const Duration(seconds: 1),
+                      () async {
+                        _timer?.cancel();
                         setState(() {
-                          checkSearch = true;
+                          checkSearch = v.isEmpty;
                         });
-                      } else {
-                        setState(() {
-                          checkSearch = false;
-                        });
-                      }
-                    },
-                  );
-                },
-                showTextLable: false,
-                controller: search,
-                radius: true,
-                prefixIcon: const Icon(BootstrapIcons.search),
-                hintText: 'ค้นหาข่าวสารและแคมเปญ',
-              ).paddingOnly(left: 50, right: 50, top: 10)),
+                      },
+                    );
+                  },
+                ).paddingOnly(left: 50, right: 50, top: 10),
+              ),
             ),
           ),
         ),
@@ -241,7 +104,7 @@ class _NewsPageState extends State<NewsPage> {
         body: (checkSearch)
             ? SingleChildScrollView(
                 child: Column(
-                  children: _newsModel.data.map((e) {
+                  children: Store.newsModel!.value.data.map((e) {
                     return SizedBox(
                       width: double.infinity,
                       child: Column(
@@ -280,32 +143,29 @@ class _NewsPageState extends State<NewsPage> {
                 ),
               )
             : (information)
-                ? Column(
-                    children: [
-                      Row(
-                        children: [
-                          text('คำค้นหา “'),
-                          text(search.text, color: ThemeColor.primaryColor),
-                          text('” พบ'),
-                          text(' 20 ', color: ThemeColor.primaryColor),
-                          text('บทความ'),
-                        ],
+                ? Column(children: [
+                    Row(children: [
+                      text('คำค้นหา "'),
+                      text(search.text, color: ThemeColor.primaryColor),
+                      text('" พบ'),
+                      text(' ${_searchNewsModel.data.length} ', color: ThemeColor.primaryColor),
+                      text('บทความ'),
+                    ]),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: _searchNewsModel.data.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 320),
+                        itemBuilder: (context, index) {
+                          return boxNews(
+                            image: _searchNewsModel.data[index].thumbnailUrl,
+                            content: _searchNewsModel.data[index].subHeadline,
+                            onTap: () => Get.to(() => NewsDetail(_searchNewsModel.data[index])),
+                          );
+                        },
                       ),
-                      const SizedBox(height: 10),
-                      Expanded(
-                        child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 280, mainAxisSpacing: 20),
-                            itemCount: 10,
-                            itemBuilder: (BuildContext context, int index) {
-                              return boxNews(
-                                  image: 'assets/images/promotion.png',
-                                  content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                                  onTap: () {});
-                            }),
-                      ),
-                    ],
-                  ).paddingSymmetric(horizontal: 20, vertical: 10)
+                    ),
+                  ]).paddingOnly(left: 20, top: 10, right: 10, bottom: 20)
                 : Center(
                     child: Column(children: [
                     SvgPicture.asset('assets/icons/notfound.svg'),

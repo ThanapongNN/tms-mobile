@@ -15,7 +15,7 @@ class NewsMore extends StatelessWidget {
       body: GridView.builder(
         itemCount: data.lists.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 320),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
         itemBuilder: (context, index) {
           return boxNews(
             image: data.lists[index].thumbnailUrl,

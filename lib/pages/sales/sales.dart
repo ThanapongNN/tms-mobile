@@ -219,7 +219,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
           : Column(children: [
               AppBar(title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100)),
               NoDataPage(onPressed: () async {
-                await callAccountProductGroup(Store.encryptedEmployeeId.value);
+                await callFirstLogin(Store.encryptedEmployeeId.value);
                 setState(() {
                   if (Store.productGroupModel != null) {
                     for (var e in Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup) {

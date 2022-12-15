@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:tms/models/news.model.dart';
 import 'package:tms/widgets/text.dart';
 import 'package:video_player/video_player.dart';
 
 class NewsDetail extends StatefulWidget {
-  final ListElement data;
+  final dynamic data;
   const NewsDetail(this.data, {super.key});
 
   @override
@@ -44,6 +44,12 @@ class _NewsDetailState extends State<NewsDetail> {
 
   Widget showBody() {
     switch (widget.data.sourceType) {
+      case 'IMG':
+        return PhotoView(
+          basePosition: Alignment.topCenter,
+          backgroundDecoration: const BoxDecoration(color: Colors.white),
+          imageProvider: NetworkImage(widget.data.sourceUrl),
+        );
       case 'PDF':
         return SfPdfViewer.network(widget.data.sourceUrl);
       case 'VDO':

@@ -35,10 +35,8 @@ class _MenuState extends State<Menu> {
                 unSelectedColor: Colors.black54,
                 backgroundColor: Colors.white,
                 currentIndex: Store.currentIndex.value,
-                unselectedIconSize: 20,
-                selectedIconSize: 24,
-                selectedFontSize: 16,
-                unselectedFontSize: 14,
+                selectedFontSize: 14,
+                unselectedFontSize: 12,
                 onTap: (index) => Store.currentIndex.value = index,
                 customBottomBarItems: [
                   CustomBottomBarItems(label: 'หน้าหลัก', icon: BootstrapIcons.house),

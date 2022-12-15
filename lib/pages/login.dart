@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
 
                           //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
-                          await callAccountProductGroup(Store.encryptedEmployeeId.value);
+                          await callFirstLogin(Store.encryptedEmployeeId.value);
 
                           //เข้าหน้าเมนู
                           navigatorOffAll(() => const Menu());

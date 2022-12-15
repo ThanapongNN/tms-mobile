@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tms/apis/request/product_group.request.dart';
+import 'package:tms/pages/news/news_detail.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -26,30 +27,30 @@ class _HomeState extends State<Home> {
 
   int indexProductGroup = 0;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    // if (Store.productGroupModel != null) {
-    //   items.add(boxHeadStatus(
-    //       image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
+  // if (Store.productGroupModel != null) {
+  //   items.add(boxHeadStatus(
+  //       image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
 
-    //   items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
-    //     return boxHeadStatus(
-    //         image: (e.product == 'ยอดเบอร์' || e.product == 'ยอดขายเบอร์')
-    //             ? "assets/images/sim2.svg"
-    //             : (e.product == 'ยอดมือถือ' || e.product == "ยอดขายมือถือ")
-    //                 ? "assets/images/phone.svg"
-    //                 : (e.product == 'เติมเงินเติมเน็ต' || e.product == "ยอดขายเติมเงินเติมเน็ต")
-    //                     ? "assets/images/coin.svg"
-    //                     : (e.product == 'เน็ตบ้านและทีวี' || e.product == "ยอดสมัครเน็ตบ้านและทีวี")
-    //                         ? "assets/images/tv.svg"
-    //                         : "assets/images/true.svg",
-    //         content: e.product,
-    //         quantity: '${e.salesTotal}');
-    //   }).toList());
-    // }
-  }
+  //   items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
+  //     return boxHeadStatus(
+  //         image: (e.product == 'ยอดเบอร์' || e.product == 'ยอดขายเบอร์')
+  //             ? "assets/images/sim2.svg"
+  //             : (e.product == 'ยอดมือถือ' || e.product == "ยอดขายมือถือ")
+  //                 ? "assets/images/phone.svg"
+  //                 : (e.product == 'เติมเงินเติมเน็ต' || e.product == "ยอดขายเติมเงินเติมเน็ต")
+  //                     ? "assets/images/coin.svg"
+  //                     : (e.product == 'เน็ตบ้านและทีวี' || e.product == "ยอดสมัครเน็ตบ้านและทีวี")
+  //                         ? "assets/images/tv.svg"
+  //                         : "assets/images/true.svg",
+  //         content: e.product,
+  //         quantity: '${e.salesTotal}');
+  //   }).toList());
+  // }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +169,7 @@ class _HomeState extends State<Home> {
                       ),
                     ])
                   : NoDataPage(onPressed: () async {
-                      await callAccountProductGroup(Store.encryptedEmployeeId.value);
+                      await callFirstLogin(Store.encryptedEmployeeId.value);
                       setState(() {
                         if (Store.productGroupModel != null) {
                           items.add(boxHeadStatus(
@@ -197,12 +198,13 @@ class _HomeState extends State<Home> {
                       child: ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         scrollDirection: Axis.horizontal,
-                        itemCount: 4,
+                        itemCount: Store.newsModel!.value.data[0].lists.length,
                         itemBuilder: (BuildContext context, int index) {
                           return boxNews(
-                              image: 'assets/images/promotion.png',
-                              content: 'ทรูให้เครื่องฟรี ที่ 7-Eleven เมื่อเปิด เบอร์ ใหม่รายเดือนหรือใช้ เบอร์เดิม WIKO Y82',
-                              onTap: () {});
+                            image: Store.newsModel!.value.data[0].lists[index].thumbnailUrl,
+                            content: Store.newsModel!.value.data[0].lists[index].subHeadline,
+                            onTap: () => Get.to(() => NewsDetail(Store.newsModel!.value.data[0].lists[index])),
+                          );
                         },
                       ),
                     ),
