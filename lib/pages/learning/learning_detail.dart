@@ -7,15 +7,15 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:tms/widgets/text.dart';
 import 'package:video_player/video_player.dart';
 
-class NewsDetail extends StatefulWidget {
+class LearningDetail extends StatefulWidget {
   final dynamic data;
-  const NewsDetail(this.data, {super.key});
+  const LearningDetail(this.data, {super.key});
 
   @override
-  State<NewsDetail> createState() => _NewsDetailState();
+  State<LearningDetail> createState() => _LearningDetailState();
 }
 
-class _NewsDetailState extends State<NewsDetail> {
+class _LearningDetailState extends State<LearningDetail> {
   VideoPlayerController? _controller;
 
   @override

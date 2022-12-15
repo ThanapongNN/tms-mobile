@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:tms/theme/color.dart';
 
-loadingIndicator() {
+Widget loadingIndicator() {
   return Center(
     child: Container(
       height: 60,

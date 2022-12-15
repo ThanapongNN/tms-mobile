@@ -23,7 +23,7 @@ class _AcceptTermsState extends State<AcceptTerms> {
   bool disable = true;
   CallBack? data;
 
-  Future callTermsAndCondition() async {
+  Future<CallBack?> callTermsAndCondition() async {
     data ??= await Call.raw(method: Method.get, url: '$host/settings/v1/terms_and_condition');
     return data;
   }
@@ -37,7 +37,7 @@ class _AcceptTermsState extends State<AcceptTerms> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return InAppWebView(
-              initialUrlRequest: URLRequest(url: Uri.parse('https://truevirtualworld.com/en/vlearn/terms-and-conditions')),
+              initialUrlRequest: URLRequest(url: Uri.parse(snapshot.data?.response['value'])),
               onOverScrolled: (controller, x, y, clampedX, clampedY) {
                 if (clampedY && disable) setState(() => disable = false);
               },

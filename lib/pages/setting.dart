@@ -19,7 +19,7 @@ class _SettingState extends State<Setting> {
       body: Column(
         children: [
           listTile(
-            svgicon: 'assets/icons/pinlocation.svg',
+            svgicon: 'assets/images/pinlocation.svg',
             title: 'เข้าใช้งานด้วยรหัส PIN',
             content: 'เข้าใช้งานด้วยรหัส PIN',
             changeMark: true,
@@ -35,7 +35,7 @@ class _SettingState extends State<Setting> {
             ),
           ),
           listTile(
-            svgicon: 'assets/icons/person.svg',
+            svgicon: 'assets/images/person.svg',
             title: 'เข้าใช้งานด้วยรหัส PIN',
             content: 'เข้าใช้งานด้วยรหัส PIN',
             changeMark: true,
@@ -51,7 +51,7 @@ class _SettingState extends State<Setting> {
             ),
           ),
           listTile(
-            svgicon: 'assets/icons/bell.svg',
+            svgicon: 'assets/images/bell.svg',
             title: 'เข้าใช้งานด้วยรหัส PIN',
             changeMark: true,
             trailing: switchcustom(

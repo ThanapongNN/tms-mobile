@@ -64,23 +64,23 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 text(Store.userAccountModel!.value.account.employee.empId),
                 const SizedBox(height: 10),
                 listTile(
-                  svgicon: 'assets/icons/pinlocation.svg',
+                  svgicon: 'assets/images/pinlocation.svg',
                   title: 'สถานที่ทำงาน',
                   content: Store.userAccountModel!.value.account.partnerName,
                   trailing: Column(children: [text(Store.userAccountModel!.value.account.partnerCode)]),
                 ),
-                listTile(svgicon: 'assets/icons/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
+                listTile(svgicon: 'assets/images/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
                 listTile(
-                    svgicon: 'assets/icons/cake.svg',
+                    svgicon: 'assets/images/cake.svg',
                     title: 'วันเดือนปีเกิด',
                     content: DateFormat('dd MMMM ${Store.userAccountModel!.value.account.employee.birthdate.year + 543}')
                         .format(Store.userAccountModel!.value.account.employee.birthdate)),
                 listTile(
-                  svgicon: 'assets/icons/phone.svg',
+                  svgicon: 'assets/images/phone.svg',
                   title: 'เบอร์มือถือ',
                   content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel!.value.account.employee.mobile),
                 ),
-                listTile(svgicon: 'assets/icons/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.employee.email),
+                listTile(svgicon: 'assets/images/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.employee.email),
                 const Spacer(),
                 button(
                   text: 'แก้ไขข้อมูล',

@@ -25,5 +25,5 @@ class CustomIcons {
   static const IconData logout = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData changePass = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData profile = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData education = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData education = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -72,7 +72,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               text(Store.userAccountModel!.value.account.partnerName),
               const SizedBox(height: 10),
               listTile(
-                svgicon: 'assets/icons/pinlocation.svg',
+                svgicon: 'assets/images/pinlocation.svg',
                 title: 'สถานที่ทำงาน',
                 subtitle: formField(
                   controller: _branch,
@@ -88,7 +88,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ),
               ),
               listTile(
-                svgicon: 'assets/icons/person.svg',
+                svgicon: 'assets/images/person.svg',
                 title: 'ตำแหน่งงาน',
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
@@ -110,7 +110,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ]).paddingOnly(bottom: 10),
               ),
               listTile(
-                svgicon: 'assets/icons/cake.svg',
+                svgicon: 'assets/images/cake.svg',
                 title: 'วันเดือนปีเกิด',
                 subtitle: Row(children: [
                   dropdown(
@@ -178,7 +178,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ]),
               ),
               listTile(
-                svgicon: 'assets/icons/phone.svg',
+                svgicon: 'assets/images/phone.svg',
                 title: 'เบอร์มือถือ',
                 subtitle: formField(
                   controller: _phoneNumber,
@@ -198,7 +198,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ),
               ),
               listTile(
-                svgicon: 'assets/icons/envelope open.svg',
+                svgicon: 'assets/images/envelope open.svg',
                 title: 'อีเมล',
                 subtitle: formField(
                   controller: _email,

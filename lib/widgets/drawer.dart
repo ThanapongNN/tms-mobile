@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/call.dart';
@@ -76,6 +77,7 @@ Widget drawer() {
               });
 
               if (data.success) {
+                Phoenix.rebirth(Get.context!);
                 navigatorOffAll(() => const LoginPage());
               }
             },

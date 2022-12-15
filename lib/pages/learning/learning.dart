@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/first_login.request.dart';
-import 'package:tms/models/search_news.model.dart';
-import 'package:tms/pages/news/news_detail.dart';
-import 'package:tms/pages/news/news_more.dart';
+import 'package:tms/models/search_learning.model.dart';
+import 'package:tms/pages/learning/learning_detail.dart';
+import 'package:tms/pages/learning/learning_more.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -19,21 +19,21 @@ import 'package:tms/widgets/form_field.dart';
 import 'package:tms/widgets/navigator.dart';
 import 'package:tms/widgets/text.dart';
 
-class NewsPage extends StatefulWidget {
-  const NewsPage({super.key});
+class LearningPage extends StatefulWidget {
+  const LearningPage({super.key});
 
   @override
-  State<NewsPage> createState() => _NewsPageState();
+  State<LearningPage> createState() => _LearningPageState();
 }
 
-class _NewsPageState extends State<NewsPage> {
+class _LearningPageState extends State<LearningPage> {
   final search = TextEditingController();
 
   Timer? _timer;
 
   bool showSearch = false;
 
-  late SearchNewsModel _searchNewsModel;
+  late SearchLearningModel _searchLearningModel;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _NewsPageState extends State<NewsPage> {
           title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
           centerTitle: true,
           elevation: 0,
-          bottom: (Store.newsModel != null)
+          bottom: (Store.learningModel != null)
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(70),
                   child: Container(
@@ -53,7 +53,7 @@ class _NewsPageState extends State<NewsPage> {
                     color: const Color(0xFF414F5C),
                     child: Form(
                       child: formField(
-                        hintText: 'ค้นหาข่าวสารและแคมเปญ',
+                        hintText: 'ค้นหาคอร์สเรียนรู้',
                         prefixIcon: const Icon(BootstrapIcons.search),
                         showTextLable: false,
                         controller: search,
@@ -66,10 +66,10 @@ class _NewsPageState extends State<NewsPage> {
                               _timer?.cancel();
 
                               if (v.isNotEmpty) {
-                                Call.raw(method: Method.get, url: '$host/news-campaign/v1/news-campaign/$v').then((news) {
+                                Call.raw(method: Method.get, url: '$host/learning-course/v1/learning-course/$v').then((news) {
                                   if (news.success) {
                                     setState(() {
-                                      _searchNewsModel = SearchNewsModel.fromJson(news.response);
+                                      _searchLearningModel = SearchLearningModel.fromJson(news.response);
                                       showSearch = true;
                                     });
                                   }
@@ -90,7 +90,7 @@ class _NewsPageState extends State<NewsPage> {
         ),
         onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
         drawer: drawer(),
-        body: (Store.newsModel == null)
+        body: (Store.learningModel == null)
             ? NoDataPage(onPressed: () async {
                 await firstLoginRequest(Store.encryptedEmployeeId.value);
                 setState(() {});
@@ -118,14 +118,14 @@ class _NewsPageState extends State<NewsPage> {
                                     return boxNews(
                                       image: e.lists[index].thumbnailUrl,
                                       content: e.lists[index].subHeadline,
-                                      onTap: () => Get.to(() => NewsDetail(e.lists[index])),
+                                      onTap: () => Get.to(() => LearningDetail(e.lists[index])),
                                     );
                                   },
                                 ),
                               ),
                               Center(
                                 child: GestureDetector(
-                                  onTap: () => navigatorTo(() => NewsMore(e)),
+                                  onTap: () => navigatorTo(() => LearningMore(e)),
                                   child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
                                 ),
                               ).paddingOnly(bottom: 10),
@@ -136,25 +136,25 @@ class _NewsPageState extends State<NewsPage> {
                       }).toList(),
                     ),
                   )
-                : (_searchNewsModel.data.isNotEmpty)
+                : (_searchLearningModel.data.isNotEmpty)
                     ? Column(children: [
                         Row(children: [
                           text('คำค้นหา "'),
                           text(search.text, color: ThemeColor.primaryColor),
                           text('" พบ'),
-                          text(' ${_searchNewsModel.data.length} ', color: ThemeColor.primaryColor),
+                          text(' ${_searchLearningModel.data.length} ', color: ThemeColor.primaryColor),
                           text('บทความ'),
                         ]),
                         const SizedBox(height: 10),
                         Expanded(
                           child: GridView.builder(
-                            itemCount: _searchNewsModel.data.length,
+                            itemCount: _searchLearningModel.data.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 320),
                             itemBuilder: (context, index) {
                               return boxNews(
-                                image: _searchNewsModel.data[index].thumbnailUrl,
-                                content: _searchNewsModel.data[index].subHeadline,
-                                onTap: () => Get.to(() => NewsDetail(_searchNewsModel.data[index])),
+                                image: _searchLearningModel.data[index].thumbnailUrl,
+                                content: _searchLearningModel.data[index].subHeadline,
+                                onTap: () => Get.to(() => LearningDetail(_searchLearningModel.data[index])),
                               );
                             },
                           ),

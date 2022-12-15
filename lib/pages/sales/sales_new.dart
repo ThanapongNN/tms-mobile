@@ -140,7 +140,7 @@ class _SalesPageNewState extends State<SalesPageNew> with SingleTickerProviderSt
                                     fit: BoxFit.scaleDown,
                                     child: Row(
                                       children: [
-                                        SvgPicture.asset('assets/icons/cash.svg',
+                                        SvgPicture.asset('assets/images/cash.svg',
                                             width: 30, color: (_tabBar.index == 0) ? Colors.white : Colors.black),
                                         const SizedBox(width: 5),
                                         const Text('ยอดขายทั้งหมด'),
@@ -152,7 +152,7 @@ class _SalesPageNewState extends State<SalesPageNew> with SingleTickerProviderSt
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(
-                                          'assets/icons/gift.svg',
+                                          'assets/images/gift.svg',
                                           width: 30,
                                           color: (_tabBar.index == 1) ? Colors.white : Colors.black,
                                         ),

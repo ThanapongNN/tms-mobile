@@ -78,7 +78,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                       ),
-                      SvgPicture.asset('assets/icons/pinlocation.svg', color: Colors.white).paddingOnly(right: 5),
+                      SvgPicture.asset('assets/images/pinlocation.svg', color: Colors.white).paddingOnly(right: 5),
                       FittedBox(child: text(Store.userAccountModel!.value.account.partnerName, color: Colors.white))
                     ]),
                   ))
@@ -142,19 +142,50 @@ class _HomeState extends State<Home> {
                               shrinkWrap: true,
                               itemCount: 4,
                               itemBuilder: (context, index) {
-                                String icon = 'assets/images/phone_with_sim.svg';
-                                if (index == 0) {}
-                                icon = 'assets/images/sim.svg';
-
-                                return listProductGroup(
-                                  icon: icon,
-                                  title: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].order,
-                                  quantity: '${Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].orderTotal}',
-                                  unit: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].unit,
-                                  detail: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].serviceCampaign,
-                                  seeDetail:
-                                      (Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[index].orderTotal == 0) ? false : true,
-                                );
+                                String icon = 'assets/images/sim.svg';
+                                switch (index) {
+                                  case 0:
+                                    icon = 'assets/images/phone_with_sim.svg';
+                                    return listProductGroup(
+                                      icon: icon,
+                                      title: Store.productGroupModel!.value.data[0].productGroup[1].product,
+                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[1].salesTotal}',
+                                      unit: Store.productGroupModel!.value.data[0].productGroup[1].salesOrder[0].unit,
+                                      detail: Store.productGroupModel!.value.data[0].productGroup[1].salesOrder[0].serviceCampaign,
+                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[1].salesTotal == 0),
+                                    );
+                                  case 1:
+                                    return listProductGroup(
+                                      icon: icon,
+                                      title: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].order,
+                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].orderTotal}',
+                                      unit: 'รายการ',
+                                      detail: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].serviceCampaign,
+                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].orderTotal == 0),
+                                    );
+                                  case 2:
+                                    return listProductGroup(
+                                      icon: icon,
+                                      title: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].order,
+                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].orderTotal}',
+                                      unit: 'รายการ',
+                                      detail: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].serviceCampaign,
+                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].orderTotal == 0),
+                                    );
+                                  case 3:
+                                    icon = 'assets/images/coin_฿.svg';
+                                    return listProductGroup(
+                                      icon: icon,
+                                      title: Store.productGroupModel!.value.data[0].productGroup[3].product,
+                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[3].salesTotal}',
+                                      unit: 'รายการ',
+                                      detail: Store.productGroupModel!.value.data[0].productGroup[3].salesOrder[0].serviceCampaign +
+                                          Store.productGroupModel!.value.data[0].productGroup[3].salesOrder[1].serviceCampaign,
+                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[3].salesTotal == 0),
+                                    );
+                                  default:
+                                    return const SizedBox();
+                                }
                               },
                             ),
                             GestureDetector(

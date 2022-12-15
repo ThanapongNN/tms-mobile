@@ -92,10 +92,8 @@ class _SalesTotalState extends State<SalesTotal> {
                                 '${Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].orderTotal}',
                             unit: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].unit,
                             seeDetail:
-                                (Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].orderTotal ==
-                                        0)
-                                    ? false
-                                    : true,
+                                !(Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].orderTotal ==
+                                    0),
                             detail: Store
                                 .productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].serviceCampaign,
                           );
@@ -122,11 +120,9 @@ class _SalesTotalState extends State<SalesTotal> {
                             '${Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal}',
                         unit: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
                             .salesOrder[index].unit,
-                        seeDetail: (Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
-                                    .salesOrder[index].orderTotal ==
-                                0)
-                            ? false
-                            : true,
+                        seeDetail: !(Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
+                                .salesOrder[index].orderTotal ==
+                            0),
                         detail: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
                             .salesOrder[index].serviceCampaign,
                       );
