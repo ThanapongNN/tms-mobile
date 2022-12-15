@@ -21,17 +21,31 @@ class AcceptTerms extends StatefulWidget {
 
 class _AcceptTermsState extends State<AcceptTerms> {
   bool disable = true;
+  CallBack? data;
+
+  Future callTermsAndCondition() async {
+    data ??= await Call.raw(method: Method.get, url: '$host/settings/v1/terms_and_condition');
+    return data;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('เงื่อนไขและข้อตกลง')),
-      body: InAppWebView(
-        initialUrlRequest: URLRequest(url: Uri.parse('https://truevirtualworld.com/en/vlearn/terms-and-conditions')),
-        onOverScrolled: (controller, x, y, clampedX, clampedY) {
-          if (clampedY && disable) setState(() => disable = false);
+      body: FutureBuilder(
+        future: callTermsAndCondition(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return InAppWebView(
+              initialUrlRequest: URLRequest(url: Uri.parse('https://truevirtualworld.com/en/vlearn/terms-and-conditions')),
+              onOverScrolled: (controller, x, y, clampedX, clampedY) {
+                if (clampedY && disable) setState(() => disable = false);
+              },
+              gestureRecognizers: {Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())},
+            );
+          }
+          return const SizedBox();
         },
-        gestureRecognizers: {Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())},
       ),
       bottomNavigationBar: Container(
         height: 150,
