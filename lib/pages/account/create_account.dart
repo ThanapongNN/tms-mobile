@@ -512,6 +512,8 @@ class _CreateAccountState extends State<CreateAccount> {
 
                               navigatorTo(() => const AcceptTerms(), transition: Transition.rightToLeft);
                             }
+                          } else {
+                            setState(() => disable = true);
                           }
                         },
                 ),

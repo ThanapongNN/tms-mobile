@@ -150,11 +150,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                           setState(() {
                             _autovalidateMode = AutovalidateMode.onUserInteraction;
                           });
-                          // print(_formKey.currentState!.validate());
-                          navigatorOffAll(
-                            () => const AccountSuccess(otp: OTP.changePassword),
-                            transition: Transition.rightToLeft,
-                          );
+                          if (_formKey.currentState!.validate()) {
+                            navigatorOffAll(
+                              () => const AccountSuccess(otp: OTP.changePassword),
+                              transition: Transition.rightToLeft,
+                            );
+                          } else {
+                            setState(() => disable = true);
+                          }
                         },
                 ),
                 const SizedBox(height: 10),

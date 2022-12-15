@@ -189,6 +189,8 @@ class _NewPasswordState extends State<NewPassword> {
                                 break;
                               default:
                             }
+                          } else {
+                            setState(() => disable = true);
                           }
                         },
                 ),

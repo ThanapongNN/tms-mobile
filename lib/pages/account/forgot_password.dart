@@ -137,6 +137,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 });
                               }
                             });
+                          } else {
+                            setState(() => disable = true);
                           }
                         },
                 ),

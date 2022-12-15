@@ -143,6 +143,8 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                             } else {
                               dialog(content: 'รหัสพนักงานไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง');
                             }
+                          } else {
+                            setState(() => disable = true);
                           }
                         },
                 ),
