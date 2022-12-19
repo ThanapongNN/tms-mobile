@@ -49,9 +49,9 @@ Widget listProductGroup({
                       itemCount: checklist,
                       itemBuilder: (context, index) {
                         return listSalesDetail(
-                          title: detail?[index].name,
-                          quantity: '${detail?[index].ea}',
-                          unit: detail?[index].unit,
+                          title: detail?[index]['name'],
+                          quantity: '${detail?[index]['ea']}',
+                          unit: detail?[index]['unit'],
                           index: index,
                           maxIndex: checklist,
                         );
