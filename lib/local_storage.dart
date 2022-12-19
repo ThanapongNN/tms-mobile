@@ -8,7 +8,7 @@ class LocalStorage {
   }
 
   static String readHost() {
-    String host = GetStorage().read('host') ?? 'https://6b83-171-96-39-168.ap.ngrok.io';
+    String host = GetStorage().read('host') ?? 'https://3e15-171-96-39-168.ap.ngrok.io';
     return host;
   }
 }

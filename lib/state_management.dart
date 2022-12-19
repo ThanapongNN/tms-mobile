@@ -2,7 +2,6 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:tms/models/forgot_password.model.dart';
 import 'package:tms/models/learning.model.dart';
 import 'package:tms/models/news.model.dart';
-import 'package:tms/models/product_group.model.dart';
 import 'package:tms/models/user_account.model.dart';
 
 //ตัวแปรกองกลาง
@@ -14,8 +13,9 @@ class Store {
   static RxInt indexMonth = 0.obs;
 
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{}.obs;
-  static RxMap<String, dynamic> userRoles = <String, dynamic>{}.obs;
+  static RxMap<String, dynamic> productGroup = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
+  static RxMap<String, dynamic> userRoles = <String, dynamic>{}.obs;
 
   static RxString encryptedEmployeeId = ''.obs;
   static RxString deviceSerial = ''.obs;
@@ -60,6 +60,5 @@ class Store {
   static Rx<ForgotPasswordModel>? forgotPasswordModel;
   static Rx<LearningModel>? learningModel;
   static Rx<NewsModel>? newsModel;
-  static Rx<ProductGroupModel>? productGroupModel;
   static Rx<UserAccountModel>? userAccountModel;
 }

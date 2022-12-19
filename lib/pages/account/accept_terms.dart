@@ -39,7 +39,7 @@ class _AcceptTermsState extends State<AcceptTerms> {
             return InAppWebView(
               initialUrlRequest: URLRequest(url: Uri.parse(snapshot.data?.response['value'])),
               onOverScrolled: (controller, x, y, clampedX, clampedY) {
-                if (clampedY && disable) setState(() => disable = false);
+                if (clampedY && disable && y != 0) setState(() => disable = false);
               },
               gestureRecognizers: {Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer())},
             );
@@ -56,22 +56,24 @@ class _AcceptTermsState extends State<AcceptTerms> {
             text: 'ยอมรับเงื่อนไข ',
             icon: BootstrapIcons.check,
             disable: disable,
-            onPressed: () {
-              Call.raw(
-                method: Method.post,
-                url: '$host/support/v1/otp/request',
-                body: {"msisdn": Store.registerBody['employee']['mobile']},
-              ).then((otpRequest) {
-                if (otpRequest.success) {
-                  Store.otpRefID.value = otpRequest.response['refId'];
+            onPressed: disable
+                ? () {}
+                : () {
+                    Call.raw(
+                      method: Method.post,
+                      url: '$host/support/v1/otp/request',
+                      body: {"msisdn": Store.registerBody['employee']['mobile']},
+                    ).then((otpRequest) {
+                      if (otpRequest.success) {
+                        Store.otpRefID.value = otpRequest.response['refId'];
 
-                  navigatorTo(
-                    () => ConfirmOTP(otp: OTP.createAccount, mobileNO: Store.registerBody['employee']['mobile']),
-                    transition: Transition.rightToLeft,
-                  );
-                }
-              });
-            },
+                        navigatorTo(
+                          () => ConfirmOTP(otp: OTP.createAccount, mobileNO: Store.registerBody['employee']['mobile']),
+                          transition: Transition.rightToLeft,
+                        );
+                      }
+                    });
+                  },
           ),
           const SizedBox(height: 10),
           button(text: 'ยกเลิก', icon: BootstrapIcons.x, outline: true),

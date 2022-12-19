@@ -21,9 +21,9 @@ class _SalesTotalState extends State<SalesTotal> {
     super.initState();
     showProducts.clear();
 
-    if (Store.productGroupModel != null) {
-      for (var e in Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup) {
-        select.add(e.product);
+    if (Store.productGroup.isNotEmpty) {
+      for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
+        select.add(e['product']);
       }
     }
   }
@@ -77,25 +77,25 @@ class _SalesTotalState extends State<SalesTotal> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup.length,
+                    itemCount: Store.productGroup['data'][Store.indexMonth.value]['productGroup'].length,
                     itemBuilder: (context, index) {
                       return Column(
-                        children: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder.map((e) {
-                          int indexOrder = Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder.indexOf(e);
+                        children: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'].map<Widget>((e) {
+                          int indexOrder = Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'].indexOf(e);
                           return listProductGroup(
-                            icon: (Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].unit ==
+                            icon: (Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['unit'] ==
                                     'เบอร์')
                                 ? 'assets/images/sim.svg'
                                 : 'assets/images/phone_with_sim.svg',
-                            title: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].order,
+                            title: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['order'],
                             quantity:
-                                '${Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].orderTotal}',
-                            unit: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].unit,
-                            seeDetail:
-                                !(Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].orderTotal ==
-                                    0),
-                            detail: Store
-                                .productGroupModel!.value.data[Store.indexMonth.value].productGroup[index].salesOrder[indexOrder].serviceCampaign,
+                                '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['orderTotal']}',
+                            unit: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['unit'],
+                            seeDetail: !(Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]
+                                    ['orderTotal'] ==
+                                0),
+                            detail: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]
+                                ['serviceCampaign'],
                           );
                         }).toList(),
                       );
@@ -106,25 +106,25 @@ class _SalesTotalState extends State<SalesTotal> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount:
-                        Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1].salesOrder.length,
+                        Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'].length,
                     itemBuilder: (context, index) {
                       return listProductGroup(
-                        icon: (Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
-                                    .salesOrder[index].unit ==
+                        icon: (Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
+                                    [index]['unit'] ==
                                 'เบอร์')
                             ? 'assets/images/sim.svg'
                             : 'assets/images/phone_with_sim.svg',
-                        title: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
-                            .salesOrder[index].order,
+                        title: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
+                            [index]['order'],
                         quantity:
-                            '${Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1].salesOrder[index].orderTotal}',
-                        unit: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
-                            .salesOrder[index].unit,
-                        seeDetail: !(Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
-                                .salesOrder[index].orderTotal ==
+                            '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]['orderTotal']}',
+                        unit: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
+                            [index]['unit'],
+                        seeDetail: !(Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]
+                                ['salesOrder'][index]['orderTotal'] ==
                             0),
-                        detail: Store.productGroupModel!.value.data[Store.indexMonth.value].productGroup[Store.indexProductGroup.value - 1]
-                            .salesOrder[index].serviceCampaign,
+                        detail: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
+                            [index]['serviceCampaign'],
                       );
                     },
                   ),

@@ -22,7 +22,6 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     _host.text = host;
-    // _host.text = 'https://4d88-171-96-39-168.ap.ngrok.io';
   }
 
   @override

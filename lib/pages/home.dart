@@ -33,9 +33,9 @@ class _HomeState extends State<Home> {
 
   // if (Store.productGroupModel != null) {
   //   items.add(boxHeadStatus(
-  //       image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
+  //       image: 'assets/images/true.svg', content: 'ยอดขายรวมทุกสินค้า', quantity: '${Store.productGroup['data'][0].totalCount}'));
 
-  //   items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
+  //   items.addAll(Store.productGroup['data'][0].productGroup.map((e) {
   //     return boxHeadStatus(
   //         image: (e.product == 'ยอดเบอร์' || e.product == 'ยอดขายเบอร์')
   //             ? "assets/images/sim2.svg"
@@ -90,21 +90,21 @@ class _HomeState extends State<Home> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Column(children: [
-              (Store.productGroupModel != null && Store.userAccountModel != null)
+              (Store.productGroup.isNotEmpty && Store.userAccountModel != null)
                   ? Column(children: [
                       Container(
                         width: double.infinity,
                         color: const Color(0xFF414F5C),
                         child: Column(children: [
                           text(
-                              'ยอดขายเดือน ${DateFormat('MMMM ${Store.productGroupModel!.value.data[0].lastUpdate.year + 543}').format(Store.productGroupModel!.value.data[0].lastUpdate)}',
+                              'ยอดขายเดือน ${DateFormat('MMMM ${DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).year + 543}').format(DateTime.parse(Store.productGroup['data'][0]['lastUpdate']))}',
                               color: Colors.white),
                           const SizedBox(height: 5),
                           text(
                             DateFormat(
-                              'ข้อมูลถึงวันที่ dd/MM/${Store.productGroupModel!.value.data[0].lastUpdate.year + 543} HH:mm',
+                              'ข้อมูลถึงวันที่ dd/MM/${DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).year + 543} HH:mm',
                               'th',
-                            ).format(Store.productGroupModel!.value.data[0].lastUpdate.toLocal()),
+                            ).format(DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).toLocal()),
                             color: Colors.white,
                           ),
                           const SizedBox(height: 15),
@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                             child: boxHeadStatus(
                                 image: 'assets/images/true.svg',
                                 content: 'ยอดขายรวมทุกสินค้า',
-                                quantity: '${Store.productGroupModel!.value.data[0].totalCount}'),
+                                quantity: '${Store.productGroup['data'][0]['totalCount']}'),
                           )
                           // GestureDetector(
                           //     onTap: () {
@@ -148,40 +148,40 @@ class _HomeState extends State<Home> {
                                     icon = 'assets/images/phone_with_sim.svg';
                                     return listProductGroup(
                                       icon: icon,
-                                      title: Store.productGroupModel!.value.data[0].productGroup[1].product,
-                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[1].salesTotal}',
-                                      unit: Store.productGroupModel!.value.data[0].productGroup[1].salesOrder[0].unit,
-                                      detail: Store.productGroupModel!.value.data[0].productGroup[1].salesOrder[0].serviceCampaign,
-                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[1].salesTotal == 0),
+                                      title: Store.productGroup['data'][0]['productGroup'][1]['product'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][1]['salesTotal']}',
+                                      unit: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['unit'],
+                                      detail: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['serviceCampaign'],
+                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][1]['salesTotal'] == 0),
                                     );
                                   case 1:
                                     return listProductGroup(
                                       icon: icon,
-                                      title: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].order,
-                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].orderTotal}',
+                                      title: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['order'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['orderTotal']}',
                                       unit: 'รายการ',
-                                      detail: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].serviceCampaign,
-                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[1].orderTotal == 0),
+                                      detail: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['serviceCampaign'],
+                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['orderTotal'] == 0),
                                     );
                                   case 2:
                                     return listProductGroup(
                                       icon: icon,
-                                      title: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].order,
-                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].orderTotal}',
+                                      title: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['order'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['orderTotal']}',
                                       unit: 'รายการ',
-                                      detail: Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].serviceCampaign,
-                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[0].salesOrder[0].orderTotal == 0),
+                                      detail: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['serviceCampaign'],
+                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['orderTotal'] == 0),
                                     );
                                   case 3:
                                     icon = 'assets/images/coin_฿.svg';
                                     return listProductGroup(
                                       icon: icon,
-                                      title: Store.productGroupModel!.value.data[0].productGroup[3].product,
-                                      quantity: '${Store.productGroupModel!.value.data[0].productGroup[3].salesTotal}',
+                                      title: Store.productGroup['data'][0]['productGroup'][3]['product'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][3]['salesTotal']}',
                                       unit: 'รายการ',
-                                      detail: Store.productGroupModel!.value.data[0].productGroup[3].salesOrder[0].serviceCampaign +
-                                          Store.productGroupModel!.value.data[0].productGroup[3].salesOrder[1].serviceCampaign,
-                                      seeDetail: !(Store.productGroupModel!.value.data[0].productGroup[3].salesTotal == 0),
+                                      detail: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['serviceCampaign'] +
+                                          Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['serviceCampaign'],
+                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][3]['salesTotal'] == 0),
                                     );
                                   default:
                                     return const SizedBox();
@@ -202,15 +202,15 @@ class _HomeState extends State<Home> {
                   : NoDataPage(onPressed: () async {
                       await firstLoginRequest(Store.encryptedEmployeeId.value);
                       setState(() {
-                        if (Store.productGroupModel != null) {
+                        if (Store.productGroup.isNotEmpty) {
                           items.add(boxHeadStatus(
                               image: 'assets/images/true.svg',
                               content: 'ยอดขายรวมทุกสินค้า',
-                              quantity: '${Store.productGroupModel!.value.data[0].totalCount}'));
+                              quantity: '${Store.productGroup['data'][0].totalCount}'));
 
-                          items.addAll(Store.productGroupModel!.value.data[0].productGroup.map((e) {
+                          items.addAll(Store.productGroup['data'][0].productGroup.map((e) {
                             return boxHeadStatus(
-                                image: iconHead[Store.productGroupModel!.value.data[0].productGroup.indexOf(e)],
+                                image: iconHead[Store.productGroup['data'][0].productGroup.indexOf(e)],
                                 content: e.product,
                                 quantity: '${e.salesTotal}');
                           }).toList());
