@@ -250,7 +250,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 Row(children: [
                   text('วันเดือนปีเกิด', fontSize: 18),
-                  text('*', fontSize: 20, color: Colors.red),
+                  text('* กรณีไม่มีวันและเดือนเกิด ระบุ 1 ม.ค.', fontSize: 20, color: Colors.red),
                 ]),
                 Row(children: [
                   dropdown(

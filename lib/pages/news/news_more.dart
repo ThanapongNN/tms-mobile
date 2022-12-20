@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/models/news.model.dart';
-import 'package:tms/pages/news/news_detail.dart';
+import 'package:tms/pages/detail.dart';
 import 'package:tms/widgets/box_news.dart';
 
 class NewsMore extends StatelessWidget {
@@ -20,7 +20,7 @@ class NewsMore extends StatelessWidget {
           return boxNews(
             image: data.lists[index].thumbnailUrl,
             content: data.lists[index].subHeadline,
-            onTap: () => Get.to(() => NewsDetail(data.lists[index])),
+            onTap: () => Get.to(() => DetailPage(data.lists[index])),
           );
         },
       ),

@@ -8,7 +8,7 @@ import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/first_login.request.dart';
 import 'package:tms/models/search_learning.model.dart';
-import 'package:tms/pages/learning/learning_detail.dart';
+import 'package:tms/pages/detail.dart';
 import 'package:tms/pages/learning/learning_more.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
@@ -118,7 +118,7 @@ class _LearningPageState extends State<LearningPage> {
                                     return boxNews(
                                       image: e.lists[index].thumbnailUrl,
                                       content: e.lists[index].subHeadline,
-                                      onTap: () => Get.to(() => LearningDetail(e.lists[index])),
+                                      onTap: () => Get.to(() => DetailPage(e.lists[index])),
                                     );
                                   },
                                 ),
@@ -154,7 +154,7 @@ class _LearningPageState extends State<LearningPage> {
                               return boxNews(
                                 image: _searchLearningModel.data[index].thumbnailUrl,
                                 content: _searchLearningModel.data[index].subHeadline,
-                                onTap: () => Get.to(() => LearningDetail(_searchLearningModel.data[index])),
+                                onTap: () => Get.to(() => DetailPage(_searchLearningModel.data[index])),
                               );
                             },
                           ),

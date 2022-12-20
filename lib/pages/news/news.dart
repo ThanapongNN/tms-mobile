@@ -8,7 +8,7 @@ import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/first_login.request.dart';
 import 'package:tms/models/search_news.model.dart';
-import 'package:tms/pages/news/news_detail.dart';
+import 'package:tms/pages/detail.dart';
 import 'package:tms/pages/news/news_more.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
@@ -118,7 +118,7 @@ class _NewsPageState extends State<NewsPage> {
                                     return boxNews(
                                       image: e.lists[index].thumbnailUrl,
                                       content: e.lists[index].subHeadline,
-                                      onTap: () => Get.to(() => NewsDetail(e.lists[index])),
+                                      onTap: () => Get.to(() => DetailPage(e.lists[index])),
                                     );
                                   },
                                 ),
@@ -154,7 +154,7 @@ class _NewsPageState extends State<NewsPage> {
                               return boxNews(
                                 image: _searchNewsModel.data[index].thumbnailUrl,
                                 content: _searchNewsModel.data[index].subHeadline,
-                                onTap: () => Get.to(() => NewsDetail(_searchNewsModel.data[index])),
+                                onTap: () => Get.to(() => DetailPage(_searchNewsModel.data[index])),
                               );
                             },
                           ),

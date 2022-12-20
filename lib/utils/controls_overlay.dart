@@ -1,95 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get/get_utils/get_utils.dart';
-import 'package:intl/intl.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:tms/widgets/text.dart';
 import 'package:video_player/video_player.dart';
 
-class NewsDetail extends StatefulWidget {
-  final dynamic data;
-  const NewsDetail(this.data, {super.key});
-
-  @override
-  State<NewsDetail> createState() => _NewsDetailState();
-}
-
-class _NewsDetailState extends State<NewsDetail> {
-  VideoPlayerController? _controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.data.sourceType == 'VDO') {
-      _controller = VideoPlayerController.network(widget.data.sourceUrl)
-        ..initialize().then((_) {
-          setState(() {});
-        });
-      _controller?.addListener(() {
-        setState(() {});
-      });
-      _controller?.play();
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
-  }
-
-  Widget showBody() {
-    switch (widget.data.sourceType) {
-      case 'HTML':
-        return InAppWebView(
-          initialUrlRequest: URLRequest(url: Uri.parse(widget.data.sourceUrl)),
-        );
-      case 'IMG':
-        return PhotoView(
-          basePosition: Alignment.topCenter,
-          backgroundDecoration: const BoxDecoration(color: Colors.white),
-          imageProvider: NetworkImage(widget.data.sourceUrl),
-        );
-      case 'PDF':
-        return SfPdfViewer.network(widget.data.sourceUrl);
-      case 'VDO':
-        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          text(widget.data.headline, fontSize: 24),
-          text(
-            'โพสต์เมื่อ ${DateFormat('d MMM ${widget.data.startDate.year + 543} (HH:mmน.)').format(widget.data.startDate.toLocal())}',
-            color: const Color(0xFF6F869A),
-          ).paddingSymmetric(vertical: 10),
-          text(widget.data.subHeadline, color: const Color(0xFF6F869A)),
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                VideoPlayer(_controller!),
-                _ControlsOverlay(controller: _controller!),
-                VideoProgressIndicator(_controller!, allowScrubbing: true),
-              ],
-            ),
-          ).paddingSymmetric(vertical: 10),
-        ]).paddingAll(20);
-      default:
-        return const SizedBox();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('รายละเอียด')),
-      body: showBody(),
-    );
-  }
-}
-
-class _ControlsOverlay extends StatelessWidget {
-  const _ControlsOverlay({Key? key, required this.controller}) : super(key: key);
+class ControlsOverlay extends StatelessWidget {
+  const ControlsOverlay({Key? key, required this.controller}) : super(key: key);
 
   // static const List<Duration> _exampleCaptionOffsets = <Duration>[
   //   Duration(seconds: -10),
@@ -138,7 +51,7 @@ class _ControlsOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
+            // controller.value.isPlaying ? controller.pause() : controller.play();
           },
         ),
         // Align(

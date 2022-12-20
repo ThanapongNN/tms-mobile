@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tms/apis/request/first_login.request.dart';
-import 'package:tms/pages/news/news_detail.dart';
+import 'package:tms/pages/detail.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -234,7 +234,7 @@ class _HomeState extends State<Home> {
                           return boxNews(
                             image: Store.newsModel!.value.data[0].lists[index].thumbnailUrl,
                             content: Store.newsModel!.value.data[0].lists[index].subHeadline,
-                            onTap: () => Get.to(() => NewsDetail(Store.newsModel!.value.data[0].lists[index])),
+                            onTap: () => Get.to(() => DetailPage(Store.newsModel!.value.data[0].lists[index])),
                           );
                         },
                       ),
