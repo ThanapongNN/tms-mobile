@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tms/models/compensation_data.model.dart';
 import 'package:tms/state_management.dart';
+import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/list_product_group.dart';
+import 'package:tms/widgets/text.dart';
 
 class Compensation extends StatefulWidget {
   const Compensation({super.key});
@@ -46,22 +49,27 @@ class _CompensationState extends State<Compensation> {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: mockdata['data'].length,
-        itemBuilder: (context, index) {
-          return listProductGroup(
-              icon: 'assets/images/sim.svg',
-              title: compensationData.data[index].product,
-              quantity: '${compensationData.data[index].salesTotal}',
-              unit: compensationData.data[index].unit,
-              seeDetail: true,
-              detail: compensationData.data[index].salesOrder,
-              sum: '${compensationData.data[index].sum}',
-              compensation: true);
-        },
+      child: Column(
+        children: [
+          text('*ผลตอบแทนทั้งหมดเป็นเพียงแค่ยอดประมาณการ', color: ThemeColor.primaryColor).paddingOnly(top: 10),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: mockdata['data'].length,
+            itemBuilder: (context, index) {
+              return listProductGroup(
+                  icon: 'assets/images/sim.svg',
+                  title: compensationData.data[index].product,
+                  quantity: '${compensationData.data[index].salesTotal}',
+                  unit: compensationData.data[index].unit,
+                  seeDetail: true,
+                  detail: compensationData.data[index].salesOrder,
+                  sum: '${compensationData.data[index].sum}',
+                  compensation: true);
+            },
+          ),
+        ],
       ),
     );
   }
