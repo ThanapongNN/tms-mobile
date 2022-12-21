@@ -6,7 +6,6 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/loading_indicator.dart';
 import 'package:tms/widgets/text.dart';
 import 'package:video_player/video_player.dart';
@@ -22,11 +21,6 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -62,7 +56,14 @@ class _DetailPageState extends State<DetailPage> {
           imageProvider: NetworkImage(widget.data.sourceUrl),
         );
       case 'PDF':
-        return SfPdfViewer.network(widget.data.sourceUrl);
+        return SfPdfViewer.network(
+          widget.data.sourceUrl,
+          canShowPaginationDialog: true,
+        );
+      // return InAppWebView(
+      //   initialUrlRequest: URLRequest(url: Uri.parse('https://docs.google.com/gview?embedded=true&url=http://www.pdf995.com/samples/pdf.pdf')),
+      // );
+
       case 'VDO':
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           text(widget.data.headline, fontSize: 24),
