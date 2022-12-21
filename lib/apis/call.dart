@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/state_management.dart';
-import 'package:tms/utils/logger.dart';
+// import 'package:tms/utils/logger.dart';
 import 'package:tms/widgets/dialog.dart';
 import 'package:http/http.dart' as http;
 
