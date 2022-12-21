@@ -1,6 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
@@ -32,14 +33,15 @@ class _LoginPageState extends State<LoginPage> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   bool _hideText = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _user.text = '1234567';
-    _password.text = 'aaaaaaa1';
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _user.text = '1234567';
+  //   _password.text = 'aaaaaaa1';
+  // }
 
   Future<void> _sendAnalyticsEvent() async {
+    await EasyLoading.show();
     await FirebaseAnalytics.instance.logEvent(
       name: 'login',
       parameters: <String, dynamic>{
@@ -52,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         "status": Store.userAccountModel!.value.account.status,
       },
     );
+    await EasyLoading.dismiss();
   }
 
   @override
