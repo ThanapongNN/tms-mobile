@@ -1,3 +1,4 @@
+import 'package:advance_pdf_viewer_fork/advance_pdf_viewer_fork.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:tms/widgets/loading_indicator.dart';
 import 'package:tms/widgets/text.dart';
 import 'package:video_player/video_player.dart';
@@ -21,12 +22,28 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
+  bool _isLoading = true;
+  late PDFDocument document;
+  final bool _usePDFListView = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data.sourceType == 'PDF') {
+      loadDocument();
+    }
+  }
 
   @override
   void dispose() {
     super.dispose();
     _videoPlayerController?.dispose();
     _chewieController?.dispose();
+  }
+
+  loadDocument() async {
+    document = await PDFDocument.fromURL(widget.data.sourceUrl);
+    setState(() => _isLoading = false);
   }
 
   Future<bool> initializeVideo() async {
@@ -56,10 +73,29 @@ class _DetailPageState extends State<DetailPage> {
           imageProvider: NetworkImage(widget.data.sourceUrl),
         );
       case 'PDF':
-        return SfPdfViewer.network(
-          widget.data.sourceUrl,
-          canShowPaginationDialog: true,
+        return Column(
+          children: <Widget>[
+            !_usePDFListView
+                ? Expanded(
+                    child: Center(
+                      child: _isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : PDFViewer(document: document, enableSwipeNavigation: false, showPicker: false),
+                    ),
+                  )
+                : Expanded(
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : PDFListViewer(
+                            document: document,
+                            preload: true,
+                          ),
+                  ),
+          ],
         );
+      // return SfPdfViewer.network(widget.data.sourceUrl, canShowPaginationDialog: true);
       // return InAppWebView(
       //   initialUrlRequest: URLRequest(url: Uri.parse('https://docs.google.com/gview?embedded=true&url=http://www.pdf995.com/samples/pdf.pdf')),
       // );
