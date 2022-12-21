@@ -10,8 +10,8 @@ import 'package:tms/state_management.dart';
 Future<void> firstLoginRequest(String employeeId) async {
   await EasyLoading.show();
 
-  if (Store.userAccountModel == null) {
-    await Call.raw(
+  await Future.wait([
+    Call.raw(
       method: Method.get,
       url: '$host/user/v1/accounts/$employeeId',
       headers: Authorization.token,
@@ -19,11 +19,8 @@ Future<void> firstLoginRequest(String employeeId) async {
       showLoading: false,
     ).then((userAccount) {
       if (userAccount.success) Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
-    });
-  }
-
-  if (Store.productGroup.isEmpty) {
-    await Call.raw(
+    }),
+    Call.raw(
       method: Method.get,
       url: '$host/product-group/v1/productGroup/$employeeId',
       headers: Authorization.token,
@@ -31,11 +28,8 @@ Future<void> firstLoginRequest(String employeeId) async {
       showLoading: false,
     ).then((productGroup) {
       if (productGroup.success) Store.productGroup.value = productGroup.response;
-    });
-  }
-
-  if (Store.newsModel == null) {
-    await Call.raw(
+    }),
+    Call.raw(
       method: Method.get,
       url: '$host/news-campaign/v1/news-campaign',
       headers: Authorization.token,
@@ -43,11 +37,8 @@ Future<void> firstLoginRequest(String employeeId) async {
       showLoading: false,
     ).then((newsCampaign) {
       if (newsCampaign.success) Store.newsModel = NewsModel.fromJson(newsCampaign.response).obs;
-    });
-  }
-
-  if (Store.learningModel == null) {
-    await Call.raw(
+    }),
+    Call.raw(
       method: Method.get,
       url: '$host/learning-course/v1/learning-course',
       headers: Authorization.token,
@@ -55,8 +46,8 @@ Future<void> firstLoginRequest(String employeeId) async {
       showLoading: false,
     ).then((learning) {
       if (learning.success) Store.learningModel = LearningModel.fromJson(learning.response).obs;
-    });
-  }
+    }),
+  ]);
 
   await EasyLoading.dismiss();
 }

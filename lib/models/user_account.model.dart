@@ -41,12 +41,16 @@ class Account {
     required this.partnerCode,
     required this.partnerName,
     required this.partnerTypeCode,
+    required this.createAt,
+    required this.status,
     required this.employee,
   });
 
   final String partnerCode;
   final String partnerName;
   final String partnerTypeCode;
+  final DateTime createAt;
+  final String status;
   final Employee employee;
 
   factory Account.fromRawJson(String str) => Account.fromJson(json.decode(str));
@@ -57,6 +61,8 @@ class Account {
         partnerCode: json["partnerCode"],
         partnerName: json["partnerName"],
         partnerTypeCode: json["partnerTypeCode"],
+        createAt: DateTime.parse(json["create_at"]),
+        status: json["status"],
         employee: Employee.fromJson(json["employee"]),
       );
 
@@ -64,6 +70,8 @@ class Account {
         "partnerCode": partnerCode,
         "partnerName": partnerName,
         "partnerTypeCode": partnerTypeCode,
+        "create_at": createAt.toIso8601String(),
+        "status": status,
         "employee": employee.toJson(),
       };
 }
