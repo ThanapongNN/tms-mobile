@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -35,6 +36,12 @@ class _NewsPageState extends State<NewsPage> {
   bool showSearch = false;
 
   late SearchNewsModel _searchNewsModel;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance.logScreenView(screenName: 'news-screen');
+  }
 
   @override
   Widget build(BuildContext context) {

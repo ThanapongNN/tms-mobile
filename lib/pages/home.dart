@@ -1,4 +1,5 @@
 // import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -51,6 +52,12 @@ class _HomeState extends State<Home> {
   //   }).toList());
   // }
   // }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance.logScreenView(screenName: 'home-screen');
+  }
 
   @override
   Widget build(BuildContext context) {

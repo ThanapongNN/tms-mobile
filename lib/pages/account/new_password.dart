@@ -1,4 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
@@ -162,6 +163,7 @@ class _NewPasswordState extends State<NewPassword> {
                                     ],
                                   ).then((register) {
                                     if (register.success) {
+                                      FirebaseAnalytics.instance.logSignUp(signUpMethod: "${_saleID.text}-${DateTime.now()}");
                                       navigatorOffAll(
                                         () => const AccountSuccess(otp: OTP.createAccount),
                                         transition: Transition.rightToLeft,

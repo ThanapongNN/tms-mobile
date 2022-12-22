@@ -42,18 +42,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _sendAnalyticsEvent() async {
     await EasyLoading.show();
+
     await FirebaseAnalytics.instance.logEvent(
       name: 'login',
       parameters: <String, dynamic>{
         "emp_id": Store.userAccountModel!.value.account.employee.empId,
-        "branch_id": Store.userAccountModel!.value.account.partnerCode,
-        "job_branch": Store.userAccountModel!.value.account.partnerName,
+        "partner_code": Store.userAccountModel!.value.account.partnerCode,
+        "partner_name": Store.userAccountModel!.value.account.partnerName,
         "name_surname": "${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}",
         "create_at": Store.userAccountModel!.value.account.createAt.toString(),
         "role_code": Store.userAccountModel!.value.account.employee.roleCode,
         "status": Store.userAccountModel!.value.account.status,
       },
     );
+
     await EasyLoading.dismiss();
   }
 
@@ -158,8 +160,8 @@ class _LoginPageState extends State<LoginPage> {
                           }
 
                           //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
-                          await firstLoginRequest(Store.encryptedEmployeeId.value);
-                          await _sendAnalyticsEvent();
+                          bool success = await firstLoginRequest(Store.encryptedEmployeeId.value);
+                          if (success) await _sendAnalyticsEvent();
 
                           //เข้าหน้าเมนู
                           navigatorOffAll(() => const Menu());

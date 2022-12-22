@@ -30,6 +30,7 @@ class _AccountSuccessState extends State<AccountSuccess> {
       case OTP.createAccount:
         titleAppbar = 'สร้างบัญชีใหม่';
         titleBody = 'ระบบสร้างบัญชีให้ท่านเรียบร้อยแล้ว';
+
         break;
       case OTP.deactivateAccount:
         titleAppbar = 'ปิดบัญชีใช้งาน';

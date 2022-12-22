@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -34,6 +35,12 @@ class _LearningPageState extends State<LearningPage> {
   bool showSearch = false;
 
   late SearchLearningModel _searchLearningModel;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAnalytics.instance.logScreenView(screenName: 'learning-screen');
+  }
 
   @override
   Widget build(BuildContext context) {
