@@ -50,8 +50,6 @@ class _LearningPageState extends State<LearningPage> {
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
           title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
-          centerTitle: true,
-          elevation: 0,
           bottom: (Store.learningModel != null)
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(70),

@@ -51,8 +51,6 @@ class _NewsPageState extends State<NewsPage> {
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
           title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
-          centerTitle: true,
-          elevation: 0,
           bottom: (Store.newsModel != null)
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(70),

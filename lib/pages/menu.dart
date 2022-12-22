@@ -3,7 +3,7 @@ import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:tms/pages/learning/learning.dart';
-import 'package:tms/pages/sales/sales_new.dart';
+import 'package:tms/pages/sales/sales.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/pages/home.dart';
 import 'package:tms/pages/news/news.dart';
@@ -20,7 +20,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   List<Widget> taps = [
     const Home(),
-    const SalesPageNew(),
+    const SalesPage(),
     const NewsPage(),
     const LearningPage(),
   ];

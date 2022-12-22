@@ -103,6 +103,6 @@ flutter:
 #   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
 #   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
 #   # bottomLeft, or bottomRight.
-#   ios_content_mode: scaleAspectFit
+#   ios_content_mode: scaleAspectFill
 
 #   android_screen_orientation: portrait

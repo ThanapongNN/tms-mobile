@@ -33,12 +33,12 @@ class _LoginPageState extends State<LoginPage> {
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   bool _hideText = true;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _user.text = '1234567';
-  //   _password.text = 'aaaaaaa1';
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _user.text = '0724719';
+    _password.text = '123456aa';
+  }
 
   Future<void> _sendAnalyticsEvent() async {
     await EasyLoading.show();

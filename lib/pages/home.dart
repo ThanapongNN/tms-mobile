@@ -66,7 +66,6 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
           title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100),
-          centerTitle: true,
           bottom: (Store.userAccountModel != null)
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(50),
