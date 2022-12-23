@@ -166,28 +166,25 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                 if (_tabBar.index == 1) const Compensation(),
               ]);
             })
-          : Column(children: [
-              AppBar(title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100)),
-              NoDataPage(onPressed: () async {
-                await firstLoginRequest(Store.encryptedEmployeeId.value);
-                setState(() {
-                  if (Store.productGroup.isNotEmpty) {
-                    for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
-                      select.add(e['product']);
-                    }
-
-                    //เซ็ตสีเลือกเดือน
-                    currentMonthFocus = Store.productGroup['data']
-                        .map((e) => Store.productGroup['data'].length == (Store.productGroup['data'].indexOf(e) + 1))
-                        .toList()
-                        .reversed
-                        .toList();
-
-                    Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
+          : NoDataPage(onPressed: () async {
+              await firstLoginRequest(Store.encryptedEmployeeId.value);
+              setState(() {
+                if (Store.productGroup.isNotEmpty) {
+                  for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
+                    select.add(e['product']);
                   }
-                });
-              }),
-            ]),
+
+                  //เซ็ตสีเลือกเดือน
+                  currentMonthFocus = Store.productGroup['data']
+                      .map<bool>((e) => Store.productGroup['data'].length == (Store.productGroup['data'].indexOf(e) + 1))
+                      .toList()
+                      .reversed
+                      .toList();
+
+                  Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
+                }
+              });
+            }),
     );
   }
 }

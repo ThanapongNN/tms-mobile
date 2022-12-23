@@ -207,21 +207,7 @@ class _HomeState extends State<Home> {
                     ])
                   : NoDataPage(onPressed: () async {
                       await firstLoginRequest(Store.encryptedEmployeeId.value);
-                      setState(() {
-                        if (Store.productGroup.isNotEmpty) {
-                          items.add(boxHeadStatus(
-                              image: 'assets/images/true.svg',
-                              content: 'ยอดขายรวมทุกสินค้า',
-                              quantity: '${Store.productGroup['data'][0].totalCount}'));
-
-                          items.addAll(Store.productGroup['data'][0].productGroup.map((e) {
-                            return boxHeadStatus(
-                                image: iconHead[Store.productGroup['data'][0].productGroup.indexOf(e)],
-                                content: e.product,
-                                quantity: '${e.salesTotal}');
-                          }).toList());
-                        }
-                      });
+                      setState(() {});
                     }),
               const SizedBox(height: 15),
               SizedBox(

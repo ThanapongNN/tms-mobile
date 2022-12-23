@@ -1,5 +1,4 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
@@ -38,21 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     _user.text = '0724719';
     _password.text = '123456aa';
-  }
-
-  Future<void> _sendAnalyticsEvent() async {
-    await FirebaseAnalytics.instance.logEvent(
-      name: 'login',
-      parameters: <String, dynamic>{
-        "emp_id": Store.userAccountModel!.value.account.employee.empId,
-        "partner_code": Store.userAccountModel!.value.account.partnerCode,
-        "partner_name": Store.userAccountModel!.value.account.partnerName,
-        "name_surname": "${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}",
-        "create_at": Store.userAccountModel!.value.account.createAt.toString(),
-        "role_code": Store.userAccountModel!.value.account.employee.roleCode,
-        "status": Store.userAccountModel!.value.account.status,
-      },
-    );
   }
 
   @override
@@ -156,13 +140,10 @@ class _LoginPageState extends State<LoginPage> {
                           }
 
                           //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
-                          bool success = await firstLoginRequest(Store.encryptedEmployeeId.value);
-                          if (success) await _sendAnalyticsEvent();
+                          await firstLoginRequest(Store.encryptedEmployeeId.value, showLoading: false);
 
                           //เข้าหน้าเมนู
                           Get.offAll(() => const Menu());
-
-                          // navigatorOffAll(() => const Menu());
                         }
                         await EasyLoading.dismiss();
                       });
