@@ -41,8 +41,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _sendAnalyticsEvent() async {
-    await EasyLoading.show();
-
     await FirebaseAnalytics.instance.logEvent(
       name: 'login',
       parameters: <String, dynamic>{
@@ -55,8 +53,6 @@ class _LoginPageState extends State<LoginPage> {
         "status": Store.userAccountModel!.value.account.status,
       },
     );
-
-    await EasyLoading.dismiss();
   }
 
   @override
@@ -131,11 +127,14 @@ class _LoginPageState extends State<LoginPage> {
                     });
 
                     if (_formKey.currentState!.validate()) {
+                      await EasyLoading.show();
+
                       Store.currentIndex.value = 0;
                       Store.userTextInput.value = _user.text;
                       Call.raw(
                         method: Method.post,
                         url: '$host/user/v1/token/access',
+                        showLoading: false,
                         body: {
                           "deviceId": Store.deviceSerial.value,
                           "user": _user.text,
@@ -151,10 +150,7 @@ class _LoginPageState extends State<LoginPage> {
 
                           //เรียกข้อมูลตำแหน่งงานกรณียังไม่ถูกเรียก
                           if (Store.userRoles.isEmpty) {
-                            Call.raw(
-                              method: Method.get,
-                              url: '$host/content/v1/user-roles',
-                            ).then((userRoles) {
+                            Call.raw(method: Method.get, url: '$host/content/v1/user-roles', showLoading: false).then((userRoles) {
                               if (userRoles.success) Store.userRoles.value = userRoles.response;
                             });
                           }
@@ -164,8 +160,11 @@ class _LoginPageState extends State<LoginPage> {
                           if (success) await _sendAnalyticsEvent();
 
                           //เข้าหน้าเมนู
-                          navigatorOffAll(() => const Menu());
+                          Get.offAll(() => const Menu());
+
+                          // navigatorOffAll(() => const Menu());
                         }
+                        await EasyLoading.dismiss();
                       });
                     }
                   },

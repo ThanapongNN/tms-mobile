@@ -57,7 +57,6 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: ThemeColor.primaryColor,
       appBar: AppBar(title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100), toolbarHeight: kToolbarHeight + 1),
       onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
       drawer: drawer(),

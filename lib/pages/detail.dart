@@ -92,7 +92,6 @@ class _DetailPageState extends State<DetailPage> {
                                 onPressed: () {
                                   setState(() {
                                     jumpToPage(page: 0);
-                                    print(page);
                                   });
                                 },
                               ),

@@ -1,4 +1,3 @@
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/state_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
@@ -8,8 +7,6 @@ import 'package:tms/models/user_account.model.dart';
 import 'package:tms/state_management.dart';
 
 Future<bool> firstLoginRequest(String employeeId) async {
-  await EasyLoading.show();
-
   List<bool> success = [];
 
   await Future.wait([
@@ -54,8 +51,6 @@ Future<bool> firstLoginRequest(String employeeId) async {
       if (learning.success) Store.learningModel = LearningModel.fromJson(learning.response).obs;
     }),
   ]);
-
-  await EasyLoading.dismiss();
 
   return success.every((e) => e);
 }
