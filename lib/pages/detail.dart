@@ -6,6 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:tms/theme/color.dart';
 // import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:tms/widgets/loading_indicator.dart';
 import 'package:tms/widgets/text.dart';
@@ -24,7 +25,6 @@ class _DetailPageState extends State<DetailPage> {
   ChewieController? _chewieController;
   bool _isLoading = true;
   late PDFDocument document;
-  final bool _usePDFListView = false;
 
   @override
   void initState() {
@@ -75,24 +75,51 @@ class _DetailPageState extends State<DetailPage> {
       case 'PDF':
         return Column(
           children: <Widget>[
-            !_usePDFListView
-                ? Expanded(
-                    child: Center(
-                      child: _isLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : PDFViewer(document: document, enableSwipeNavigation: false, showPicker: false),
-                    ),
-                  )
-                : Expanded(
-                    child: _isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : PDFListViewer(
-                            document: document,
-                            preload: true,
-                          ),
-                  ),
+            Expanded(
+              child: Center(
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : PDFViewer(
+                        document: document,
+                        enableSwipeNavigation: false,
+                        showPicker: false,
+                        navigationBuilder: (context, page, totalPages, jumpToPage, animateToPage) {
+                          return ButtonBar(
+                            alignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.first_page, color: (page == 1) ? Colors.grey : ThemeColor.primaryColor),
+                                onPressed: () {
+                                  setState(() {
+                                    jumpToPage(page: 0);
+                                    print(page);
+                                  });
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.chevron_left, color: (page == 1) ? Colors.grey : ThemeColor.primaryColor),
+                                onPressed: () {
+                                  if (page != null) animateToPage(page: page - 2);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.navigate_next, color: (page == totalPages) ? Colors.grey : ThemeColor.primaryColor),
+                                onPressed: () {
+                                  animateToPage(page: page);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.last_page, color: (page == totalPages) ? Colors.grey : ThemeColor.primaryColor),
+                                onPressed: () {
+                                  jumpToPage(page: totalPages!);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+              ),
+            )
           ],
         );
       // return SfPdfViewer.network(widget.data.sourceUrl, canShowPaginationDialog: true);
