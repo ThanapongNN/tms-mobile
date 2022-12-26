@@ -2,12 +2,12 @@ import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/widgets/dialog.dart';
 
-Future<bool> validateAccountRequest({required String saleID, required String msisdn, required thaiID}) async {
+Future<bool> validateAccountRequest({required String userID, required String msisdn, required thaiID}) async {
   List<bool> isSuccess = [];
 
-  CallBack checkSaleID = await Call.raw(
+  CallBack checkUserID = await Call.raw(
     method: Method.get,
-    url: '$host/user/v1/check/$saleID',
+    url: '$host/user/v1/check/$userID',
   );
 
   CallBack checkTrueMove = await Call.raw(
@@ -25,7 +25,7 @@ Future<bool> validateAccountRequest({required String saleID, required String msi
 
   if (!checkThaiID.response['result']) dialog(content: checkThaiID.response["description"]);
 
-  isSuccess.add(checkSaleID.success);
+  isSuccess.add(checkUserID.success);
   isSuccess.add(checkTrueMove.response['result']);
   isSuccess.add(checkThaiID.response['result']);
 

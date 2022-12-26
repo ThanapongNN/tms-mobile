@@ -1,4 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/state_manager.dart';
 import 'package:tms/apis/call.dart';
@@ -6,12 +5,23 @@ import 'package:tms/apis/config.dart';
 import 'package:tms/models/learning.model.dart';
 import 'package:tms/models/news.model.dart';
 import 'package:tms/models/user_account.model.dart';
+import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/state_management.dart';
 
 Future<void> firstLoginRequest(String employeeId, {bool showLoading = true}) async {
   if (showLoading) await EasyLoading.show();
 
   await Future.wait([
+    (Store.userRolesModel == null)
+        ? Call.raw(
+            method: Method.get,
+            url: '$host/content/v1/user-roles',
+            showLoading: false,
+            showDialog: false,
+          ).then((userRoles) {
+            if (userRoles.success) Store.userRolesModel = UserRolesModel.fromJson(userRoles.response).obs;
+          })
+        : Future.delayed(const Duration(seconds: 0)),
     (Store.userAccountModel == null)
         ? Call.raw(
             method: Method.get,
@@ -20,21 +30,7 @@ Future<void> firstLoginRequest(String employeeId, {bool showLoading = true}) asy
             showDialog: false,
             showLoading: false,
           ).then((userAccount) {
-            if (userAccount.success) {
-              Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
-              FirebaseAnalytics.instance.logEvent(
-                name: 'login',
-                parameters: <String, dynamic>{
-                  "emp_id": Store.userAccountModel!.value.account.employee.empId,
-                  "partner_code": Store.userAccountModel!.value.account.partnerCode,
-                  "partner_name": Store.userAccountModel!.value.account.partnerName,
-                  "name_surname": "${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}",
-                  "create_at": Store.userAccountModel!.value.account.createAt.toString(),
-                  "role_code": Store.userAccountModel!.value.account.employee.roleCode,
-                  "status": Store.userAccountModel!.value.account.status,
-                },
-              );
-            }
+            if (userAccount.success) Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
           })
         : Future.delayed(const Duration(seconds: 0)),
     (Store.productGroup.isEmpty)

@@ -22,7 +22,7 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  final _saleID = TextEditingController();
+  final _userID = TextEditingController();
   final _oldPassword = TextEditingController();
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
@@ -35,7 +35,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool disable = true;
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) &&
+    if ((_userID.text.length > 6) &&
         (_oldPassword.text.length == 8) &&
         (_password.text.length == 8) &&
         (_confirmPassword.text.length == 8) &&
@@ -61,7 +61,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               children: [
                 const SizedBox(height: 25),
                 formField(
-                  controller: _saleID,
+                  controller: _userID,
                   textLable: 'รหัสพนักงาน',
                   hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: 8,

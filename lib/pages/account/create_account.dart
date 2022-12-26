@@ -8,7 +8,6 @@ import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/validate_account.request.dart';
 import 'package:tms/models/partner_types.model.dart';
 import 'package:tms/models/shop_profile_list.model.dart';
-import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/accept_terms.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -34,14 +33,14 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  final _saleID = TextEditingController();
+  final _userID = TextEditingController();
   final _thaiID = TextEditingController();
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _email = TextEditingController();
-  final _branch = TextEditingController();
-  final _jobBranch = TextEditingController();
+  final _partnerCode = TextEditingController();
+  final _partnerName = TextEditingController();
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
@@ -50,14 +49,14 @@ class _CreateAccountState extends State<CreateAccount> {
   bool errorDay = false;
   bool errorMonth = false;
   bool errorYear = false;
-  bool errorJob = false;
+  bool errorRole = false;
 
   bool is711 = true;
 
   Color borderDay = Colors.grey;
   Color borderMonth = Colors.grey;
   Color borderYear = Colors.grey;
-  Color borderJob = Colors.grey;
+  Color borderRole = Colors.grey;
 
   List<bool> selectShop = [
     true,
@@ -66,25 +65,24 @@ class _CreateAccountState extends State<CreateAccount> {
     false,
   ];
 
-  List<String> nameShop = [], itemsJobs = [], itemsDays = [], itemsYears = [];
+  List<String> nameShop = [], itemsRoles = [], itemsDays = [], itemsYears = [];
 
-  String? selectedDay, selectedMonth, selectedYear, selectedJob;
+  String? selectedDay, selectedMonth, selectedYear, selectedRole;
 
   PartnerTypesModel partner = PartnerTypesModel.fromJson(Store.partnerTypes);
-  UserRolesModel user = UserRolesModel.fromJson(Store.userRoles);
 
   @override
   void initState() {
     super.initState();
 
     nameShop = partner.partnerTypes.map((e) => e.name.th).toList();
-    itemsJobs = user.userRoles.map((e) => e.name.th).toList();
+    itemsRoles = Store.userRolesModel!.value.userRoles.map((e) => e.name.th).toList();
     itemsDays = listStringNumber(start: 1, end: 31);
     itemsYears = listStringNumber(start: ((DateTime.now().year + 543) - 100), end: (DateTime.now().year + 543), invert: true);
   }
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) &&
+    if ((_userID.text.length > 6) &&
         _firstName.text.isNotEmpty &&
         _lastName.text.isNotEmpty &&
         (_thaiID.text.length == 17) &&
@@ -92,9 +90,9 @@ class _CreateAccountState extends State<CreateAccount> {
         (selectedMonth != null) &&
         (selectedYear != null) &&
         (_phoneNumber.text.length == 12) &&
-        (selectedJob != null) &&
-        (_branch.text.length == 5) &&
-        _jobBranch.text.isNotEmpty &&
+        (selectedRole != null) &&
+        (_partnerCode.text.length == 5) &&
+        _partnerName.text.isNotEmpty &&
         _formKey.currentState!.validate()) {
       disable = false;
     } else {
@@ -126,9 +124,9 @@ class _CreateAccountState extends State<CreateAccount> {
         isValid = false;
       }
 
-      if (selectedJob == null) {
-        borderJob = Colors.red;
-        errorJob = true;
+      if (selectedRole == null) {
+        borderRole = Colors.red;
+        errorRole = true;
         isValid = false;
       }
     });
@@ -188,7 +186,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 Center(child: text('ข้อมูลพนักงานขาย', fontSize: 24).paddingAll(10)),
                 rowForm(
                   formField(
-                    controller: _saleID,
+                    controller: _userID,
                     textLable: 'รหัสพนักงาน',
                     hintText: 'กรุณากรอกรหัสพนักงาน',
                     maxLength: is711 ? 7 : 8,
@@ -400,28 +398,28 @@ class _CreateAccountState extends State<CreateAccount> {
                     Row(children: [
                       dropdown(
                         hint: 'เลือกตำแหน่งงาน',
-                        items: itemsJobs,
-                        selectedValue: selectedJob,
-                        borderColor: borderJob,
+                        items: itemsRoles,
+                        selectedValue: selectedRole,
+                        borderColor: borderRole,
                         onMenuStateChange: (isOpen) {
                           setState(() {
-                            borderJob = isOpen ? ThemeColor.primaryColor : Colors.grey;
+                            borderRole = isOpen ? ThemeColor.primaryColor : Colors.grey;
                           });
                         },
-                        onChanged: (job) {
+                        onChanged: (role) {
                           setState(() {
-                            borderJob = Colors.grey;
-                            errorJob = false;
-                            selectedJob = job;
+                            borderRole = Colors.grey;
+                            errorRole = false;
+                            selectedRole = role;
                             checkAllInput();
                           });
                         },
                       ),
                     ]),
-                    if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
+                    if (errorRole) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
                   ]).paddingOnly(bottom: 10),
                   formField(
-                    controller: _branch,
+                    controller: _partnerCode,
                     textLable: 'รหัสสาขาทรู',
                     hintText: ' ค้นหารหัสสาขาทรู',
                     maxLength: 5,
@@ -440,20 +438,20 @@ class _CreateAccountState extends State<CreateAccount> {
                       return null;
                     },
                     onChanged: (value) async {
-                      // _branch.selection = TextSelection.fromPosition(TextPosition(offset: _branch.text.length));
-                      if (_branch.text.length == 5) {
-                        _jobBranch.clear();
+                      // _partnerCode.selection = TextSelection.fromPosition(TextPosition(offset: _partnerCode.text.length));
+                      if (_partnerCode.text.length == 5) {
+                        _partnerName.clear();
 
                         CallBack data = await Call.raw(
                           method: Method.get,
-                          url: '$host/content/v1/partners/711${_branch.text}',
+                          url: '$host/content/v1/partners/711${_partnerCode.text}',
                         );
 
                         if (data.success) {
                           if (data.response['partner'] != null) {
                             ShopProfileListModel shopProfileList = ShopProfileListModel.fromJson(data.response);
-                            // _branch.text = shopProfileList.partner[0].code;
-                            _jobBranch.text = shopProfileList.partner[0].name.th;
+                            // _partnerCode.text = shopProfileList.partner[0].code;
+                            _partnerName.text = shopProfileList.partner[0].name.th;
                           } else {
                             dialog(content: 'ไม่พบรหัสสาขาทรูในระบบ');
                           }
@@ -465,7 +463,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                 ),
                 formField(
-                  controller: _jobBranch,
+                  controller: _partnerName,
                   textLable: 'สาขาปฏิบัติงาน',
                   required: false,
                   disable: true,
@@ -487,7 +485,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       : () async {
                           if (_validateForm()) {
                             bool isSuccess = await validateAccountRequest(
-                              saleID: _saleID.text,
+                              userID: _userID.text,
                               msisdn: _phoneNumber.text.replaceAll('-', ''),
                               thaiID: _thaiID.text.replaceAll('-', ''),
                             );
@@ -496,11 +494,11 @@ class _CreateAccountState extends State<CreateAccount> {
                               Store.registerBody.value = {
                                 "otpRefId": '',
                                 "partnerTypeCode": partner.partnerTypes[selectShop.indexOf(true)].code,
-                                "partnerCode": '711${_branch.text}',
-                                "partnerName": _jobBranch.text,
+                                "partnerCode": '711${_partnerCode.text}',
+                                "partnerName": _partnerName.text,
                                 "employee": {
                                   "thaiId": _thaiID.text.replaceAll('-', ''),
-                                  "id": _saleID.text,
+                                  "id": _userID.text,
                                   "password": '',
                                   "name": _firstName.text,
                                   "surname": _lastName.text,
@@ -508,7 +506,8 @@ class _CreateAccountState extends State<CreateAccount> {
                                       '${DateTime.parse('${int.parse(selectedYear!) - 543}-${(itemsMonths.indexOf(selectedMonth!) + 1).toString().padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}')}',
                                   "mobile": _phoneNumber.text.replaceAll('-', ''),
                                   "email": _email.text,
-                                  "roleCode": user.userRoles[itemsJobs.indexOf(selectedJob!)].code,
+                                  "role": selectedRole,
+                                  "roleCode": Store.userRolesModel!.value.userRoles[itemsRoles.indexOf(selectedRole!)].code,
                                 }
                               };
 

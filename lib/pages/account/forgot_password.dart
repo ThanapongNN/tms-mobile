@@ -6,7 +6,6 @@ import 'package:get/state_manager.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/forgot_password.model.dart';
-import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/confirm_otp.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/utils/constructor.dart';
@@ -27,14 +26,12 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  final _saleID = TextEditingController();
+  final _userID = TextEditingController();
   final _thaiID = TextEditingController();
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   bool disable = true;
-
-  UserRolesModel user = UserRolesModel.fromJson(Store.userRoles);
 
   bool _validateForm() {
     bool isValid = _formKey.currentState!.validate();
@@ -47,7 +44,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_thaiID.text.length == 17) && _formKey.currentState!.validate()) {
+    if ((_userID.text.length > 6) && (_thaiID.text.length == 17) && _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;
@@ -69,7 +66,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Center(child: text('กรุณาระบุข้อมูล\nเพื่อกำหนดรหัสผ่านใหม่', fontSize: 24, textAlign: TextAlign.center).paddingAll(20)),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 formField(
-                  controller: _saleID,
+                  controller: _userID,
                   textLable: 'รหัสพนักงาน',
                   hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: 8,
@@ -109,11 +106,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ? () {}
                       : () async {
                           if (_validateForm()) {
-                            Store.saleID.value = _saleID.text;
+                            Store.userID.value = _userID.text;
 
                             Call.raw(
                               method: Method.post,
-                              url: '$host/user/v1/accounts/${_saleID.text}',
+                              url: '$host/user/v1/accounts/${_userID.text}',
                               body: {"thai_id": _thaiID.text.replaceAll('-', '')},
                             ).then((forgotPassword) {
                               if (forgotPassword.success) {

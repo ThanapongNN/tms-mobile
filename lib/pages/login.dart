@@ -129,15 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                           //เก็บ TOKEN
                           UserTokenAccessModel userTokenAccess = UserTokenAccessModel.fromJson(login.response);
                           Store.token.value = userTokenAccess.token;
-
                           Store.encryptedEmployeeId.value = encrypt(_user.text);
-
-                          //เรียกข้อมูลตำแหน่งงานกรณียังไม่ถูกเรียก
-                          if (Store.userRoles.isEmpty) {
-                            Call.raw(method: Method.get, url: '$host/content/v1/user-roles', showLoading: false).then((userRoles) {
-                              if (userRoles.success) Store.userRoles.value = userRoles.response;
-                            });
-                          }
 
                           //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
                           await firstLoginRequest(Store.encryptedEmployeeId.value, showLoading: false);

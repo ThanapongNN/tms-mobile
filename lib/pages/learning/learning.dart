@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ import 'package:tms/pages/learning/learning_more.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/ga_log.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/drawer.dart';
 import 'package:tms/widgets/form_field.dart';
@@ -39,7 +39,7 @@ class _LearningPageState extends State<LearningPage> {
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance.logScreenView(screenName: 'learning-screen');
+    GALog.content('learning-view');
   }
 
   @override

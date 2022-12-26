@@ -1,4 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -10,6 +9,7 @@ import 'package:tms/pages/sales/compensation.dart';
 import 'package:tms/pages/sales/sales_total.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/ga_log.dart';
 import 'package:tms/widgets/box_head_user.dart';
 import 'package:tms/widgets/drawer.dart';
 import 'package:tms/widgets/text.dart';
@@ -31,7 +31,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance.logScreenView(screenName: 'sales-screen');
+    GALog.content('sales-view');
 
     _tabBar = TabController(length: 2, vsync: this);
     _tabBar.addListener(() {

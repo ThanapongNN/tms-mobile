@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -10,11 +9,11 @@ import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/first_login.request.dart';
 import 'package:tms/models/search_news.model.dart';
 import 'package:tms/pages/detail.dart';
-// import 'package:tms/pages/news/detail_test.dart';
 import 'package:tms/pages/news/news_more.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/ga_log.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/drawer.dart';
 import 'package:tms/widgets/form_field.dart';
@@ -40,7 +39,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance.logScreenView(screenName: 'news-screen');
+    GALog.content('news-view');
   }
 
   @override

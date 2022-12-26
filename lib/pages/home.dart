@@ -1,5 +1,4 @@
 // import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:tms/pages/detail.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
+import 'package:tms/utils/ga_log.dart';
 import 'package:tms/widgets/box_head_status.dart';
 import 'package:tms/widgets/box_news.dart';
 import 'package:tms/widgets/drawer.dart';
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    FirebaseAnalytics.instance.logScreenView(screenName: 'home-screen');
+    GALog.content('home-view');
   }
 
   @override

@@ -25,7 +25,7 @@ class DeactivateAccount extends StatefulWidget {
 class _DeactivateAccountState extends State<DeactivateAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  final _saleID = TextEditingController();
+  final _userID = TextEditingController();
   final _password = TextEditingController();
 
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
@@ -34,7 +34,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
   bool disable = true;
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_password.text.length == 8) && _formKey.currentState!.validate()) {
+    if ((_userID.text.length > 6) && (_password.text.length == 8) && _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;
@@ -56,7 +56,7 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
               children: [
                 Center(child: text('ยืนยันการปิดบัญชีใช้งาน', fontSize: 24).paddingSymmetric(vertical: 20)),
                 formField(
-                  controller: _saleID,
+                  controller: _userID,
                   textLable: 'รหัสพนักงาน',
                   hintText: 'กรุณากรอกรหัสพนักงาน',
                   maxLength: 8,
@@ -110,14 +110,14 @@ class _DeactivateAccountState extends State<DeactivateAccount> {
                           });
 
                           if (_formKey.currentState!.validate()) {
-                            if (Store.userAccountModel?.value.account.employee.empId == _saleID.text) {
+                            if (Store.userAccountModel?.value.account.employee.empId == _userID.text) {
                               CallBack data = await Call.raw(
                                 method: Method.post,
                                 url: '$host/user/v1/token/access',
                                 headers: Authorization.token,
                                 body: {
                                   "deviceId": Store.deviceSerial.value,
-                                  "user": _saleID.text,
+                                  "user": _userID.text,
                                   "password": _password.text,
                                 },
                                 errorMessage: 'รหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง',

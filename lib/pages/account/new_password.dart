@@ -28,7 +28,7 @@ class NewPassword extends StatefulWidget {
 class _NewPasswordState extends State<NewPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  final _saleID = TextEditingController();
+  final _userID = TextEditingController();
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
 
@@ -46,18 +46,18 @@ class _NewPasswordState extends State<NewPassword> {
     switch (widget.otp) {
       case OTP.createAccount:
         titleAppbar = 'สร้างบัญชีใหม่';
-        _saleID.text = Store.registerBody['employee']['id'];
+        _userID.text = Store.registerBody['employee']['id'];
         break;
       case OTP.forgotPassword:
         titleAppbar = 'ลืมรหัสผ่าน';
-        _saleID.text = Store.saleID.value;
+        _userID.text = Store.userID.value;
         break;
       default:
     }
   }
 
   void checkAllInput() {
-    if ((_saleID.text.length > 6) && (_password.text.length == 8) && (_confirmPassword.text.length == 8) && _formKey.currentState!.validate()) {
+    if ((_userID.text.length > 6) && (_password.text.length == 8) && (_confirmPassword.text.length == 8) && _formKey.currentState!.validate()) {
       disable = false;
     } else {
       disable = true;
@@ -80,7 +80,7 @@ class _NewPasswordState extends State<NewPassword> {
                 Center(child: text('กำหนดรหัสผ่าน', fontSize: 24).paddingSymmetric(vertical: 20)),
                 formField(
                   disable: true,
-                  controller: _saleID,
+                  controller: _userID,
                   required: false,
                   textLable: 'รหัสพนักงาน',
                 ),
@@ -158,12 +158,24 @@ class _NewPasswordState extends State<NewPassword> {
                                     compareError: [
                                       ErrorMessage(
                                         errorMessage: 'The user was registered.',
-                                        contentDialog: 'รหัสผู้ใช้งาน ${_saleID.text} มีบัญชีเข้าใช้งานเรียบร้อยแล้ว',
+                                        contentDialog: 'รหัสผู้ใช้งาน ${_userID.text} มีบัญชีเข้าใช้งานเรียบร้อยแล้ว',
                                       ),
                                     ],
                                   ).then((register) {
                                     if (register.success) {
-                                      FirebaseAnalytics.instance.logSignUp(signUpMethod: "${_saleID.text}-${DateTime.now()}");
+                                      FirebaseAnalytics.instance.logEvent(
+                                        name: 'sign_up',
+                                        parameters: <String, dynamic>{
+                                          "user_id": Store.registerBody['employee']['id'],
+                                          "user_name": "${Store.registerBody['employee']['name']} ${Store.registerBody['employee']['surname']}",
+                                          "partner_code": Store.registerBody['partnerCode'],
+                                          "partner_name": Store.registerBody['partnerName'],
+                                          "create_at": "${DateTime.now()}",
+                                          "role": Store.registerBody['employee']['role'],
+                                          "status": 'A',
+                                        },
+                                      );
+
                                       navigatorOffAll(
                                         () => const AccountSuccess(otp: OTP.createAccount),
                                         transition: Transition.rightToLeft,

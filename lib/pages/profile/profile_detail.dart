@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/models/user_account.model.dart';
-import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/pages/account/deactivate_account.dart';
 import 'package:tms/pages/no_data.dart';
 import 'package:tms/pages/profile/profile_edit.dart';
@@ -27,8 +26,6 @@ class _ProfileDetailState extends State<ProfileDetail> {
   bool switchValue = true;
   String userRolesName = '';
 
-  UserRolesModel userRoles = UserRolesModel.fromJson(Store.userRoles);
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +34,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
 
   getUserRolesName() {
     if (Store.userAccountModel != null) {
-      for (var userRole in userRoles.userRoles) {
+      for (var userRole in Store.userRolesModel!.value.userRoles) {
         if (Store.userAccountModel!.value.account.employee.roleCode == userRole.code) {
           userRolesName = userRole.name.th;
         }

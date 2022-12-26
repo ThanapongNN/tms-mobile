@@ -24,22 +24,22 @@ class ProfileEdit extends StatefulWidget {
 class _ProfileEditState extends State<ProfileEdit> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  final _branch = TextEditingController();
+  final _partnerCode = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _email = TextEditingController();
 
-  final List<String> itemsJobs = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
+  final List<String> itemsRoles = ['พนักงานประจำสาขา', 'ผู้จัดการสาขา'];
 
   List<String> itemsDays = [], itemsYears = [];
 
-  String? selectedDay, selectedMonth, selectedYear, selectedJob;
+  String? selectedDay, selectedMonth, selectedYear, selectedRole;
 
   Color borderDay = Colors.grey;
   Color borderMonth = Colors.grey;
   Color borderYear = Colors.grey;
-  Color borderJob = Colors.grey;
+  Color borderRole = Colors.grey;
 
-  bool errorJob = false;
+  bool errorRole = false;
   bool errorDay = false;
   bool errorMonth = false;
   bool errorYear = false;
@@ -75,7 +75,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 svgicon: 'assets/images/pinlocation.svg',
                 title: 'สถานที่ทำงาน',
                 subtitle: formField(
-                  controller: _branch,
+                  controller: _partnerCode,
                   showTextLable: false,
                   hintText: 'กรุณาค้นหาด้วยรหัสสาขาทรู',
                   suffixIcon: const Icon(BootstrapIcons.search),
@@ -94,19 +94,19 @@ class _ProfileEditState extends State<ProfileEdit> {
                   Row(children: [
                     dropdown(
                       hint: 'กรุณาเลือกตำแหน่งงาน',
-                      items: itemsJobs,
-                      selectedValue: selectedJob,
-                      borderColor: borderJob,
-                      onChanged: (job) {
+                      items: itemsRoles,
+                      selectedValue: selectedRole,
+                      borderColor: borderRole,
+                      onChanged: (role) {
                         setState(() {
-                          borderJob = Colors.grey;
-                          errorJob = false;
-                          selectedJob = job;
+                          borderRole = Colors.grey;
+                          errorRole = false;
+                          selectedRole = role;
                         });
                       },
                     ),
                   ]),
-                  if (errorJob) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
+                  if (errorRole) text('กรุณาตำแหน่งงาน', color: ThemeColor.primaryColor, fontSize: 12).paddingOnly(left: 10),
                 ]).paddingOnly(bottom: 10),
               ),
               listTile(
