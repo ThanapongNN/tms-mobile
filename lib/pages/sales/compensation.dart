@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tms/models/compensation_data.model.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';

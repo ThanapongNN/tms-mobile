@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:get/state_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:tms/apis/request/first_login.request.dart';
 import 'package:tms/pages/no_data.dart';
@@ -22,7 +25,12 @@ class SalesPage extends StatefulWidget {
 }
 
 class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMixin {
+  final GlobalKey _keyRow = GlobalKey();
+  final GlobalKey _keyText = GlobalKey();
+  final GlobalKey _keyBoxHeadUser = GlobalKey();
+
   late TabController _tabBar;
+
   bool turn = true;
 
   List<bool> currentMonthFocus = [];
@@ -34,9 +42,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
     GALog.content('sales-view');
 
     _tabBar = TabController(length: 2, vsync: this);
-    _tabBar.addListener(() {
-      setState(() {});
-    });
+    _tabBar.addListener(() => setState(() {}));
 
     if (Store.productGroup.isNotEmpty) {
       for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
@@ -52,6 +58,21 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
 
       Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Timer.periodic(
+        const Duration(milliseconds: 250),
+        (Timer t) {
+          if (Store.productGroup.isNotEmpty) {
+            t.cancel();
+            if (Store.heightSliverAppBar.value == 0) {
+              Store.heightSliverAppBar.value =
+                  94 + _keyRow.currentContext!.size!.height + _keyText.currentContext!.size!.height + _keyBoxHeadUser.currentContext!.size!.height;
+            }
+          }
+        },
+      );
+    });
   }
 
   @override
@@ -67,12 +88,13 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                   leading: const SizedBox(),
                   actions: null,
                   pinned: true,
-                  expandedHeight: 270,
+                  expandedHeight: Store.heightSliverAppBar.value,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       color: const Color(0xFF414F5C),
                       child: Column(children: [
                         Row(
+                          key: _keyRow,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: Store.productGroup['data']
                               .map<Widget>((e) {
@@ -97,20 +119,29 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                               .reversed //เรียงจากหลังไปหน้า
                               .toList(), //แปลงกลับเป็น Array
                         ).paddingSymmetric(vertical: 10),
-                        text(
-                          DateFormat(
-                            'ข้อมูลถึงวันที่ dd MMMM ${DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).year + 543}',
-                            'th',
-                          ).format(DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).toLocal()),
-                          color: Colors.white,
-                        ).paddingSymmetric(vertical: 10),
-                        boxHeadUser(
-                          name: 'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
-                          title: Store.selectedProductGroup.value,
-                          quantity: (select.indexOf(Store.selectedProductGroup.value) == 0)
-                              ? '${Store.productGroup['data'][Store.indexMonth.value]['totalCount']}'
-                              : '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][select.indexOf(Store.selectedProductGroup.value) - 1]['salesTotal']}',
-                        ).paddingOnly(bottom: 15),
+                        Padding(
+                          key: _keyText,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: text(
+                            DateFormat(
+                              'ข้อมูลถึงวันที่ dd MMMM ${DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).year + 543}',
+                              'th',
+                            ).format(DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).toLocal()),
+                            color: Colors.white,
+                          ),
+                        ),
+                        Padding(
+                          key: _keyBoxHeadUser,
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: boxHeadUser(
+                            name:
+                                'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
+                            title: Store.selectedProductGroup.value,
+                            quantity: (select.indexOf(Store.selectedProductGroup.value) == 0)
+                                ? '${Store.productGroup['data'][Store.indexMonth.value]['totalCount']}'
+                                : '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][select.indexOf(Store.selectedProductGroup.value) - 1]['salesTotal']}',
+                          ),
+                        ),
                       ]),
                     ),
                   ),
@@ -164,10 +195,11 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                 ),
                 if (_tabBar.index == 0) const SalesTotal(),
                 if (_tabBar.index == 1) const Compensation(),
+                const SliverToBoxAdapter(child: SizedBox(height: 20))
               ]);
             })
           : NoDataPage(onPressed: () async {
-              await firstLoginRequest(Store.encryptedEmployeeId.value);
+              await firstLoginRequest();
               setState(() {
                 if (Store.productGroup.isNotEmpty) {
                   for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {

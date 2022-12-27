@@ -37,6 +37,8 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     _user.text = '0724719';
     _password.text = '123456aa';
+    // _user.text = '1234567';
+    // _password.text = 'aaaaaaa1';
   }
 
   @override
@@ -114,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                       await EasyLoading.show();
 
                       Store.currentIndex.value = 0;
-                      Store.userTextInput.value = _user.text;
+
                       Call.raw(
                         method: Method.post,
                         url: '$host/user/v1/token/access',
@@ -132,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           Store.encryptedEmployeeId.value = encrypt(_user.text);
 
                           //เรียกข้อมูลโปรไฟล์และข้อมูลยอดขาย
-                          await firstLoginRequest(Store.encryptedEmployeeId.value, showLoading: false);
+                          await firstLoginRequest(showLoading: false);
 
                           //เข้าหน้าเมนู
                           Get.offAll(() => const Menu());

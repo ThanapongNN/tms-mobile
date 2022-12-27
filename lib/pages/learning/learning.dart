@@ -97,7 +97,7 @@ class _LearningPageState extends State<LearningPage> {
         drawer: drawer(),
         body: (Store.learningModel == null)
             ? NoDataPage(onPressed: () async {
-                await firstLoginRequest(Store.encryptedEmployeeId.value);
+                await firstLoginRequest();
                 setState(() {});
               })
             : (!showSearch)

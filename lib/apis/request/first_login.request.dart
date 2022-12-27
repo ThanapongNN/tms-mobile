@@ -8,7 +8,7 @@ import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/state_management.dart';
 
-Future<void> firstLoginRequest(String employeeId, {bool showLoading = true}) async {
+Future<void> firstLoginRequest({bool showLoading = true}) async {
   if (showLoading) await EasyLoading.show();
 
   await Future.wait([
@@ -25,7 +25,7 @@ Future<void> firstLoginRequest(String employeeId, {bool showLoading = true}) asy
     (Store.userAccountModel == null)
         ? Call.raw(
             method: Method.get,
-            url: '$host/user/v1/accounts/$employeeId',
+            url: '$host/user/v1/accounts/${Store.encryptedEmployeeId.value}',
             headers: Authorization.token,
             showDialog: false,
             showLoading: false,
@@ -36,7 +36,7 @@ Future<void> firstLoginRequest(String employeeId, {bool showLoading = true}) asy
     (Store.productGroup.isEmpty)
         ? Call.raw(
             method: Method.get,
-            url: '$host/product-group/v1/productGroup/$employeeId',
+            url: '$host/product-group/v1/productGroup/${Store.encryptedEmployeeId.value}',
             headers: Authorization.token,
             showDialog: false,
             showLoading: false,

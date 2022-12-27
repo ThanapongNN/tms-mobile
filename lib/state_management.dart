@@ -13,6 +13,8 @@ class Store {
   static RxInt indexProductGroup = 0.obs;
   static RxInt indexMonth = 0.obs;
 
+  static RxDouble heightSliverAppBar = 0.0.obs;
+
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> productGroup = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
@@ -23,7 +25,6 @@ class Store {
   static RxString selectedProductGroup = ''.obs;
   static RxString otpRefID = ''.obs;
   static RxString token = ''.obs;
-  static RxString userTextInput = ''.obs;
   static RxString version = ''.obs;
 
   static RxMap<String, dynamic> compersationData = <String, dynamic>{

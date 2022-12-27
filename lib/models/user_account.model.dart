@@ -86,6 +86,7 @@ class Employee {
     required this.mobile,
     required this.email,
     required this.roleCode,
+    required this.roleName,
   });
 
   final String id;
@@ -96,6 +97,7 @@ class Employee {
   final String mobile;
   final String email;
   final String roleCode;
+  final RoleName roleName;
 
   factory Employee.fromRawJson(String str) => Employee.fromJson(json.decode(str));
 
@@ -110,6 +112,7 @@ class Employee {
         mobile: json["mobile"],
         email: json["email"],
         roleCode: json["roleCode"],
+        roleName: RoleName.fromJson(json["roleName"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -122,5 +125,30 @@ class Employee {
         "mobile": mobile,
         "email": email,
         "roleCode": roleCode,
+        "roleName": roleName.toJson(),
+      };
+}
+
+class RoleName {
+  RoleName({
+    required this.nameTh,
+    required this.nameEn,
+  });
+
+  final String nameTh;
+  final String nameEn;
+
+  factory RoleName.fromRawJson(String str) => RoleName.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory RoleName.fromJson(Map<String, dynamic> json) => RoleName(
+        nameTh: json["name_th"],
+        nameEn: json["name_en"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name_th": nameTh,
+        "name_en": nameEn,
       };
 }

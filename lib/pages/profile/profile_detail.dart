@@ -24,23 +24,6 @@ class ProfileDetail extends StatefulWidget {
 
 class _ProfileDetailState extends State<ProfileDetail> {
   bool switchValue = true;
-  String userRolesName = '';
-
-  @override
-  void initState() {
-    super.initState();
-    getUserRolesName();
-  }
-
-  getUserRolesName() {
-    if (Store.userAccountModel != null) {
-      for (var userRole in Store.userRolesModel!.value.userRoles) {
-        if (Store.userAccountModel!.value.account.employee.roleCode == userRole.code) {
-          userRolesName = userRole.name.th;
-        }
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +31,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
       appBar: AppBar(title: const Text('ข้อมูลของคุณ')),
       body: (Store.userAccountModel != null)
           ? SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: SizedBox(
                 width: double.infinity,
                 child: Column(children: [
-                  const SizedBox(height: 20),
                   const CircleAvatar(
                     radius: 32,
                     backgroundColor: Colors.red,
@@ -67,7 +50,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     content: Store.userAccountModel!.value.account.partnerName,
                     trailing: Column(children: [text(Store.userAccountModel!.value.account.partnerCode)]),
                   ),
-                  listTile(svgicon: 'assets/images/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
+                  listTile(
+                      svgicon: 'assets/images/person.svg',
+                      title: 'ตำแหน่งงาน',
+                      content: Store.userAccountModel!.value.account.employee.roleName.nameTh),
                   listTile(
                       svgicon: 'assets/images/cake.svg',
                       title: 'วันเดือนปีเกิด',
@@ -99,18 +85,17 @@ class _ProfileDetailState extends State<ProfileDetail> {
               ),
             )
           : NoDataPage(
-              onPressed: () async {
-                CallBack userAccount = await Call.raw(
+              onPressed: () {
+                Call.raw(
                   method: Method.get,
-                  url: '$host/user/v1/accounts/${Store.userTextInput.value}',
-                );
-
-                if (userAccount.success) {
-                  Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
-                  setState(() {
-                    getUserRolesName();
-                  });
-                }
+                  url: '$host/user/v1/accounts/${Store.encryptedEmployeeId.value}',
+                  headers: Authorization.token,
+                  showDialog: false,
+                  showLoading: false,
+                ).then((userAccount) {
+                  if (userAccount.success) Store.userAccountModel = UserAccountModel.fromJson(userAccount.response).obs;
+                  setState(() {});
+                });
               },
             ),
     );

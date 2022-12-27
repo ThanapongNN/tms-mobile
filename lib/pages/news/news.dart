@@ -97,7 +97,7 @@ class _NewsPageState extends State<NewsPage> {
         drawer: drawer(),
         body: (Store.newsModel == null)
             ? NoDataPage(onPressed: () async {
-                await firstLoginRequest(Store.encryptedEmployeeId.value);
+                await firstLoginRequest();
                 setState(() {});
               })
             : (!showSearch)

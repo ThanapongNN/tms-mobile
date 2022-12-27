@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
                           const SizedBox(height: 5),
                           text(
                             DateFormat(
-                              'ข้อมูลถึงวันที่ dd/MM/${DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).year + 543} HH:mm',
+                              'ข้อมูลถึงวันที่ dd/MM/${DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).year + 543}',
                               'th',
                             ).format(DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).toLocal()),
                             color: Colors.white,
@@ -149,16 +149,18 @@ class _HomeState extends State<Home> {
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: 4,
+                              itemCount: 5,
                               itemBuilder: (context, index) {
                                 String icon = 'assets/images/sim.svg';
+
+                                //ตอนนี้ hard code อนาคตรอ back end ส่งคีย์มาบอกว่าจะเอาอะไรขึ้นโชว์หน้าแรก
                                 switch (index) {
                                   case 0:
                                     icon = 'assets/images/phone_with_sim.svg';
                                     return listProductGroup(
                                       icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][1]['product'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][1]['salesTotal']}',
+                                      title: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['order'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['orderTotal']}',
                                       unit: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['unit'],
                                       detail: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['serviceCampaign'],
                                       seeDetail: !(Store.productGroup['data'][0]['productGroup'][1]['salesTotal'] == 0),
@@ -185,10 +187,21 @@ class _HomeState extends State<Home> {
                                     icon = 'assets/images/coin_฿.svg';
                                     return listProductGroup(
                                       icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][3]['product'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][3]['salesTotal']}',
-                                      unit: 'รายการ',
+                                      title: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['order'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['orderTotal']}',
+                                      unit: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['unit'],
                                       detail: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['serviceCampaign'] +
+                                          Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['serviceCampaign'],
+                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][3]['salesTotal'] == 0),
+                                    );
+                                  case 4:
+                                    icon = 'assets/images/coin_฿.svg';
+                                    return listProductGroup(
+                                      icon: icon,
+                                      title: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['order'],
+                                      quantity: '${Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['orderTotal']}',
+                                      unit: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['unit'],
+                                      detail: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['serviceCampaign'] +
                                           Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['serviceCampaign'],
                                       seeDetail: !(Store.productGroup['data'][0]['productGroup'][3]['salesTotal'] == 0),
                                     );
@@ -209,7 +222,7 @@ class _HomeState extends State<Home> {
                       ),
                     ])
                   : NoDataPage(onPressed: () async {
-                      await firstLoginRequest(Store.encryptedEmployeeId.value);
+                      await firstLoginRequest();
                       setState(() {});
                     }),
               const SizedBox(height: 15),

@@ -58,10 +58,10 @@ class _ProfileEditState extends State<ProfileEdit> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Form(
             key: _formKey,
             child: Column(children: [
-              const SizedBox(height: 20),
               const CircleAvatar(
                 radius: 32,
                 backgroundColor: Colors.red,
