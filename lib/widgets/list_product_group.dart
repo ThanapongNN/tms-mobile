@@ -109,7 +109,7 @@ Widget listSalesDetail({
         Expanded(flex: 6, child: text(title)),
         if (quantity != null && unit != null)
           Expanded(
-              flex: 2,
+              flex: 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -120,7 +120,7 @@ Widget listSalesDetail({
               )),
         if (total != null)
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

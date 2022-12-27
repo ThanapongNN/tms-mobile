@@ -19,24 +19,26 @@ Widget drawer() {
   return Drawer(
     child: Column(children: <Widget>[
       SizedBox(
-        height: 220,
+        height: 230,
         width: double.infinity,
         child: DrawerHeader(
           decoration: const BoxDecoration(color: ThemeColor.primaryColor),
           child: (Store.userAccountModel != null)
-              ? Column(children: [
-                  const CircleAvatar(
-                    radius: 32,
-                    backgroundColor: Colors.red,
-                    backgroundImage: AssetImage('assets/images/no_avatar.png'),
-                  ),
-                  const SizedBox(height: 15),
-                  text(
-                    'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
-                    color: Colors.white,
-                  ),
-                  text(Store.userAccountModel!.value.account.partnerName, color: Colors.white, fontSize: 16),
-                ])
+              ? FittedBox(
+                  child: Column(children: [
+                    const CircleAvatar(
+                      radius: 32,
+                      backgroundColor: Colors.red,
+                      backgroundImage: AssetImage('assets/images/no_avatar.png'),
+                    ),
+                    const SizedBox(height: 15),
+                    text(
+                      'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
+                      color: Colors.white,
+                    ),
+                    text(Store.userAccountModel!.value.account.partnerName, color: Colors.white, fontSize: 16),
+                  ]),
+                )
               : const SizedBox(),
         ),
       ),

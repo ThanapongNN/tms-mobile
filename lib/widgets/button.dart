@@ -24,10 +24,12 @@ Widget button({
       side: BorderSide(color: outline ? colorOutline ?? Colors.grey : Colors.transparent),
     ),
     onPressed: onPressed ?? () => navigatorBack(),
-    child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Icon(icon, color: outline ? colorOutline ?? Colors.black : Colors.white, size: 32),
-      SizedBox(width: space),
-      Text(text, style: TextStyle(fontSize: 24, color: outline ? colorOutline ?? Colors.black : Colors.white)),
-    ]),
+    child: FittedBox(
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Icon(icon, color: outline ? colorOutline ?? Colors.black : Colors.white, size: 32),
+        SizedBox(width: space),
+        Text(text, style: TextStyle(fontSize: 24, color: outline ? colorOutline ?? Colors.black : Colors.white)),
+      ]),
+    ),
   );
 }

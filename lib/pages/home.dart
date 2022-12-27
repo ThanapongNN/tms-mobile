@@ -72,21 +72,24 @@ class _HomeState extends State<Home> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: ThemeColor.primaryColor,
-                    child: Row(children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.red,
-                        backgroundImage: AssetImage('assets/images/no_avatar.png'),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: text(
-                          'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
-                          color: Colors.white,
+                    child: FittedBox(
+                      child: Row(children: [
+                        const CircleAvatar(
+                          backgroundColor: Colors.red,
+                          backgroundImage: AssetImage('assets/images/no_avatar.png'),
                         ),
-                      ),
-                      SvgPicture.asset('assets/images/pinlocation.svg', color: Colors.white).paddingOnly(right: 5),
-                      FittedBox(child: text(Store.userAccountModel!.value.account.partnerName, color: Colors.white))
-                    ]),
+                        const SizedBox(width: 5),
+                        SizedBox(
+                          width: 280,
+                          child: text(
+                            'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
+                            color: Colors.white,
+                          ),
+                        ),
+                        SvgPicture.asset('assets/images/pinlocation.svg', color: Colors.white).paddingOnly(right: 5),
+                        text(Store.userAccountModel!.value.account.partnerName, color: Colors.white)
+                      ]),
+                    ),
                   ))
               : null,
         ),
@@ -115,7 +118,7 @@ class _HomeState extends State<Home> {
                           ),
                           const SizedBox(height: 15),
                           SizedBox(
-                            height: 90,
+                            height: 105,
                             child: boxHeadStatus(
                                 image: 'assets/images/true.svg',
                                 content: 'ยอดขายรวมทุกสินค้า',

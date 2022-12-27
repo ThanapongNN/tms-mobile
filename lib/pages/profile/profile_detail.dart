@@ -47,54 +47,56 @@ class _ProfileDetailState extends State<ProfileDetail> {
     return Scaffold(
       appBar: AppBar(title: const Text('ข้อมูลของคุณ')),
       body: (Store.userAccountModel != null)
-          ? SizedBox(
-              width: double.infinity,
-              child: Column(children: [
-                const SizedBox(height: 20),
-                const CircleAvatar(
-                  radius: 32,
-                  backgroundColor: Colors.red,
-                  backgroundImage: AssetImage('assets/images/no_avatar.png'),
-                ),
-                const SizedBox(height: 10),
-                text('คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}'),
-                text(Store.userAccountModel!.value.account.employee.empId),
-                const SizedBox(height: 10),
-                listTile(
-                  svgicon: 'assets/images/pinlocation.svg',
-                  title: 'สถานที่ทำงาน',
-                  content: Store.userAccountModel!.value.account.partnerName,
-                  trailing: Column(children: [text(Store.userAccountModel!.value.account.partnerCode)]),
-                ),
-                listTile(svgicon: 'assets/images/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
-                listTile(
-                    svgicon: 'assets/images/cake.svg',
-                    title: 'วันเดือนปีเกิด',
-                    content: DateFormat('dd MMMM ${Store.userAccountModel!.value.account.employee.birthdate.year + 543}')
-                        .format(Store.userAccountModel!.value.account.employee.birthdate)),
-                listTile(
-                  svgicon: 'assets/images/phone.svg',
-                  title: 'เบอร์มือถือ',
-                  content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel!.value.account.employee.mobile),
-                ),
-                listTile(svgicon: 'assets/images/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.employee.email),
-                const Spacer(),
-                button(
-                  text: 'แก้ไขข้อมูล',
-                  icon: BootstrapIcons.pencil,
-                  onPressed: () {
-                    navigatorTo((() => const ProfileEdit()));
-                  },
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {
-                    navigatorTo((() => const DeactivateAccount()));
-                  },
-                  child: text('ปิดบัญชีใช้งาน', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
-                ),
-                const SizedBox(height: 20),
-              ]).paddingSymmetric(horizontal: 20),
+          ? SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(children: [
+                  const SizedBox(height: 20),
+                  const CircleAvatar(
+                    radius: 32,
+                    backgroundColor: Colors.red,
+                    backgroundImage: AssetImage('assets/images/no_avatar.png'),
+                  ),
+                  const SizedBox(height: 10),
+                  text('คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}'),
+                  text(Store.userAccountModel!.value.account.employee.empId),
+                  const SizedBox(height: 10),
+                  listTile(
+                    svgicon: 'assets/images/pinlocation.svg',
+                    title: 'สถานที่ทำงาน',
+                    content: Store.userAccountModel!.value.account.partnerName,
+                    trailing: Column(children: [text(Store.userAccountModel!.value.account.partnerCode)]),
+                  ),
+                  listTile(svgicon: 'assets/images/person.svg', title: 'ตำแหน่งงาน', content: userRolesName),
+                  listTile(
+                      svgicon: 'assets/images/cake.svg',
+                      title: 'วันเดือนปีเกิด',
+                      content: DateFormat('dd MMMM ${Store.userAccountModel!.value.account.employee.birthdate.year + 543}')
+                          .format(Store.userAccountModel!.value.account.employee.birthdate)),
+                  listTile(
+                    svgicon: 'assets/images/phone.svg',
+                    title: 'เบอร์มือถือ',
+                    content: TextInputFormatter.maskTextPhoneNumber.maskText(Store.userAccountModel!.value.account.employee.mobile),
+                  ),
+                  listTile(svgicon: 'assets/images/envelope open.svg', title: 'อีเมล', content: Store.userAccountModel!.value.account.employee.email),
+                  // const Spacer(),
+                  button(
+                    text: 'แก้ไขข้อมูล',
+                    icon: BootstrapIcons.pencil,
+                    onPressed: () {
+                      navigatorTo((() => const ProfileEdit()));
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      navigatorTo((() => const DeactivateAccount()));
+                    },
+                    child: text('ปิดบัญชีใช้งาน', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
+                  ),
+                  const SizedBox(height: 20),
+                ]).paddingSymmetric(horizontal: 20),
+              ),
             )
           : NoDataPage(
               onPressed: () async {

@@ -37,8 +37,8 @@ Widget boxHeadStatus({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                text(content, fontSize: 20, color: Colors.red),
-                text(quantity, fontSize: 20, fontBold: true),
+                FittedBox(child: text(content, fontSize: 20, color: Colors.red)),
+                FittedBox(child: text(quantity, fontSize: 20, fontBold: true)),
               ],
             ),
           ),

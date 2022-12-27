@@ -40,7 +40,7 @@ Widget boxNews({
         //   height: 180,
         //   decoration: BoxDecoration(image: DecorationImage(image: (image != null) ? NetworkImage(image) : , fit: BoxFit.cover)),
         // ),
-        Expanded(child: text(content).paddingAll(5))
+        Expanded(child: text(content, overflow: TextOverflow.fade).paddingAll(5))
       ]),
     ).marginOnly(right: 10),
   );

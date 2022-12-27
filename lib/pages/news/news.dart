@@ -109,10 +109,12 @@ class _NewsPageState extends State<NewsPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(children: [
-                                SvgPicture.asset('assets/images/${e.icon}.svg'),
-                                text(e.nameTh, fontBold: true, fontSize: 24).paddingOnly(left: 10),
-                              ]).paddingSymmetric(vertical: 10, horizontal: 20),
+                              FittedBox(
+                                child: Row(children: [
+                                  SvgPicture.asset('assets/images/${e.icon}.svg'),
+                                  text(e.nameTh, fontBold: true, fontSize: 24, overflow: TextOverflow.ellipsis).paddingOnly(left: 10),
+                                ]).paddingSymmetric(vertical: 10, horizontal: 20),
+                              ),
                               SizedBox(
                                 height: 300,
                                 child: ListView.builder(

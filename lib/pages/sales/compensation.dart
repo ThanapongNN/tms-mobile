@@ -51,7 +51,7 @@ class _CompensationState extends State<Compensation> {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          text('*ผลตอบแทนทั้งหมดเป็นเพียงแค่ยอดประมาณการ', color: ThemeColor.primaryColor).paddingOnly(top: 10),
+          Center(child: text('*ผลตอบแทนทั้งหมดเป็นเพียงแค่ยอดประมาณการ', color: ThemeColor.primaryColor, textAlign: TextAlign.center)),
           ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
