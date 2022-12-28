@@ -166,7 +166,7 @@ class _NewPasswordState extends State<NewPassword> {
                                       FirebaseAnalytics.instance.logEvent(
                                         name: 'sign_up',
                                         parameters: <String, dynamic>{
-                                          "user_id": Store.registerBody['employee']['id'],
+                                          "emp_id": Store.registerBody['employee']['id'],
                                           "user_name": "${Store.registerBody['employee']['name']} ${Store.registerBody['employee']['surname']}",
                                           "partner_code": Store.registerBody['partnerCode'],
                                           "partner_name": Store.registerBody['partnerName'],

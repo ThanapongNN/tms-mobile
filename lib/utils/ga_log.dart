@@ -6,7 +6,7 @@ class GALog {
     FirebaseAnalytics.instance.logEvent(
       name: 'select_content',
       parameters: <String, dynamic>{
-        "user_id": Store.userAccountModel!.value.account.employee.empId,
+        "emp_id": Store.userAccountModel!.value.account.employee.empId,
         "partner_code": Store.userAccountModel!.value.account.partnerCode,
         "partner_name": Store.userAccountModel!.value.account.partnerName,
         "user_name": "${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}",
