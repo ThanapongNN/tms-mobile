@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/get_utils.dart';
@@ -59,13 +60,13 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
       Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Timer.periodic(
         const Duration(milliseconds: 250),
         (Timer t) {
           if (Store.productGroup.isNotEmpty) {
             t.cancel();
-            if (Store.heightSliverAppBar.value == 0) {
+            if ((Store.heightSliverAppBar.value == 0) && (_keyRow.currentContext != null)) {
               Store.heightSliverAppBar.value =
                   94 + _keyRow.currentContext!.size!.height + _keyText.currentContext!.size!.height + _keyBoxHeadUser.currentContext!.size!.height;
             }
