@@ -80,22 +80,14 @@ class _SalesTotalState extends State<SalesTotal> {
                   itemCount: Store.productGroup['data'][Store.indexMonth.value]['productGroup'].length,
                   itemBuilder: (context, index) {
                     return Column(
-                      children: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'].map<Widget>((e) {
-                        int indexOrder = Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'].indexOf(e);
+                      children: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'].map<Widget>((salesOrder) {
                         return listProductGroup(
-                          icon:
-                              (Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['unit'] == 'เบอร์')
-                                  ? 'assets/images/sim.svg'
-                                  : 'assets/images/phone_with_sim.svg',
-                          title: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['order'],
-                          quantity:
-                              '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['orderTotal']}',
-                          unit: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]['unit'],
-                          seeDetail: !(Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]
-                                  ['orderTotal'] ==
-                              0),
-                          detail: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'][indexOrder]
-                              ['serviceCampaign'],
+                          icon: salesOrder['iconName'],
+                          title: salesOrder['order'],
+                          quantity: '${salesOrder['orderTotal']}',
+                          seeDetail: !(salesOrder['orderTotal'] == 0),
+                          unit: salesOrder['unit'] ?? '',
+                          detail: salesOrder['serviceCampaign'],
                         );
                       }).toList(),
                     );
@@ -109,20 +101,18 @@ class _SalesTotalState extends State<SalesTotal> {
                       Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'].length,
                   itemBuilder: (context, index) {
                     return listProductGroup(
-                      icon: (Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
-                                  [index]['unit'] ==
-                              'เบอร์')
-                          ? 'assets/images/sim.svg'
-                          : 'assets/images/phone_with_sim.svg',
+                      icon: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]
+                          ['iconName'],
                       title: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
                           [index]['order'],
                       quantity:
                           '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]['orderTotal']}',
-                      unit: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]
-                          ['unit'],
                       seeDetail: !(Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
                               [index]['orderTotal'] ==
                           0),
+                      unit: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]
+                              ['unit'] ??
+                          '',
                       detail: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
                           [index]['serviceCampaign'],
                     );

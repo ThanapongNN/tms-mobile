@@ -92,7 +92,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       color: const Color(0xFF414F5C),
-                      child: Column(children: [
+                      child: ListView(children: [
                         Row(
                           key: _keyRow,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -119,20 +119,18 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                               .reversed //เรียงจากหลังไปหน้า
                               .toList(), //แปลงกลับเป็น Array
                         ).paddingSymmetric(vertical: 10),
-                        Padding(
+                        Center(
                           key: _keyText,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
                           child: text(
                             DateFormat(
                               'ข้อมูลถึงวันที่ dd MMMM ${DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).year + 543}',
                               'th',
                             ).format(DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).toLocal()),
                             color: Colors.white,
-                          ),
+                          ).paddingSymmetric(vertical: 10),
                         ),
-                        Padding(
+                        Center(
                           key: _keyBoxHeadUser,
-                          padding: const EdgeInsets.only(bottom: 15),
                           child: boxHeadUser(
                             name:
                                 'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
@@ -140,7 +138,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                             quantity: (select.indexOf(Store.selectedProductGroup.value) == 0)
                                 ? '${Store.productGroup['data'][Store.indexMonth.value]['totalCount']}'
                                 : '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][select.indexOf(Store.selectedProductGroup.value) - 1]['salesTotal']}',
-                          ),
+                          ).paddingOnly(bottom: 15),
                         ),
                       ]),
                     ),

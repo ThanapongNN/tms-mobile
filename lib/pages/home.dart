@@ -142,84 +142,25 @@ class _HomeState extends State<Home> {
                           //     ),
                         ]).paddingSymmetric(vertical: 15),
                       ),
-                      Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: 5,
-                              itemBuilder: (context, index) {
-                                String icon = 'assets/images/sim.svg';
-
-                                //ตอนนี้ hard code อนาคตรอ back end ส่งคีย์มาบอกว่าจะเอาอะไรขึ้นโชว์หน้าแรก
-                                switch (index) {
-                                  case 0:
-                                    icon = 'assets/images/phone_with_sim.svg';
-                                    return listProductGroup(
-                                      icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['order'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['orderTotal']}',
-                                      unit: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['unit'],
-                                      detail: Store.productGroup['data'][0]['productGroup'][1]['salesOrder'][0]['serviceCampaign'],
-                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][1]['salesTotal'] == 0),
-                                    );
-                                  case 1:
-                                    return listProductGroup(
-                                      icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['order'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['orderTotal']}',
-                                      unit: 'รายการ',
-                                      detail: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['serviceCampaign'],
-                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][1]['orderTotal'] == 0),
-                                    );
-                                  case 2:
-                                    return listProductGroup(
-                                      icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['order'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['orderTotal']}',
-                                      unit: 'รายการ',
-                                      detail: Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['serviceCampaign'],
-                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][0]['salesOrder'][0]['orderTotal'] == 0),
-                                    );
-                                  case 3:
-                                    icon = 'assets/images/coin_฿.svg';
-                                    return listProductGroup(
-                                      icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['order'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['orderTotal']}',
-                                      unit: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['unit'],
-                                      detail: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['serviceCampaign'] +
-                                          Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][0]['serviceCampaign'],
-                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][3]['salesTotal'] == 0),
-                                    );
-                                  case 4:
-                                    icon = 'assets/images/coin_฿.svg';
-                                    return listProductGroup(
-                                      icon: icon,
-                                      title: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['order'],
-                                      quantity: '${Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['orderTotal']}',
-                                      unit: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['unit'],
-                                      detail: Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['serviceCampaign'] +
-                                          Store.productGroup['data'][0]['productGroup'][3]['salesOrder'][1]['serviceCampaign'],
-                                      seeDetail: !(Store.productGroup['data'][0]['productGroup'][3]['salesTotal'] == 0),
-                                    );
-                                  default:
-                                    return const SizedBox();
-                                }
-                              },
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Store.currentIndex.value = 1;
-                                Store.indexProductGroup.value = 0;
-                              },
-                              child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
-                            ).paddingSymmetric(vertical: 15),
-                          ],
-                        ),
+                      Column(
+                        children: Store.productGroup['data'][0]['homeDisplay'].map<Widget>((homeDisplay) {
+                          return listProductGroup(
+                            icon: homeDisplay['iconName'],
+                            title: homeDisplay['order'],
+                            quantity: '${homeDisplay['orderTotal']}',
+                            seeDetail: !(homeDisplay['orderTotal'] == 0),
+                            unit: homeDisplay['unit'],
+                            detail: homeDisplay['serviceCampaign'],
+                          );
+                        }).toList(),
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          Store.currentIndex.value = 1;
+                          Store.indexProductGroup.value = 0;
+                        },
+                        child: text('ดูยอดขายทั้งหมด', color: const Color(0xFF2F80ED), decoration: TextDecoration.underline),
+                      ).paddingSymmetric(vertical: 15),
                     ])
                   : NoDataPage(onPressed: () async {
                       await firstLoginRequest();

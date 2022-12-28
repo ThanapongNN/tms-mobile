@@ -30,7 +30,7 @@ Widget listProductGroup({
           useInkWell: false,
         ),
         header: ListTile(
-          leading: SvgPicture.asset(icon),
+          leading: SvgPicture.asset('assets/images/$icon.svg'),
           title: text(title, fontSize: 24, overflow: TextOverflow.ellipsis),
           trailing: Wrap(children: [
             text(quantity, fontSize: 24, color: ThemeColor.primaryColor),
