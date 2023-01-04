@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tms/models/compensation_data.model.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
@@ -19,7 +20,7 @@ class _CompensationState extends State<Compensation> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Column(children: [
-        text('*ผลตอบแทนทั้งหมดเป็นเพียงแค่ยอดประมาณการ', color: ThemeColor.primaryColor),
+        text('*ยอดโดยประมาณการการคำนวณผลตอบแทนเป็นไปตามเงื่อนไขที่บริษัทกำหนด', color: ThemeColor.primaryColor).paddingSymmetric(vertical: 5),
         Column(
           children: Store.productGroup['data'][Store.indexMonth.value]['commission'].map<Widget>((commission) {
             return listProductGroup(

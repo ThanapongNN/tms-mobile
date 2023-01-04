@@ -130,8 +130,8 @@ class _LearningPageState extends State<LearningPage> {
                               ),
                               Center(
                                 child: GestureDetector(
-                                  onTap: () => navigatorTo(() => LearningMore(e)),
-                                  child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
+                                  onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => LearningMore(e)) : null,
+                                  child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
                                 ),
                               ).paddingOnly(bottom: 10),
                               Divider(color: Colors.white.withOpacity(0.7), thickness: 20),

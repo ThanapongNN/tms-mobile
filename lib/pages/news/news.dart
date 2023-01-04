@@ -4,6 +4,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tms/apis/call.dart';
 import 'package:tms/apis/config.dart';
 import 'package:tms/apis/request/first_login.request.dart';
@@ -132,8 +133,8 @@ class _NewsPageState extends State<NewsPage> {
                               ),
                               Center(
                                 child: GestureDetector(
-                                  onTap: () => navigatorTo(() => NewsMore(e)),
-                                  child: text('+ ดูเพิ่มเติม', color: ThemeColor.primaryColor),
+                                  onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => NewsMore(e)) : null,
+                                  child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
                                 ),
                               ).paddingOnly(bottom: 10),
                               Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
