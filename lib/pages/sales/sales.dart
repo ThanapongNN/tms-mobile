@@ -51,7 +51,9 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
 
       //เซ็ตสีเลือกเดือน
       currentMonthFocus = Store.productGroup['data']
-          .map<bool>((e) => Store.productGroup['data'].length == (Store.productGroup['data'].indexOf(e) + 1))
+          .map<bool>(
+            (e) => Store.indexMonth.value == Store.productGroup['data'].indexOf(e),
+          )
           .toList()
           .reversed
           .toList();
