@@ -20,7 +20,9 @@ class _CompensationState extends State<Compensation> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Column(children: [
-        text('*ยอดโดยประมาณการการคำนวณผลตอบแทนเป็นไปตามเงื่อนไขที่บริษัทกำหนด', color: ThemeColor.primaryColor).paddingSymmetric(vertical: 5),
+        text('*ยอดโดยประมาณการการคำนวณผลตอบแทน\nเป็นไปตามเงื่อนไขที่บริษัทกำหนด',
+                fontSize: 19, color: ThemeColor.primaryColor, textAlign: TextAlign.center)
+            .paddingSymmetric(vertical: 5),
         Column(
           children: Store.productGroup['data'][Store.indexMonth.value]['commission'].map<Widget>((commission) {
             return listProductGroup(

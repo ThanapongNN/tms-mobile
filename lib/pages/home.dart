@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                             DateFormat(
                               'ข้อมูลถึงวันที่ dd/MM/${DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).year + 543}',
                               'th',
-                            ).format(DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).toLocal()),
+                            ).format(DateTime.now().toLocal()),
                             color: Colors.white,
                           ),
                           const SizedBox(height: 15),
