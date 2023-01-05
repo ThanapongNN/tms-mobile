@@ -18,11 +18,11 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final _host = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _host.text = 'https://2f1d-171-96-88-207.ap.ngrok.io';
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _host.text = 'https://c246-171-96-154-114.ap.ngrok.io';
+  // }
 
   @override
   Widget build(BuildContext context) {

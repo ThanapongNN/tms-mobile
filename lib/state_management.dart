@@ -1,4 +1,4 @@
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/state_manager.dart';
 import 'package:tms/models/forgot_password.model.dart';
 import 'package:tms/models/learning.model.dart';
 import 'package:tms/models/news.model.dart';
@@ -6,7 +6,7 @@ import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_roles.model.dart';
 
 //ตัวแปรกองกลาง
-class Store {
+class Store extends GetxController {
   static RxBool drawer = false.obs;
 
   static RxInt currentIndex = 0.obs;
@@ -27,40 +27,29 @@ class Store {
   static RxString token = ''.obs;
   static RxString version = ''.obs;
 
-  static RxMap<String, dynamic> compersationData = <String, dynamic>{
-    "data": [
-      {
-        "code": "p001",
-        "product": "ยอดมือถือ",
-        "salesTotal": 3,
-        "unit": "เครื่อง",
-        "iconName": "sim",
-        "salesOrder": [
-          {"name": "VIVO Y15S", "ea": 1, "unit": "เครื่อง", "total": "100"},
-          {"name": "ATV SKY", "ea": 1, "unit": "เครื่อง", "total": "20"},
-          {"name": "HUAWEI NOVA Y70", "ea": 1, "unit": "เครื่อง", "total": "20"},
-          {"name": "HUAWEI NOVA Y70", "ea": 1, "unit": "เครื่อง", "total": "20"},
-        ],
-        "sum": 360,
-      },
-      {
-        "code": "p002",
-        "product": "ซิมเติมเงิน",
-        "salesTotal": 1,
-        "unit": "ซิม",
-        "iconName": "sim",
-        "salesOrder": [
-          {"name": "ซิมเบอร์ใหม่แบบเติมเงิน ฟันธง", "ea": 1, "unit": "เครื่อง", "total": "50"},
-        ],
-        "sum": 360,
-      }
-    ]
-  }.obs;
-
   //STORE MODEL
   static Rx<ForgotPasswordModel>? forgotPasswordModel;
   static Rx<LearningModel>? learningModel;
   static Rx<NewsModel>? newsModel;
   static Rx<UserAccountModel>? userAccountModel;
   static Rx<UserRolesModel>? userRolesModel;
+
+  static void clearState() {
+    drawer.value = false;
+
+    currentIndex.value = 0;
+    indexProductGroup.value = 0;
+    indexMonth.value = 0;
+
+    productGroup.clear();
+
+    encryptedEmployeeId.value = '';
+    userID.value = '';
+    selectedProductGroup.value = '';
+    token.value = '';
+
+    learningModel = null;
+    newsModel = null;
+    userAccountModel = null;
+  }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tms/models/compensation_data.model.dart';
 import 'package:tms/state_management.dart';
 import 'package:tms/theme/color.dart';
 import 'package:tms/widgets/list_product_group.dart';
@@ -14,8 +13,6 @@ class Compensation extends StatefulWidget {
 }
 
 class _CompensationState extends State<Compensation> {
-  CompensationData compensationData = CompensationData.fromJson(Store.compersationData);
-
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(

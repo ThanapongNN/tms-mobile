@@ -48,7 +48,7 @@ class Call {
       }
       if (showLoading) EasyLoading.dismiss();
 
-      // logger(response, body: body);
+      logger(response, body: body);
 
       if (response.statusCode == 200) {
         return CallBack(success: true, response: jsonDecode(response.body));
