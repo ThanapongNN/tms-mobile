@@ -29,6 +29,7 @@ class LearningPage extends StatefulWidget {
 
 class _LearningPageState extends State<LearningPage> {
   final search = TextEditingController();
+  List<Widget> groupLearning = [];
 
   Timer? _timer;
 
@@ -40,6 +41,45 @@ class _LearningPageState extends State<LearningPage> {
   void initState() {
     super.initState();
     GALog.content('learning-view');
+
+    for (var e in Store.learningModel!.value.data) {
+      if (e.lists.isNotEmpty) {
+        groupLearning.add(SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                SvgPicture.asset('assets/images/${e.icon}.svg'),
+                text(e.nameTh, fontBold: true, fontSize: 24).paddingOnly(left: 10),
+              ]).paddingSymmetric(vertical: 10, horizontal: 20),
+              SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: e.lists.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return boxNews(
+                      image: e.lists[index].thumbnailUrl,
+                      content: e.lists[index].subHeadline,
+                      onTap: () => Get.to(() => DetailPage(e.lists[index])),
+                    );
+                  },
+                ),
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => LearningMore(e)) : null,
+                  child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
+                ),
+              ).paddingOnly(bottom: 10),
+              Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
+            ],
+          ),
+        ));
+      }
+    }
   }
 
   @override
@@ -103,42 +143,17 @@ class _LearningPageState extends State<LearningPage> {
             : (!showSearch)
                 ? SingleChildScrollView(
                     child: Column(
-                      children: Store.learningModel!.value.data.map((e) {
-                        return SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(children: [
-                                SvgPicture.asset('assets/images/${e.icon}.svg'),
-                                text(e.nameTh, fontBold: true, fontSize: 24).paddingOnly(left: 10),
-                              ]).paddingSymmetric(vertical: 10, horizontal: 20),
-                              SizedBox(
-                                height: 300,
-                                child: ListView.builder(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: e.lists.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return boxNews(
-                                      image: e.lists[index].thumbnailUrl,
-                                      content: e.lists[index].subHeadline,
-                                      onTap: () => Get.to(() => DetailPage(e.lists[index])),
-                                    );
-                                  },
-                                ),
-                              ),
+                      children: (groupLearning.isNotEmpty)
+                          ? groupLearning
+                          : [
                               Center(
-                                child: GestureDetector(
-                                  onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => LearningMore(e)) : null,
-                                  child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
-                                ),
-                              ).paddingOnly(bottom: 10),
-                              Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
+                                  child: Column(
+                                children: [
+                                  SvgPicture.asset('assets/images/notfound.svg'),
+                                  text('ไม่มีข้อมูลคอร์สเรียนรู้', fontSize: 22, color: Colors.grey),
+                                ],
+                              )).paddingOnly(top: 72)
                             ],
-                          ),
-                        );
-                      }).toList(),
                     ),
                   )
                 : (_searchLearningModel.data.isNotEmpty)

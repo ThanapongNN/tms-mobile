@@ -29,6 +29,7 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   final search = TextEditingController();
+  List<Widget> groupNew = [];
 
   Timer? _timer;
 
@@ -40,6 +41,46 @@ class _NewsPageState extends State<NewsPage> {
   void initState() {
     super.initState();
     GALog.content('news-view');
+    for (var e in Store.newsModel!.value.data) {
+      if (e.lists.isNotEmpty) {
+        groupNew.add(SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                child: Row(children: [
+                  SvgPicture.asset('assets/images/${e.icon}.svg'),
+                  text(e.nameTh, fontBold: true, fontSize: 24, overflow: TextOverflow.ellipsis).paddingOnly(left: 10),
+                ]).paddingSymmetric(vertical: 10, horizontal: 20),
+              ),
+              SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: e.lists.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return boxNews(
+                      image: e.lists[index].thumbnailUrl,
+                      content: e.lists[index].subHeadline,
+                      onTap: () => Get.to(() => DetailPage(e.lists[index])),
+                    );
+                  },
+                ),
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => NewsMore(e)) : null,
+                  child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
+                ),
+              ).paddingOnly(bottom: 10),
+              Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
+            ],
+          ),
+        ));
+      }
+    }
   }
 
   @override
@@ -103,45 +144,17 @@ class _NewsPageState extends State<NewsPage> {
             : (!showSearch)
                 ? SingleChildScrollView(
                     child: Column(
-                      children: Store.newsModel!.value.data.map((e) {
-                        return SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              FittedBox(
-                                child: Row(children: [
-                                  SvgPicture.asset('assets/images/${e.icon}.svg'),
-                                  text(e.nameTh, fontBold: true, fontSize: 24, overflow: TextOverflow.ellipsis).paddingOnly(left: 10),
-                                ]).paddingSymmetric(vertical: 10, horizontal: 20),
-                              ),
-                              SizedBox(
-                                height: 300,
-                                child: ListView.builder(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: e.lists.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return boxNews(
-                                      image: e.lists[index].thumbnailUrl,
-                                      content: e.lists[index].subHeadline,
-                                      onTap: () => Get.to(() => DetailPage(e.lists[index])),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Center(
-                                child: GestureDetector(
-                                  onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => NewsMore(e)) : null,
-                                  child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
-                                ),
-                              ).paddingOnly(bottom: 10),
-                              Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                        children: (groupNew.isNotEmpty)
+                            ? groupNew
+                            : [
+                                Center(
+                                    child: Column(
+                                  children: [
+                                    SvgPicture.asset('assets/images/notfound.svg'),
+                                    text('ไม่มีข้อมูลข่าวสารและแคมเปญ', fontSize: 22, color: Colors.grey),
+                                  ],
+                                )).paddingOnly(top: 72)
+                              ]),
                   )
                 : (_searchNewsModel.data.isNotEmpty)
                     ? Column(children: [
