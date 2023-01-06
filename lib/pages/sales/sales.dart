@@ -54,8 +54,6 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
           .map<bool>(
             (e) => Store.indexMonth.value == Store.productGroup['data'].indexOf(e),
           )
-          .toList()
-          .reversed
           .toList();
 
       Store.selectedProductGroup.value = select[Store.indexProductGroup.value];
