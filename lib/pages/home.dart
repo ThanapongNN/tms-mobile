@@ -59,8 +59,8 @@ class _HomeState extends State<Home> {
     GALog.content('home-view');
 
     if (Store.newsModel != null && Store.listNewsHome.isEmpty) {
-      for (var data in Store.newsModel!.value.data) {
-        Store.listNewsHome.addAll(data.lists);
+      for (var data in Store.newsModel!.value.data!) {
+        Store.listNewsHome.addAll(data!.lists!);
       }
 
       Store.listNewsHome.removeWhere((news) => !news.startDate.isBefore(DateTime.now()) && news.endDate.isAfter(DateTime.now()));

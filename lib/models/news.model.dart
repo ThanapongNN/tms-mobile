@@ -12,10 +12,10 @@ class NewsModel {
     required this.data,
   });
 
-  final String code;
-  final String description;
-  final String transactionId;
-  final List<Datum> data;
+  final String? code;
+  final String? description;
+  final String? transactionId;
+  final List<Datum?>? data;
 
   factory NewsModel.fromRawJson(String str) => NewsModel.fromJson(json.decode(str));
 
@@ -25,14 +25,14 @@ class NewsModel {
         code: json["code"],
         description: json["description"],
         transactionId: json["transactionId"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: json["data"] == null ? [] : List<Datum?>.from(json["data"]!.map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "code": code,
         "description": description,
         "transactionId": transactionId,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x!.toJson())),
       };
 }
 
@@ -45,11 +45,11 @@ class Datum {
     required this.lists,
   });
 
-  final String groupName;
-  final String nameTh;
-  final String nameEn;
-  final String icon;
-  final List<ListElement> lists;
+  final String? groupName;
+  final String? nameTh;
+  final String? nameEn;
+  final String? icon;
+  final List<ListElement?>? lists;
 
   factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
 
@@ -60,7 +60,7 @@ class Datum {
         nameTh: json["name_th"],
         nameEn: json["name_en"],
         icon: json["icon"],
-        lists: List<ListElement>.from(json["lists"].map((x) => ListElement.fromJson(x))),
+        lists: json["lists"] == null ? [] : List<ListElement?>.from(json["lists"]!.map((x) => ListElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,7 +68,7 @@ class Datum {
         "name_th": nameTh,
         "name_en": nameEn,
         "icon": icon,
-        "lists": List<dynamic>.from(lists.map((x) => x.toJson())),
+        "lists": lists == null ? [] : List<dynamic>.from(lists!.map((x) => x!.toJson())),
       };
 }
 
@@ -85,15 +85,15 @@ class ListElement {
     required this.endDate,
   });
 
-  final String nameTh;
-  final String nameEn;
-  final String sourceType;
-  final String thumbnailUrl;
-  final String headline;
-  final String subHeadline;
-  final String sourceUrl;
-  final DateTime startDate;
-  final DateTime endDate;
+  final String? nameTh;
+  final String? nameEn;
+  final String? sourceType;
+  final String? thumbnailUrl;
+  final String? headline;
+  final String? subHeadline;
+  final String? sourceUrl;
+  final DateTime? startDate;
+  final DateTime? endDate;
 
   factory ListElement.fromRawJson(String str) => ListElement.fromJson(json.decode(str));
 
@@ -119,7 +119,7 @@ class ListElement {
         "headline": headline,
         "sub_headline": subHeadline,
         "source_url": sourceUrl,
-        "start_date": startDate.toIso8601String(),
-        "end_date": endDate.toIso8601String(),
+        "start_date": startDate?.toIso8601String(),
+        "end_date": endDate?.toIso8601String(),
       };
 }

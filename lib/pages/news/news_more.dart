@@ -11,16 +11,16 @@ class NewsMore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(data.nameTh)),
+      appBar: AppBar(title: Text(data.nameTh!)),
       body: GridView.builder(
-        itemCount: data.lists.length,
+        itemCount: data.lists!.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 320),
         padding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
         itemBuilder: (context, index) {
           return boxNews(
-            image: data.lists[index].thumbnailUrl,
-            content: data.lists[index].headline,
-            onTap: () => Get.to(() => DetailPage(data.lists[index])),
+            image: data.lists![index]!.thumbnailUrl!,
+            content: data.lists![index]!.headline!,
+            onTap: () => Get.to(() => DetailPage(data.lists![index])),
           );
         },
       ),

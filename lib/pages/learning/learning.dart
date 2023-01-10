@@ -41,35 +41,35 @@ class _LearningPageState extends State<LearningPage> {
     super.initState();
     GALog.content('learning-view');
 
-    for (var e in Store.learningModel!.value.data) {
-      if (e.lists.isNotEmpty) {
+    for (var e in Store.learningModel!.value.data!) {
+      if (e!.lists!.isNotEmpty) {
         groupLearning.add(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(children: [
               SvgPicture.asset('assets/images/${e.icon}.svg'),
-              text(e.nameTh, fontBold: true, fontSize: 24).paddingOnly(left: 10),
+              text(e.nameTh!, fontBold: true, fontSize: 24).paddingOnly(left: 10),
             ]),
             const SizedBox(height: 10),
             SizedBox(
-              height: (e.lists.length > 2) ? 300 : 150,
+              height: (e.lists!.length > 2) ? 300 : 150,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: e.lists.length,
+                itemCount: e.lists!.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 150),
                 itemBuilder: (context, index) {
                   return boxLearning(
-                    image: e.lists[index].thumbnailUrl,
-                    content: e.lists[index].headline,
-                    onTap: () => Get.to(() => DetailPage(e.lists[index])),
+                    image: e.lists![index]!.thumbnailUrl!,
+                    content: e.lists![index]!.headline!,
+                    onTap: () => Get.to(() => DetailPage(e.lists![index])),
                   );
                 },
               ),
             ),
             Center(
               child: GestureDetector(
-                onTap: () => (e.lists.isNotEmpty) ? navigatorTo(() => LearningMore(e)) : null,
-                child: text('+ ดูเพิ่มเติม', color: (e.lists.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
+                onTap: () => (e.lists!.isNotEmpty) ? navigatorTo(() => LearningMore(e)) : null,
+                child: text('+ ดูเพิ่มเติม', color: (e.lists!.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
               ),
             ),
           ],
@@ -115,8 +115,8 @@ class _LearningPageState extends State<LearningPage> {
 
                                       final SearchLearningModel searchLearningModel = SearchLearningModel.fromJson(learning.response);
 
-                                      for (var data in searchLearningModel.data) {
-                                        searchLearning.addAll(data.lists);
+                                      for (var data in searchLearningModel.data!) {
+                                        searchLearning.addAll(data!.lists!);
                                       }
                                     });
                                   }

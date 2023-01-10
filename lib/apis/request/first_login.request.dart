@@ -9,7 +9,7 @@ import 'package:tms/models/user_roles.model.dart';
 import 'package:tms/state_management.dart';
 
 Future<void> firstLoginRequest({bool showLoading = true}) async {
-  if (showLoading) await EasyLoading.show();
+  if (showLoading) EasyLoading.show();
 
   await Future.wait([
     (Store.userRolesModel == null)
@@ -68,5 +68,5 @@ Future<void> firstLoginRequest({bool showLoading = true}) async {
         : Future.delayed(const Duration(seconds: 0)),
   ]);
 
-  if (showLoading) await EasyLoading.dismiss();
+  if (showLoading) EasyLoading.dismiss();
 }
