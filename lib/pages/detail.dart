@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:tms/theme/color.dart';
-// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:tms/widgets/loading_indicator.dart';
 import 'package:tms/widgets/text.dart';
 import 'package:video_player/video_player.dart';
@@ -60,18 +60,39 @@ class _DetailPageState extends State<DetailPage> {
     return true;
   }
 
+  Widget showTitle() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      text(widget.data.headline, fontSize: 24),
+      text(
+        'โพสต์เมื่อ ${DateFormat('d MMM ${widget.data.startDate.year + 543} (HH:mmน.)').format(widget.data.startDate.toLocal())}',
+        color: const Color(0xFF6F869A),
+      ).paddingSymmetric(vertical: 10),
+      if (widget.data.subHeadline.isNotEmpty) text(widget.data.subHeadline, color: const Color(0xFF6F869A), fontSize: 18).paddingOnly(bottom: 10),
+    ]);
+  }
+
   Widget showBody() {
     switch (widget.data.sourceType) {
       case 'HTML':
         return InAppWebView(
           initialUrlRequest: URLRequest(url: Uri.parse(widget.data.sourceUrl)),
         );
-      case 'IMG':
-        return PhotoView(
-          basePosition: Alignment.topCenter,
-          backgroundDecoration: const BoxDecoration(color: Colors.white),
-          imageProvider: NetworkImage(widget.data.sourceUrl),
-        );
+      case 'IMAGE':
+        return ListView(children: [
+          showTitle(),
+          GestureDetector(
+            onTap: () => Get.to(
+              () => SafeArea(
+                child: PhotoView(
+                  basePosition: Alignment.topCenter,
+                  backgroundDecoration: const BoxDecoration(color: Colors.white),
+                  imageProvider: NetworkImage(widget.data.sourceUrl),
+                ),
+              ),
+            ),
+            child: Image.network(widget.data.sourceUrl),
+          ),
+        ]).paddingAll(20);
       case 'PDF':
         return Column(
           children: <Widget>[
@@ -128,12 +149,7 @@ class _DetailPageState extends State<DetailPage> {
 
       case 'VDO':
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          text(widget.data.headline, fontSize: 24),
-          text(
-            'โพสต์เมื่อ ${DateFormat('d MMM ${widget.data.startDate.year + 543} (HH:mmน.)').format(widget.data.startDate.toLocal())}',
-            color: const Color(0xFF6F869A),
-          ).paddingSymmetric(vertical: 10),
-          text(widget.data.subHeadline, color: const Color(0xFF6F869A)),
+          showTitle(),
           FutureBuilder(
             future: initializeVideo(),
             builder: (context, snapshot) {

@@ -15,6 +15,8 @@ class Store extends GetxController {
 
   static RxDouble heightSliverAppBar = 0.0.obs;
 
+  static RxList listNewsHome = [].obs;
+
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> productGroup = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
@@ -42,6 +44,7 @@ class Store extends GetxController {
     indexMonth.value = 0;
 
     productGroup.clear();
+    listNewsHome.clear();
 
     encryptedEmployeeId.value = '';
     userID.value = '';

@@ -38,6 +38,42 @@ class SearchLearningModel {
 
 class Datum {
   Datum({
+    required this.groupName,
+    required this.nameTh,
+    required this.nameEn,
+    required this.icon,
+    required this.lists,
+  });
+
+  final String groupName;
+  final String nameTh;
+  final String nameEn;
+  final String icon;
+  final List<ListElement> lists;
+
+  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        groupName: json["group_name"],
+        nameTh: json["name_th"],
+        nameEn: json["name_en"],
+        icon: json["icon"],
+        lists: List<ListElement>.from(json["lists"].map((x) => ListElement.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "group_name": groupName,
+        "name_th": nameTh,
+        "name_en": nameEn,
+        "icon": icon,
+        "lists": List<dynamic>.from(lists.map((x) => x.toJson())),
+      };
+}
+
+class ListElement {
+  ListElement({
     required this.nameTh,
     required this.nameEn,
     required this.sourceType,
@@ -59,11 +95,11 @@ class Datum {
   final DateTime startDate;
   final DateTime endDate;
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory ListElement.fromRawJson(String str) => ListElement.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         nameTh: json["name_th"],
         nameEn: json["name_en"],
         sourceType: json["source_type"],

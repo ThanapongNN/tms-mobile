@@ -29,13 +29,12 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   final search = TextEditingController();
-  List<Widget> groupNew = [];
-
-  Timer? _timer;
-
   bool showSearch = false;
 
-  late SearchNewsModel _searchNewsModel;
+  List<Widget> groupNew = [];
+  List searchNews = [];
+
+  Timer? _timer;
 
   @override
   void initState() {
@@ -63,7 +62,7 @@ class _NewsPageState extends State<NewsPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return boxNews(
                       image: e.lists[index].thumbnailUrl,
-                      content: e.lists[index].subHeadline,
+                      content: e.lists[index].headline,
                       onTap: () => Get.to(() => DetailPage(e.lists[index])),
                     );
                   },
@@ -115,8 +114,13 @@ class _NewsPageState extends State<NewsPage> {
                                 Call.raw(method: Method.get, url: '$host/news-campaign/v1/news-campaign/$v').then((news) {
                                   if (news.success) {
                                     setState(() {
-                                      _searchNewsModel = SearchNewsModel.fromJson(news.response);
                                       showSearch = true;
+
+                                      final SearchNewsModel searchNewsModel = SearchNewsModel.fromJson(news.response);
+
+                                      for (var data in searchNewsModel.data) {
+                                        searchNews.addAll(data.lists);
+                                      }
                                     });
                                   }
                                 });
@@ -156,25 +160,25 @@ class _NewsPageState extends State<NewsPage> {
                                 )).paddingOnly(top: 72)
                               ]),
                   )
-                : (_searchNewsModel.data.isNotEmpty)
+                : (searchNews.isNotEmpty)
                     ? Column(children: [
                         Row(children: [
                           text('คำค้นหา "'),
                           text(search.text, color: ThemeColor.primaryColor),
                           text('" พบ'),
-                          text(' ${_searchNewsModel.data.length} ', color: ThemeColor.primaryColor),
+                          text(' ${searchNews.length} ', color: ThemeColor.primaryColor),
                           text('บทความ'),
                         ]),
                         const SizedBox(height: 10),
                         Expanded(
                           child: GridView.builder(
-                            itemCount: _searchNewsModel.data.length,
+                            itemCount: searchNews.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 320),
                             itemBuilder: (context, index) {
                               return boxNews(
-                                image: _searchNewsModel.data[index].thumbnailUrl,
-                                content: _searchNewsModel.data[index].subHeadline,
-                                onTap: () => Get.to(() => DetailPage(_searchNewsModel.data[index])),
+                                image: searchNews[index].thumbnailUrl,
+                                content: searchNews[index].headline!,
+                                onTap: () => Get.to(() => DetailPage(searchNews[index])),
                               );
                             },
                           ),

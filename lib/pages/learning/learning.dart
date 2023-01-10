@@ -29,13 +29,12 @@ class LearningPage extends StatefulWidget {
 
 class _LearningPageState extends State<LearningPage> {
   final search = TextEditingController();
-  List<Widget> groupLearning = [];
-
-  Timer? _timer;
-
   bool showSearch = false;
 
-  late SearchLearningModel _searchLearningModel;
+  List<Widget> groupLearning = [];
+  List searchLearning = [];
+
+  Timer? _timer;
 
   @override
   void initState() {
@@ -62,7 +61,7 @@ class _LearningPageState extends State<LearningPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return boxNews(
                       image: e.lists[index].thumbnailUrl,
-                      content: e.lists[index].subHeadline,
+                      content: e.lists[index].headline,
                       onTap: () => Get.to(() => DetailPage(e.lists[index])),
                     );
                   },
@@ -114,8 +113,13 @@ class _LearningPageState extends State<LearningPage> {
                                 Call.raw(method: Method.get, url: '$host/learning-course/v1/learning-course/$v').then((learning) {
                                   if (learning.success) {
                                     setState(() {
-                                      _searchLearningModel = SearchLearningModel.fromJson(learning.response);
                                       showSearch = true;
+
+                                      final SearchLearningModel searchLearningModel = SearchLearningModel.fromJson(learning.response);
+
+                                      for (var data in searchLearningModel.data) {
+                                        searchLearning.addAll(data.lists);
+                                      }
                                     });
                                   }
                                 });
@@ -156,25 +160,25 @@ class _LearningPageState extends State<LearningPage> {
                             ],
                     ),
                   )
-                : (_searchLearningModel.data.isNotEmpty)
+                : (searchLearning.isNotEmpty)
                     ? Column(children: [
                         Row(children: [
                           text('คำค้นหา "'),
                           text(search.text, color: ThemeColor.primaryColor),
                           text('" พบ'),
-                          text(' ${_searchLearningModel.data.length} ', color: ThemeColor.primaryColor),
+                          text(' ${searchLearning.length} ', color: ThemeColor.primaryColor),
                           text('บทความ'),
                         ]),
                         const SizedBox(height: 10),
                         Expanded(
                           child: GridView.builder(
-                            itemCount: _searchLearningModel.data.length,
+                            itemCount: searchLearning.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 320),
                             itemBuilder: (context, index) {
                               return boxNews(
-                                image: _searchLearningModel.data[index].thumbnailUrl,
-                                content: _searchLearningModel.data[index].subHeadline,
-                                onTap: () => Get.to(() => DetailPage(_searchLearningModel.data[index])),
+                                image: searchLearning[index].thumbnailUrl,
+                                content: searchLearning[index].headline,
+                                onTap: () => Get.to(() => DetailPage(searchLearning[index])),
                               );
                             },
                           ),

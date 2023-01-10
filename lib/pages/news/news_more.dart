@@ -19,7 +19,7 @@ class NewsMore extends StatelessWidget {
         itemBuilder: (context, index) {
           return boxNews(
             image: data.lists[index].thumbnailUrl,
-            content: data.lists[index].subHeadline,
+            content: data.lists[index].headline,
             onTap: () => Get.to(() => DetailPage(data.lists[index])),
           );
         },

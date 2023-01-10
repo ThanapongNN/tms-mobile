@@ -45,7 +45,7 @@ class LearningMore extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   height: 90,
                   color: Colors.white,
-                  child: text(data.lists[index].subHeadline),
+                  child: text(data.lists[index].headline),
                 ),
               ),
             ]).paddingOnly(bottom: 10),

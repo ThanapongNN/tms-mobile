@@ -57,6 +57,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     GALog.content('home-view');
+
+    if (Store.newsModel != null && Store.listNewsHome.isEmpty) {
+      for (var data in Store.newsModel!.value.data) {
+        Store.listNewsHome.addAll(data.lists);
+      }
+    }
   }
 
   @override
@@ -166,31 +172,31 @@ class _HomeState extends State<Home> {
                       await firstLoginRequest();
                       setState(() {});
                     }),
-              const SizedBox(height: 15),
-              SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    text('ข่าวสารและแคมเปญเด่น', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
-                    SizedBox(
-                      height: 300,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: Store.newsModel!.value.data[0].lists.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return boxNews(
-                            image: Store.newsModel!.value.data[0].lists[index].thumbnailUrl,
-                            content: Store.newsModel!.value.data[0].lists[index].subHeadline,
-                            onTap: () => Get.to(() => DetailPage(Store.newsModel!.value.data[0].lists[index])),
-                          );
-                        },
+              if (Store.listNewsHome.isNotEmpty)
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      text('ข่าวสารและแคมเปญ', fontBold: true, fontSize: 24).paddingSymmetric(vertical: 10, horizontal: 20),
+                      SizedBox(
+                        height: 300,
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: Store.listNewsHome.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return boxNews(
+                              image: Store.listNewsHome[index].thumbnailUrl,
+                              content: Store.listNewsHome[index].headline,
+                              onTap: () => Get.to(() => DetailPage(Store.listNewsHome[index])),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ]),
           ),
         ),
