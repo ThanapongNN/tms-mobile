@@ -111,6 +111,7 @@ class _LearningPageState extends State<LearningPage> {
                                   if (learning.success) {
                                     setState(() {
                                       showSearch = true;
+                                      searchLearning.clear();
 
                                       final SearchLearningModel searchLearningModel = SearchLearningModel.fromJson(learning.response);
 

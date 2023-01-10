@@ -118,6 +118,7 @@ class _NewsPageState extends State<NewsPage> {
                                   if (news.success) {
                                     setState(() {
                                       showSearch = true;
+                                      searchNews.clear();
 
                                       final SearchNewsModel searchNewsModel = SearchNewsModel.fromJson(news.response);
 
