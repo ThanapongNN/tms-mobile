@@ -62,6 +62,8 @@ class _HomeState extends State<Home> {
       for (var data in Store.newsModel!.value.data) {
         Store.listNewsHome.addAll(data.lists);
       }
+
+      Store.listNewsHome.removeWhere((news) => !news.startDate.isBefore(DateTime.now()) && news.endDate.isAfter(DateTime.now()));
     }
   }
 

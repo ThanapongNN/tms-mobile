@@ -40,7 +40,10 @@ class _NewsPageState extends State<NewsPage> {
   void initState() {
     super.initState();
     GALog.content('news-view');
+
     for (var e in Store.newsModel!.value.data) {
+      e.lists.removeWhere((news) => !news.startDate.isBefore(DateTime.now()) && news.endDate.isAfter(DateTime.now()));
+
       if (e.lists.isNotEmpty) {
         groupNew.add(SizedBox(
           width: double.infinity,
