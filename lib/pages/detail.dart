@@ -67,7 +67,7 @@ class _DetailPageState extends State<DetailPage> {
         'โพสต์เมื่อ ${DateFormat('d MMM ${widget.data.startDate.year + 543} (HH:mmน.)').format(widget.data.startDate.toLocal())}',
         color: const Color(0xFF6F869A),
       ).paddingSymmetric(vertical: 10),
-      if (widget.data.subHeadline.isNotEmpty) text(widget.data.subHeadline, color: const Color(0xFF6F869A), fontSize: 18).paddingOnly(bottom: 10),
+      // if (widget.data.subHeadline.isNotEmpty) text(widget.data.subHeadline, color: const Color(0xFF6F869A), fontSize: 18).paddingOnly(bottom: 10),
     ]);
   }
 
