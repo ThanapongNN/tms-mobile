@@ -52,7 +52,7 @@ class _LearningPageState extends State<LearningPage> {
             ]),
             const SizedBox(height: 10),
             SizedBox(
-              height: 300,
+              height: (e.lists.length > 2) ? 300 : 150,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: e.lists.length,
