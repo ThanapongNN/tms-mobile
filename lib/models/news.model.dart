@@ -6,16 +6,16 @@ import 'dart:convert';
 
 class NewsModel {
   NewsModel({
-    required this.code,
-    required this.description,
-    required this.transactionId,
-    required this.data,
+    this.code,
+    this.description,
+    this.transactionId,
+    this.data,
   });
 
-  final String? code;
-  final String? description;
-  final String? transactionId;
-  final List<Datum?>? data;
+  String? code;
+  String? description;
+  String? transactionId;
+  List<Datum?>? data;
 
   factory NewsModel.fromRawJson(String str) => NewsModel.fromJson(json.decode(str));
 
@@ -38,18 +38,18 @@ class NewsModel {
 
 class Datum {
   Datum({
-    required this.groupName,
-    required this.nameTh,
-    required this.nameEn,
-    required this.icon,
-    required this.lists,
+    this.groupName,
+    this.nameTh,
+    this.nameEn,
+    this.icon,
+    this.lists,
   });
 
-  final String? groupName;
-  final String? nameTh;
-  final String? nameEn;
-  final String? icon;
-  final List<ListElement?>? lists;
+  String? groupName;
+  String? nameTh;
+  String? nameEn;
+  String? icon;
+  List<ListElement?>? lists;
 
   factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
 
@@ -74,26 +74,26 @@ class Datum {
 
 class ListElement {
   ListElement({
-    required this.nameTh,
-    required this.nameEn,
-    required this.sourceType,
-    required this.thumbnailUrl,
-    required this.headline,
-    required this.subHeadline,
-    required this.sourceUrl,
-    required this.startDate,
-    required this.endDate,
+    this.nameTh,
+    this.nameEn,
+    this.sourceType,
+    this.thumbnailUrl,
+    this.headline,
+    this.subHeadline,
+    this.sourceUrl,
+    this.startDate,
+    this.endDate,
   });
 
-  final String? nameTh;
-  final String? nameEn;
-  final String? sourceType;
-  final String? thumbnailUrl;
-  final String? headline;
-  final String? subHeadline;
-  final String? sourceUrl;
-  final DateTime? startDate;
-  final DateTime? endDate;
+  String? nameTh;
+  String? nameEn;
+  String? sourceType;
+  String? thumbnailUrl;
+  String? headline;
+  String? subHeadline;
+  String? sourceUrl;
+  DateTime? startDate;
+  DateTime? endDate;
 
   factory ListElement.fromRawJson(String str) => ListElement.fromJson(json.decode(str));
 

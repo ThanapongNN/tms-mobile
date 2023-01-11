@@ -41,10 +41,10 @@ class _NewsPageState extends State<NewsPage> {
     super.initState();
     GALog.content('news-view');
 
-    for (var e in Store.newsModel!.value.data!) {
-      e!.lists!.removeWhere((news) => !news!.startDate!.isBefore(DateTime.now()) && news.endDate!.isAfter(DateTime.now()));
+    for (var news in Store.newsModel!.value.data!) {
+      news!.lists!.removeWhere((news) => !news!.startDate!.isBefore(DateTime.now()) && news.endDate!.isAfter(DateTime.now()));
 
-      if (e.lists!.isNotEmpty) {
+      if (news.lists!.isNotEmpty) {
         groupNew.add(SizedBox(
           width: double.infinity,
           child: Column(
@@ -52,8 +52,8 @@ class _NewsPageState extends State<NewsPage> {
             children: [
               FittedBox(
                 child: Row(children: [
-                  SvgPicture.asset('assets/images/${e.icon}.svg'),
-                  text(e.nameTh!, fontBold: true, fontSize: 24, overflow: TextOverflow.ellipsis).paddingOnly(left: 10),
+                  SvgPicture.asset('assets/images/${news.icon}.svg'),
+                  text(news.nameTh!, fontBold: true, fontSize: 24, overflow: TextOverflow.ellipsis).paddingOnly(left: 10),
                 ]).paddingSymmetric(vertical: 10, horizontal: 20),
               ),
               SizedBox(
@@ -61,20 +61,20 @@ class _NewsPageState extends State<NewsPage> {
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   scrollDirection: Axis.horizontal,
-                  itemCount: e.lists!.length,
+                  itemCount: news.lists!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return boxNews(
-                      image: e.lists![index]!.thumbnailUrl!,
-                      content: e.lists![index]!.headline!,
-                      onTap: () => Get.to(() => DetailPage(e.lists![index])),
+                      image: news.lists![index]!.thumbnailUrl!,
+                      content: news.lists![index]!.headline!,
+                      onTap: () => Get.to(() => DetailPage(news.lists![index])),
                     );
                   },
                 ),
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () => (e.lists!.isNotEmpty) ? navigatorTo(() => NewsMore(e)) : null,
-                  child: text('+ ดูเพิ่มเติม', color: (e.lists!.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
+                  onTap: () => (news.lists!.isNotEmpty) ? navigatorTo(() => NewsMore(news)) : null,
+                  child: text('+ ดูเพิ่มเติม', color: (news.lists!.isNotEmpty) ? ThemeColor.primaryColor : Colors.grey),
                 ),
               ).paddingOnly(bottom: 10),
               Divider(color: Colors.white.withOpacity(0.7), thickness: 20),
@@ -122,8 +122,12 @@ class _NewsPageState extends State<NewsPage> {
 
                                       final SearchNewsModel searchNewsModel = SearchNewsModel.fromJson(news.response);
 
-                                      for (var data in searchNewsModel.data!) {
-                                        searchNews.addAll(data!.lists!);
+                                      for (var news in searchNewsModel.data!) {
+                                        news!.lists!.removeWhere(
+                                          (news) => !news!.startDate!.isBefore(DateTime.now()) && news.endDate!.isAfter(DateTime.now()),
+                                        );
+
+                                        searchNews.addAll(news.lists!);
                                       }
                                     });
                                   }

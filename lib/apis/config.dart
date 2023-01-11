@@ -1,7 +1,6 @@
-import 'package:tms/local_storage.dart';
 import 'package:tms/state_management.dart';
 
-String host = LocalStorage.readHost();
+String host = "http://103.13.228.244:8080";
 
 String errorTimeout = 'หมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
 String messageOffline = 'ขาดการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';

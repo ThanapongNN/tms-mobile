@@ -122,10 +122,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                         Center(
                           key: _keyText,
                           child: text(
-                            DateFormat(
-                              'ข้อมูลถึงวันที่ dd MMMM ${DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).year + 543}',
-                              'th',
-                            ).format(DateTime.parse(Store.productGroup['data'][Store.indexMonth.value]['lastUpdate']).toLocal()),
+                            DateFormat('ข้อมูลถึงวันที่ dd/MM/${DateTime.now().year + 543}', 'th').format(DateTime.now().toLocal()),
                             color: Colors.white,
                           ).paddingSymmetric(vertical: 10),
                         ),
