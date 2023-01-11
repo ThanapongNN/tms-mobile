@@ -69,10 +69,10 @@ Widget listProductGroup({
                             unit: detail?[index].unit,
                             index: index,
                             maxIndex: checklist,
-                            total: '${detail?[index].total}',
+                            total: detail?[index].summary,
                           );
                         } else {
-                          return listSalesDetail(title: 'รวม', total: '$sum', index: index, maxIndex: checklist);
+                          return listSalesDetail(title: 'รวม', total: sum, index: index, maxIndex: checklist);
                         }
                       },
                     ),

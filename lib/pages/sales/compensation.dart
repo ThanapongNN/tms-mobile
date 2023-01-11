@@ -21,14 +21,16 @@ class _CompensationState extends State<Compensation> {
                 fontSize: 19, color: ThemeColor.primaryColor, textAlign: TextAlign.center)
             .paddingSymmetric(vertical: 5),
         Column(
-          children: Store.productGroup['data'][Store.indexMonth.value]['commission'].map<Widget>((commission) {
+          children: Store.productGroupModel!.value.data![Store.indexMonth.value]!.commission!.map<Widget>((commission) {
             return listProductGroup(
-              icon: commission['iconName'],
-              title: commission['name'],
-              quantity: '${commission['total']}',
-              seeDetail: !(commission['total'] == 0),
-              unit: commission['unit'] ?? 'เครื่อง',
-              detail: commission['list'],
+              icon: commission!.iconName!,
+              title: commission.name!,
+              quantity: '${commission.total}',
+              seeDetail: !(commission.total == 0),
+              unit: commission.unit!,
+              detail: commission.list,
+              sum: commission.summary,
+              compensation: true,
             );
           }).toList(),
         ),

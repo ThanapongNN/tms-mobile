@@ -2,6 +2,7 @@ import 'package:get/state_manager.dart';
 import 'package:tms/models/forgot_password.model.dart';
 import 'package:tms/models/learning.model.dart';
 import 'package:tms/models/news.model.dart';
+import 'package:tms/models/product_group.model.dart';
 import 'package:tms/models/user_account.model.dart';
 import 'package:tms/models/user_roles.model.dart';
 
@@ -18,7 +19,6 @@ class Store extends GetxController {
   static RxList listNewsHome = [].obs;
 
   static RxMap<String, dynamic> partnerTypes = <String, dynamic>{}.obs;
-  static RxMap<String, dynamic> productGroup = <String, dynamic>{}.obs;
   static RxMap<String, dynamic> registerBody = <String, dynamic>{}.obs;
 
   static RxString encryptedEmployeeId = ''.obs;
@@ -33,6 +33,7 @@ class Store extends GetxController {
   static Rx<ForgotPasswordModel>? forgotPasswordModel;
   static Rx<LearningModel>? learningModel;
   static Rx<NewsModel>? newsModel;
+  static Rx<ProductGroupModel>? productGroupModel;
   static Rx<UserAccountModel>? userAccountModel;
   static Rx<UserRolesModel>? userRolesModel;
 
@@ -43,7 +44,6 @@ class Store extends GetxController {
     indexProductGroup.value = 0;
     indexMonth.value = 0;
 
-    productGroup.clear();
     listNewsHome.clear();
 
     encryptedEmployeeId.value = '';
@@ -53,6 +53,7 @@ class Store extends GetxController {
 
     learningModel = null;
     newsModel = null;
+    productGroupModel = null;
     userAccountModel = null;
   }
 }

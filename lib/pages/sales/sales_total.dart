@@ -21,9 +21,9 @@ class _SalesTotalState extends State<SalesTotal> {
     super.initState();
     showProducts.clear();
 
-    if (Store.productGroup.isNotEmpty) {
-      for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
-        select.add(e['product']);
+    if (Store.productGroupModel != null) {
+      for (var e in Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup!) {
+        select.add(e!.product!);
       }
     }
   }
@@ -77,17 +77,18 @@ class _SalesTotalState extends State<SalesTotal> {
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: Store.productGroup['data'][Store.indexMonth.value]['productGroup'].length,
+                  itemCount: Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup!.length,
                   itemBuilder: (context, index) {
                     return Column(
-                      children: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][index]['salesOrder'].map<Widget>((salesOrder) {
+                      children:
+                          Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![index]!.salesOrder!.map<Widget>((salesOrder) {
                         return listProductGroup(
-                          icon: salesOrder['iconName'],
-                          title: salesOrder['order'],
-                          quantity: '${salesOrder['orderTotal']}',
-                          seeDetail: !(salesOrder['orderTotal'] == 0),
-                          unit: salesOrder['unit'] ?? '',
-                          detail: salesOrder['serviceCampaign'],
+                          icon: salesOrder!.iconName!,
+                          title: salesOrder.order!,
+                          quantity: '${salesOrder.orderTotal}',
+                          seeDetail: !(salesOrder.orderTotal == 0),
+                          unit: salesOrder.unit!,
+                          detail: salesOrder.serviceCampaign,
                         );
                       }).toList(),
                     );
@@ -97,24 +98,23 @@ class _SalesTotalState extends State<SalesTotal> {
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount:
-                      Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'].length,
+                  itemCount: Store
+                      .productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!.salesOrder!.length,
                   itemBuilder: (context, index) {
                     return listProductGroup(
-                      icon: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]
-                          ['iconName'],
-                      title: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
-                          [index]['order'],
+                      icon: Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!
+                          .salesOrder![index]!.iconName!,
+                      title: Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!
+                          .salesOrder![index]!.order!,
                       quantity:
-                          '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]['orderTotal']}',
-                      seeDetail: !(Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
-                              [index]['orderTotal'] ==
+                          '${Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!.salesOrder![index]!.orderTotal!}',
+                      seeDetail: !(Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!
+                              .salesOrder![index]!.orderTotal! ==
                           0),
-                      unit: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder'][index]
-                              ['unit'] ??
-                          '',
-                      detail: Store.productGroup['data'][Store.indexMonth.value]['productGroup'][Store.indexProductGroup.value - 1]['salesOrder']
-                          [index]['serviceCampaign'],
+                      unit: Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!
+                          .salesOrder![index]!.unit!,
+                      detail: Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![Store.indexProductGroup.value - 1]!
+                          .salesOrder![index]!.serviceCampaign!,
                     );
                   },
                 ),

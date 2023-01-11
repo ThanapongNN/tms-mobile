@@ -107,14 +107,14 @@ class _HomeState extends State<Home> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Column(children: [
-              (Store.productGroup.isNotEmpty && Store.userAccountModel != null)
+              (Store.productGroupModel != null && Store.userAccountModel != null)
                   ? Column(children: [
                       Container(
                         width: double.infinity,
                         color: const Color(0xFF414F5C),
                         child: Column(children: [
                           text(
-                              'ยอดขายเดือน ${DateFormat('MMMM ${DateTime.parse(Store.productGroup['data'][0]['lastUpdate']).year + 543}').format(DateTime.parse(Store.productGroup['data'][0]['lastUpdate']))}',
+                              'ยอดขายเดือน ${DateFormat('MMMM ${Store.productGroupModel!.value.data![0]!.lastUpdate!.year + 543}').format(Store.productGroupModel!.value.data![0]!.lastUpdate!)}',
                               color: Colors.white),
                           const SizedBox(height: 5),
                           text(
@@ -127,7 +127,7 @@ class _HomeState extends State<Home> {
                             child: boxHeadStatus(
                                 image: 'assets/images/true.svg',
                                 content: 'ยอดขายรวมทุกสินค้า',
-                                quantity: '${Store.productGroup['data'][0]['totalCount']}'),
+                                quantity: '${Store.productGroupModel!.value.data![0]!.totalCount}'),
                           )
                           // GestureDetector(
                           //     onTap: () {
@@ -148,14 +148,14 @@ class _HomeState extends State<Home> {
                         ]).paddingSymmetric(vertical: 15),
                       ),
                       Column(
-                        children: Store.productGroup['data'][0]['homeDisplay'].map<Widget>((homeDisplay) {
+                        children: Store.productGroupModel!.value.data![0]!.homeDisplay!.map<Widget>((homeDisplay) {
                           return listProductGroup(
-                            icon: homeDisplay['iconName'],
-                            title: homeDisplay['order'],
-                            quantity: '${homeDisplay['orderTotal']}',
-                            seeDetail: !(homeDisplay['orderTotal'] == 0),
-                            unit: homeDisplay['unit'],
-                            detail: homeDisplay['serviceCampaign'],
+                            icon: homeDisplay!.iconName!,
+                            title: homeDisplay.order!,
+                            quantity: '${homeDisplay.orderTotal!}',
+                            seeDetail: !(homeDisplay.orderTotal! == 0),
+                            unit: homeDisplay.unit!,
+                            detail: homeDisplay.serviceCampaign!,
                           );
                         }).toList(),
                       ),

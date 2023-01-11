@@ -44,15 +44,15 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
     _tabBar = TabController(length: 2, vsync: this);
     _tabBar.addListener(() => setState(() {}));
 
-    if (Store.productGroup.isNotEmpty) {
-      for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
-        select.add(e['product']);
+    if (Store.productGroupModel != null) {
+      for (var e in Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup!) {
+        select.add(e!.product!);
       }
 
       //เซ็ตสีเลือกเดือน
-      currentMonthFocus = Store.productGroup['data']
+      currentMonthFocus = Store.productGroupModel!.value.data!
           .map<bool>(
-            (e) => Store.indexMonth.value == Store.productGroup['data'].indexOf(e),
+            (e) => Store.indexMonth.value == Store.productGroupModel!.value.data!.indexOf(e),
           )
           .toList();
 
@@ -63,7 +63,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
       Timer.periodic(
         const Duration(milliseconds: 250),
         (Timer t) {
-          if (Store.productGroup.isNotEmpty) {
+          if (Store.productGroupModel != null) {
             t.cancel();
             if ((Store.heightSliverAppBar.value == 0) && (_keyRow.currentContext != null)) {
               Store.heightSliverAppBar.value =
@@ -81,7 +81,7 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
       appBar: AppBar(title: SvgPicture.asset('assets/images/head_appbar.svg', width: 100), toolbarHeight: kToolbarHeight + 1),
       onDrawerChanged: (isOpened) => Store.drawer.value = isOpened,
       drawer: drawer(),
-      body: (Store.productGroup.isNotEmpty)
+      body: (Store.productGroupModel != null)
           ? Obx(() {
               return CustomScrollView(slivers: [
                 SliverAppBar(
@@ -96,20 +96,20 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                         Row(
                           key: _keyRow,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: Store.productGroup['data']
+                          children: Store.productGroupModel!.value.data!
                               .map<Widget>((e) {
-                                int index = Store.productGroup['data'].indexOf(e);
+                                int index = Store.productGroupModel!.value.data!.indexOf(e);
                                 return GestureDetector(
                                   onTap: () => setState(() {
-                                    currentMonthFocus = Store.productGroup['data'].map<bool>((e) => false).toList();
+                                    currentMonthFocus = Store.productGroupModel!.value.data!.map<bool>((e) => false).toList();
                                     currentMonthFocus[index] = true;
                                     Store.indexMonth.value = currentMonthFocus.indexOf(true);
                                   }),
                                   child: text(
                                     DateFormat(
-                                      'MMMM ${DateTime.parse('${Store.productGroup['data'][index]['strDate']}-01').year + 543}',
+                                      'MMMM ${DateTime.parse('${Store.productGroupModel!.value.data![index]!.strDate}-01').year + 543}',
                                       'th',
-                                    ).format(DateTime.parse('${Store.productGroup['data'][index]['strDate']}-01').toLocal()),
+                                    ).format(DateTime.parse('${Store.productGroupModel!.value.data![index]!.strDate}-01').toLocal()),
                                     color: currentMonthFocus[index] ? Colors.yellow : Colors.white,
                                     decoration: currentMonthFocus[index] ? TextDecoration.underline : null,
                                   ),
@@ -133,8 +133,8 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
                                 'คุณ${Store.userAccountModel!.value.account.employee.name} ${Store.userAccountModel!.value.account.employee.surname}',
                             title: Store.selectedProductGroup.value,
                             quantity: (select.indexOf(Store.selectedProductGroup.value) == 0)
-                                ? '${Store.productGroup['data'][Store.indexMonth.value]['totalCount']}'
-                                : '${Store.productGroup['data'][Store.indexMonth.value]['productGroup'][select.indexOf(Store.selectedProductGroup.value) - 1]['salesTotal']}',
+                                ? '${Store.productGroupModel!.value.data![Store.indexMonth.value]!.totalCount}'
+                                : '${Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup![select.indexOf(Store.selectedProductGroup.value) - 1]!.salesTotal}',
                           ).paddingOnly(bottom: 15),
                         ),
                       ]),
@@ -196,14 +196,14 @@ class _SalesPageState extends State<SalesPage> with SingleTickerProviderStateMix
           : NoDataPage(onPressed: () async {
               await firstLoginRequest();
               setState(() {
-                if (Store.productGroup.isNotEmpty) {
-                  for (var e in Store.productGroup['data'][Store.indexMonth.value]['productGroup']) {
-                    select.add(e['product']);
+                if (Store.productGroupModel != null) {
+                  for (var e in Store.productGroupModel!.value.data![Store.indexMonth.value]!.productGroup!) {
+                    select.add(e!.product!);
                   }
 
                   //เซ็ตสีเลือกเดือน
-                  currentMonthFocus = Store.productGroup['data']
-                      .map<bool>((e) => Store.productGroup['data'].length == (Store.productGroup['data'].indexOf(e) + 1))
+                  currentMonthFocus = Store.productGroupModel!.value.data!
+                      .map<bool>((e) => Store.productGroupModel!.value.data!.length == (Store.productGroupModel!.value.data!.indexOf(e) + 1))
                       .toList()
                       .reversed
                       .toList();
